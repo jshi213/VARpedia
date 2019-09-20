@@ -35,13 +35,10 @@ public class CreateMenuController {
 	@FXML
 	private void handleButtonPreview(ActionEvent event) throws IOException {
 		String previewText = textAreaResults.getSelectedText();
-		System.out.println(previewText);
-		PrintWriter writer = new PrintWriter("previewtext", "UTF-8");
-		writer.println(previewText);
-		writer.close();
+
 		
 		ProcessBuilder pb1 = new ProcessBuilder();
-		pb1.command("bash", "-c", "text2wave previewtext -o temporary");
+		pb1.command("bash", "-c", "echo \"" + previewText + "\" | festival --tts");
 		Process process2 = pb1.start();
 	}
 }
