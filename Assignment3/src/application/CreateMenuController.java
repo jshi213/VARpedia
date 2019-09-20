@@ -1,7 +1,7 @@
 package application;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
@@ -11,19 +11,14 @@ public class CreateMenuController {
 	
 	@FXML
 	private TextArea textAreaResults;
-	
+
 	@FXML
 	private void initialize() {
-		String line;
-		FileReader readfile;
+		String line = "";
 		try {
-			readfile = new FileReader("initialtext");
-		BufferedReader readbuffer = new BufferedReader(readfile);
-		while ((line = readbuffer.readLine()) != null) {
-				line = readbuffer.readLine();
-		}
-		readbuffer.close();
-		textAreaResults.setText(line);
+			line = new String(Files.readAllBytes(Paths.get("initialtext")));
+			textAreaResults.setText(line);
+			textAreaResults.setWrapText(true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
