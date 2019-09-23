@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
@@ -24,6 +25,9 @@ public class CreateMenuController {
 	private TextArea textAreaResults;
 	
 	@FXML
+	private MenuButton menuButtonVoices;
+	
+	@FXML
 	private MenuItem voice1;
 	
 	@FXML
@@ -31,6 +35,9 @@ public class CreateMenuController {
 	
 	@FXML
 	private MenuItem voice3;
+	
+	@FXML
+	private Button buttonSave;
 
 	@FXML
 	private void initialize() {
@@ -62,6 +69,7 @@ public class CreateMenuController {
 	
 	@FXML
 	private void handleVoice1(ActionEvent event) throws IOException {
+		menuButtonVoices.setText("Voice 1");
 		FileWriter writer = new FileWriter("preview.scm", false);
 		writer.write("(voice_akl_nz_jdt_diphone)");
 		writer.close();
@@ -69,6 +77,7 @@ public class CreateMenuController {
 	
 	@FXML
 	private void handleVoice2(ActionEvent event) throws IOException {
+		menuButtonVoices.setText("Voice 2");
 		FileWriter writer = new FileWriter("preview.scm", false);
 		writer.write("(voice_kal_diphone)");
 		writer.close();
@@ -76,8 +85,14 @@ public class CreateMenuController {
 	
 	@FXML
 	private void handleVoice3(ActionEvent event) throws IOException {
+		menuButtonVoices.setText("Voice 3");
 		FileWriter writer = new FileWriter("preview.scm", false);
 		writer.write("(voice_akl_nz_cw_cg_cg)");
 		writer.close();
+	}
+	
+	@FXML
+	private void handleButtonSave() {
+		
 	}
 }

@@ -10,12 +10,13 @@
    <children>
       <TextArea fx:id="textAreaResults" layoutX="27.0" layoutY="42.0" prefHeight="216.0" prefWidth="546.0" wrapText="true" />
       <Button fx:id="buttonPreview" layoutX="60.0" layoutY="289.0" mnemonicParsing="false" onAction="#handleButtonPreview" text="Preview" />
-      <MenuButton layoutX="184.0" layoutY="289.0" mnemonicParsing="false" text="MenuButton">
+      <MenuButton fx:id="menuButtonVoices" layoutX="253.0" layoutY="289.0" mnemonicParsing="false" text="Voices">
         <items>
           <MenuItem fx:id="voice1" mnemonicParsing="false" onAction="#handleVoice1" text="Voice 1" />
           <MenuItem fx:id="voice2" mnemonicParsing="false" onAction="#handleVoice2" text="Voice 2" />
             <MenuItem fx:id="voice3" mnemonicParsing="false" onAction="#handleVoice3" text="Voice 3" />
         </items>
       </MenuButton>
+      <Button fx:id="buttonSave" layoutX="416.0" layoutY="289.0" mnemonicParsing="false" onAction="#handleButtonSave" text="Save Audio File" />
    </children>
 </Pane>
