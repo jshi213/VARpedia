@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.Pane?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ListController">
    <children>
-      <ListView layoutX="187.0" layoutY="81.0" prefHeight="200.0" prefWidth="200.0" />
+      <ListView fx:id="listView" layoutX="151.0" layoutY="81.0" onMouseClicked="#handleItemSelection" prefHeight="200.0" prefWidth="200.0" />
+      <Button fx:id="buttonBack" layoutX="29.0" layoutY="24.0" mnemonicParsing="false" onAction="#handleButtonBack" text="Back" />
+      <Button fx:id="buttonPlay" layoutX="393.0" layoutY="110.0" mnemonicParsing="false" onAction="#handleButtonPlay" text="Play Selected Creation" />
+      <Button fx:id="buttonDelete" layoutX="393.0" layoutY="213.0" mnemonicParsing="false" onAction="#handleButtonDelete" text="Delete Selected Creation" />
    </children>
 </Pane>
