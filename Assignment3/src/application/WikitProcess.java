@@ -37,7 +37,7 @@ public class WikitProcess extends Task<String> {
 					line = line.replaceAll("(\\. )([A-Z])", "\\.\n$2");
 
 					//writing formatted result into text file
-					PrintWriter writer = new PrintWriter("initialtext", "UTF-8");
+					PrintWriter writer = new PrintWriter("temporaryfiles/initialtext", "UTF-8");
 					writer.println(line);
 					writer.close();
 					return null;
@@ -47,5 +47,9 @@ public class WikitProcess extends Task<String> {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	@Override protected void done() {
+		
 	}
 }

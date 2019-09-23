@@ -37,10 +37,11 @@ public class SearchController {
 	
 	@FXML
 	private void handleButtonSearch(ActionEvent event) throws IOException {
-		
+		//starting new thread for wikit search by using WikitProcess class
 		_searchTerm = textFieldTerm.getText();
 		WikitProcess wikitProcess = new WikitProcess(_searchTerm);
 		team.submit(wikitProcess);
+		//loading new scene to display results
 		Parent createParent = FXMLLoader.load(getClass().getResource("CreateMenu.fxml"));
 		Scene createScene =  new Scene(createParent);
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
