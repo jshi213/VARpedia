@@ -66,8 +66,6 @@ public class SearchController {
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		stage.setScene(createScene);
 		stage.show();
-		
-		
 	}
 	
 	public static Stage getStage() {
