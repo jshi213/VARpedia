@@ -10,9 +10,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Labeled;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -22,6 +24,8 @@ public class SearchController {
 	private ExecutorService team = Executors.newSingleThreadExecutor(); 
 	
 	private String _searchTerm;
+	private static Stage _staticStage;
+	private static Alert _staticAlert;
 
 	@FXML
 	private Text text;
@@ -39,14 +43,17 @@ public class SearchController {
 	private void handleButtonSearch(ActionEvent event) throws IOException {
 		//starting new thread for wikit search by using WikitProcess class
 		_searchTerm = textFieldTerm.getText();
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Loading...");
+		alert.setHeaderText(null);
+		alert.setContentText("Your search is loading...");
+		alert.show();
+		_staticAlert = alert;
 		WikitProcess wikitProcess = new WikitProcess(_searchTerm);
 		team.submit(wikitProcess);
 		//loading new scene to display results
-		Parent createParent = FXMLLoader.load(getClass().getResource("CreateMenu.fxml"));
-		Scene createScene =  new Scene(createParent);
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		stage.setScene(createScene);
-		stage.show();
+		_staticStage = stage;
 	}
 	
 	@FXML
@@ -58,6 +65,14 @@ public class SearchController {
 		stage.show();
 		
 		
+	}
+	
+	public static Stage getStage() {
+		return _staticStage;
+	}
+	
+	public static Alert getAlert() {
+		return _staticAlert;
 	}
 	
 }

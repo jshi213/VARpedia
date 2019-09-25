@@ -40,6 +40,9 @@ public class WikitProcess extends Task<String> {
 					PrintWriter writer = new PrintWriter("temporaryfiles/initialtext", "UTF-8");
 					writer.println(line);
 					writer.close();
+					//displaying new scene after successful search
+					CreateMenuScene createMenuScene = new CreateMenuScene();
+					Platform.runLater(createMenuScene);
 					return null;
 				}
 			}
