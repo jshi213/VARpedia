@@ -11,6 +11,7 @@ import javafx.concurrent.Task;
 public class WikitProcess extends Task<String> {
 	
 	private String _searchTerm;
+	private boolean _isCancelled = false;
 	
 	public WikitProcess(String searchTerm) {
 		_searchTerm = searchTerm;
@@ -31,6 +32,11 @@ public class WikitProcess extends Task<String> {
 				if(line.contains("? Ambiguous") || line.contains(":^(")) {
 					AmbiguousAlert ambiguousAlert = new AmbiguousAlert();
 					Platform.runLater(ambiguousAlert);
+				} if(_isCancelled == true) {
+					try {
+					throw new InterruptedException();
+					} catch(InterruptedException e) {
+					}
 				} else {
 					//formatting results into sentence lines
 					line = line.substring(2, line.length());
@@ -52,7 +58,7 @@ public class WikitProcess extends Task<String> {
 		return null;
 	}
 	
-	@Override protected void done() {
-		
+	public void setCancel() {
+		_isCancelled = true;
 	}
 }
