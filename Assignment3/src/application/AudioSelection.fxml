@@ -4,7 +4,6 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.Pane?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AudioSelectionController">
    <children>
       <ListView fx:id="listViewAudioFiles" layoutX="50.0" layoutY="67.0" prefHeight="200.0" prefWidth="200.0" />
@@ -13,5 +12,7 @@
       <Button fx:id="buttonMoveBack" layoutX="280.0" layoutY="203.0" mnemonicParsing="false" onAction="#handleButtonMoveBack" text="&lt;&lt;" />
       <Button fx:id="buttonNext" layoutX="250.0" layoutY="340.0" mnemonicParsing="false" onAction="#handleButtonNext" text="Next: Select number of images &amp; Create video" />
       <Button fx:id="buttonPreview" layoutX="113.0" layoutY="287.0" mnemonicParsing="false" onAction="#handleButtonPreview" text="Preview " />
+      <Button fx:id="buttonBack" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleButtonBack" text="Back" />
+      <Button fx:id="buttonCombine" layoutX="428.0" layoutY="287.0" mnemonicParsing="false" onAction="#handleButtonCombine" text="Combine" />
    </children>
 </Pane>

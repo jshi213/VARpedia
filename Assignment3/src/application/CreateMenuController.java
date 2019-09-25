@@ -52,6 +52,7 @@ public class CreateMenuController {
 	private String _voiceSelection;
 
 	private Label labelValue;
+	
 
 	@FXML
 	private void initialize() throws IOException {
@@ -127,6 +128,15 @@ public class CreateMenuController {
 	@FXML
 	private void handleButtonBack(ActionEvent event) throws IOException {
 		Parent createParent = FXMLLoader.load(getClass().getResource("Search.fxml"));
+		Scene createScene =  new Scene(createParent);
+		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		stage.setScene(createScene);
+		stage.show();
+	}
+	
+	@FXML
+	private void handleButtonNext(ActionEvent event) throws IOException {
+		Parent createParent = FXMLLoader.load(getClass().getResource("AudioSelection.fxml"));
 		Scene createScene =  new Scene(createParent);
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		stage.setScene(createScene);
