@@ -96,6 +96,7 @@ public class AudioSelectionController {
 		alert.setHeaderText(null);
 		alert.setContentText("Selected audio files have been combined");
 		alert.showAndWait();
+		
 	}
 	
 	@FXML

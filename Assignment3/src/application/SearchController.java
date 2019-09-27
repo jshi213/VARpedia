@@ -27,7 +27,8 @@ public class SearchController {
 	private WikitProcess _wikitProcess;
 	private static Stage _staticStage;
 	private static Alert _staticAlert;
-
+	private static boolean _processStatus;
+	
 	@FXML
 	private Text text;
 	
@@ -61,6 +62,7 @@ public class SearchController {
 		_staticAlert = alert;
 		WikitProcess wikitProcess = new WikitProcess(_searchTerm);
 		_wikitProcess = wikitProcess;
+		_processStatus = true;
 		team.submit(wikitProcess);
 		//loading new scene to display results
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -69,7 +71,9 @@ public class SearchController {
 	
 	@FXML
 	private void handleButtonSearchBack(ActionEvent event) throws IOException {
-		_wikitProcess.setCancel();
+		if(_processStatus) {
+			_wikitProcess.setCancel();
+		}
 		Parent createParent = FXMLLoader.load(getClass().getResource("Menu.fxml"));
 		Scene createScene =  new Scene(createParent);
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -83,6 +87,11 @@ public class SearchController {
 	
 	public static Alert getAlert() {
 		return _staticAlert;
+	}
+
+	public static void setProcessStatus() {
+		_processStatus = false;
+		
 	}
 	
 }

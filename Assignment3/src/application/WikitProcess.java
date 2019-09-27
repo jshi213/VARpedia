@@ -33,8 +33,9 @@ public class WikitProcess extends Task<String> {
 					AmbiguousAlert ambiguousAlert = new AmbiguousAlert();
 					Platform.runLater(ambiguousAlert);
 				} if(_isCancelled == true) {
+					
 					try {
-					throw new InterruptedException();
+						throw new InterruptedException();
 					} catch(InterruptedException e) {
 					}
 				} else {
@@ -49,6 +50,8 @@ public class WikitProcess extends Task<String> {
 					//displaying new scene after successful search
 					CreateMenuScene createMenuScene = new CreateMenuScene();
 					Platform.runLater(createMenuScene);
+					//setting process status to false
+					SearchController.setProcessStatus();
 					return null;
 				}
 			}
