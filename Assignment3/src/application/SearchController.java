@@ -23,7 +23,7 @@ public class SearchController {
 	
 	private ExecutorService team = Executors.newSingleThreadExecutor(); 
 	
-	private String _searchTerm;
+	public static String _searchTerm;
 	private WikitProcess _wikitProcess;
 	private static Stage _staticStage;
 	private static Alert _staticAlert;
