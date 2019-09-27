@@ -91,10 +91,10 @@ public class FlickrProcess extends Task<Void> {
 			
 			printWriter.println("#/bin/bash");
 			printWriter.println("ffmpeg -framerate 1 -pattern_type glob -i '*.jpg' -c:v libx264 -pix_fmt yuv420p out.mp4");
-			printWriter.println("");
+			printWriter.println(" ");
 			
 			ProcessBuilder builder = new ProcessBuilder("bash", tempScript.toString());
-			builder.inheritIO();
+			builder.inheritIO(); 
 			Process process = builder.start();
 			process.waitFor();
 		} catch (IOException | InterruptedException e) {
