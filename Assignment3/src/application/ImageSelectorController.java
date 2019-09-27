@@ -54,8 +54,8 @@ public class ImageSelectorController {
 	@FXML
 	private void handleButtonCreate(ActionEvent event) {
 		//alert if invalid name
-		
-		FlickrProcess flickrProcess = new FlickrProcess(number);
+		String creation = textFieldName.getText();
+		FlickrProcess flickrProcess = new FlickrProcess(number, creation);
 		team.submit(flickrProcess);
 		
 	}

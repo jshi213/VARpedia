@@ -26,9 +26,11 @@ import javafx.concurrent.Task;
 public class FlickrProcess extends Task<Void> {
 	
 	private int _number;
+	private String _creation;
 	
-	public FlickrProcess(int number) {
+	public FlickrProcess(int number, String creation) {
 		_number = number;
+		_creation = creation;
 	}
 
 	@Override
@@ -89,9 +91,7 @@ public class FlickrProcess extends Task<Void> {
 			Writer streamWriter = new OutputStreamWriter(new FileOutputStream(tempScript));
 			PrintWriter printWriter = new PrintWriter(streamWriter);
 			
-			printWriter.println("#/bin/bash");
-			printWriter.println("ffmpeg -framerate 1 -pattern_type glob -i '*.jpg' -c:v libx264 -pix_fmt yuv420p out.mp4");
-			printWriter.println(" ");
+
 			
 			ProcessBuilder builder = new ProcessBuilder("bash", tempScript.toString());
 			builder.inheritIO(); 

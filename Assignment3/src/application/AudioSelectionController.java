@@ -100,10 +100,10 @@ public class AudioSelectionController {
 	
 	@FXML
 	private void handleButtonNext(ActionEvent event) throws IOException {
-//		Parent createParent = FXMLLoader.load(getClass().getResource("ImageSelector.fxml"));
-//		Scene createScene =  new Scene(createParent);
-//		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//		stage.setScene(createScene);
-//		stage.show();
+		Parent createParent = FXMLLoader.load(getClass().getResource("ImageSelector.fxml"));
+		Scene createScene =  new Scene(createParent);
+		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		stage.setScene(createScene);
+		stage.show();
 	}
 }
