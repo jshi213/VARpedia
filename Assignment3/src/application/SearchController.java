@@ -42,8 +42,17 @@ public class SearchController {
 	
 	@FXML
 	private void handleButtonSearch(ActionEvent event) throws IOException {
-		//starting new thread for wikit search by using WikitProcess class
 		_searchTerm = textFieldTerm.getText();
+		//checking for empty search field
+		if(_searchTerm.isEmpty() || _searchTerm.trim().length() == 0) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("No search term entered");
+			alert.setHeaderText(null);
+			alert.setContentText("Please enter a search term");
+			alert.showAndWait();
+			return;
+		}
+		//starting new thread for wikit search by using WikitProcess class
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Loading...");
 		alert.setHeaderText(null);
