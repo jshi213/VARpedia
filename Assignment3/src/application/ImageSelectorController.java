@@ -30,6 +30,7 @@ public class ImageSelectorController {
 	
 	@FXML
 	private void handleButtonEnter() {
+		
 		number = Integer.valueOf(textFieldNumber.getText());
 		// alert if less than 0 or greater than 10, display next question if valid number
 		if (number > 10 || number < 0) {

@@ -24,6 +24,8 @@ public class Main extends Application {
 			dirAudio.mkdir();
 			File dirCreations = new File("Creations");
 			dirCreations.mkdir();
+			File dirPhotos = new File("downloads");
+			dirPhotos.mkdir();
 			//loading scene with fxml files
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource("Menu.fxml"));

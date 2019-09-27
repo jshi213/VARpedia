@@ -20,12 +20,12 @@
          </font>
       </Text>
       <Button fx:id="buttonEnter" layoutX="407.0" layoutY="119.0" mnemonicParsing="false" onAction="#handleButtonEnter" text="Enter" />
-      <Text fx:id="textName" layoutX="29.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" text="What would you like to name your final creation?">
+      <Text fx:id="textName" layoutX="29.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" text="What would you like to name your final creation?" visible="false">
          <font>
             <Font size="22.0" />
          </font>
       </Text>
-      <TextField fx:id="textFieldName" layoutX="215.0" layoutY="256.0" promptText="Enter a name" />
-      <Button fx:id="buttonCreate" layoutX="407.0" layoutY="256.0" mnemonicParsing="false" onAction="#handleButtonCreate" text="Create" />
+      <TextField fx:id="textFieldName" layoutX="215.0" layoutY="256.0" promptText="Enter a name" visible="false" />
+      <Button fx:id="buttonCreate" layoutX="407.0" layoutY="256.0" mnemonicParsing="false" onAction="#handleButtonCreate" text="Create" visible="false" />
    </children>
 </Pane>
