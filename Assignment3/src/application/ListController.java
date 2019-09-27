@@ -56,8 +56,14 @@ public class ListController {
 	}
 	
 	@FXML
-	private void handleButtonPlay() {
-
+	private void handleButtonPlay() throws IOException {
+		Stage stage = new Stage();
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(getClass().getResource("Play.fxml"));
+		Parent layout = loader.load();
+		Scene scene = new Scene(layout);
+		stage.setScene(scene);
+		stage.show();
 	}
 	
 	@FXML
