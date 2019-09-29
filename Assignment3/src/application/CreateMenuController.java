@@ -171,6 +171,7 @@ public class CreateMenuController {
 	
 	@FXML
 	private void handleButtonBack(ActionEvent event) throws IOException {
+		
 		Parent createParent = FXMLLoader.load(getClass().getResource("Search.fxml"));
 		Scene createScene =  new Scene(createParent);
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
