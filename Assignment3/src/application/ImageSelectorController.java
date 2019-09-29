@@ -53,7 +53,7 @@ public class ImageSelectorController {
 			number = Integer.valueOf(textFieldNumber.getText());
 		}
 		// alert if less than 0 or greater than 10, display next question if valid number
-		if (number > 10 || number < 0) {
+		if (number > 10 || number < 1) {
 			String error = "Please enter a number between 1 and 10";
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setContentText(error);
