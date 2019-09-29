@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
@@ -25,7 +24,6 @@
       <Button fx:id="buttonSave" layoutX="423.0" layoutY="311.0" mnemonicParsing="false" onAction="#handleButtonSave" text="Save Audio File" />
       <Button fx:id="buttonBack" layoutX="21.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleButtonBack" text="Back" />
       <TextField fx:id="textFieldAudioName" layoutX="396.0" layoutY="357.0" promptText="Name your audio file" />
-      <Slider fx:id="sliderRate" layoutX="32.0" layoutY="389.0" max="3.0" min="0.5" onDragDetected="#handleSliderChanged" />
       <Text layoutX="25.0" layoutY="378.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Change rate of speech" />
       <Label fx:id="labelSliderValue" layoutX="44.0" layoutY="392.0" />
       <Button fx:id="buttonNext" layoutX="342.0" layoutY="431.0" mnemonicParsing="false" onAction="#handleButtonNext" text="Next: Select/Combine audio files" />
@@ -34,5 +32,14 @@
             <Font size="18.0" />
          </font>
       </Text>
+      <MenuButton fx:id="buttonVoiceRate" layoutX="58.0" layoutY="387.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="26.0" prefWidth="75.0" text="0.75x">
+        <items>
+          <MenuItem mnemonicParsing="false" onAction="#handleSpeedOne" text="0.5x" />
+          <MenuItem mnemonicParsing="false" onAction="#handleSpeedTwo" text="0.75x" />
+            <MenuItem mnemonicParsing="false" onAction="#handleSpeedThree" text="1x" />
+            <MenuItem mnemonicParsing="false" onAction="#handleSpeedFour" text="1.5x" />
+            <MenuItem mnemonicParsing="false" onAction="#handleSpeedFive" text="2x" />
+        </items>
+      </MenuButton>
    </children>
 </Pane>

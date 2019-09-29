@@ -35,6 +35,9 @@ public class CreateMenuController {
 	private MenuButton menuButtonVoices;
 	
 	@FXML
+	private MenuButton buttonVoiceRate;
+	
+	@FXML
 	private MenuItem voice1;
 	
 	@FXML
@@ -49,16 +52,14 @@ public class CreateMenuController {
 	@FXML
 	private TextField textFieldAudioName;
 	
-	@FXML
-	private Slider sliderRate;
-	
 	private String _selectedText;
 	private String _voiceSelection;
-	private Label labelValue;
+	private String _voiceRate;
 	
 
 	@FXML
 	private void initialize() throws IOException {
+		buttonVoiceRate.setText("1x");
 		//initializing default voice
 		_voiceSelection = "(voice_kal_diphone)\n";
 		//initializing text area to display results in
@@ -76,8 +77,8 @@ public class CreateMenuController {
 	private void handleButtonPreview(ActionEvent event) throws IOException {
 		FileWriter writer = new FileWriter("temporaryfiles/preview.scm", false);
 		writer.write(_voiceSelection);
+		writer.write(_voiceRate);
 		writer.close();
-		String speechRate = Double.toString(sliderRate.getValue());
 		_selectedText = textAreaResults.getSelectedText();
 		if(_selectedText.length() - _selectedText.replaceAll(" ", "").length() > 39) {
 			Alert alert = new Alert(AlertType.WARNING);
@@ -115,10 +116,34 @@ public class CreateMenuController {
 		_voiceSelection = "(voice_akl_nz_cw_cg_cg)\n";
 	}
 	
-	@FXML 
-	private void handleSliderChanged(ActionEvent event) throws IOException {
-		String speechRate = Double.toString(sliderRate.getValue());
-		labelValue.setText(speechRate);
+	@FXML
+	private void handleSpeedOne(ActionEvent event) {
+		_voiceRate = "(Parameter.set 'Duration_Stretch 2)\n";
+		buttonVoiceRate.setText("0.5x");
+	}
+	
+	@FXML
+	private void handleSpeedTwo(ActionEvent event) {
+		_voiceRate = "(Parameter.set 'Duration_Stretch 1.333)\n";
+		buttonVoiceRate.setText("0.75x");
+	}
+	
+	@FXML
+	private void handleSpeedThree(ActionEvent event) {
+		_voiceRate = "";
+		buttonVoiceRate.setText("1x");
+	}
+	
+	@FXML
+	private void handleSpeedFour(ActionEvent event) {
+		_voiceRate = "(Parameter.set 'Duration_Stretch 0.666)\n";
+		buttonVoiceRate.setText("1.5x");
+	}
+	
+	@FXML
+	private void handleSpeedFive(ActionEvent event) {
+		_voiceRate = "(Parameter.set 'Duration_Stretch 0.5\n)";
+		buttonVoiceRate.setText("2x");
 	}
 	
 	@FXML
@@ -163,6 +188,7 @@ public class CreateMenuController {
 		}
 		FileWriter scmwriter = new FileWriter("temporaryfiles/audiofile.scm", false);
 		scmwriter.write(_voiceSelection);
+		scmwriter.write(_voiceRate);
 		scmwriter.close();
 		FileWriter writer = new FileWriter("temporaryfiles/audiotext", false);
 		writer.write(_selectedText);
