@@ -89,6 +89,7 @@ public class ListController {
 			if (response == ButtonType.OK) {
 				File file = new File("Creations/" + _selected + ".mp4");
 				file.delete();
+				_selected = null;
 				initialize();
 			}});
 		}
