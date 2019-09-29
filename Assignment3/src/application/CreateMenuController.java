@@ -15,6 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.Region;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
@@ -124,6 +125,14 @@ public class CreateMenuController {
 	private void handleButtonSave() throws IOException {
 		//checking if selected text is too long
 		_selectedText = textAreaResults.getSelectedText();
+		if (_selectedText.isEmpty()) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("Selection error");
+			alert.setHeaderText(null);
+			alert.setContentText("No text has been selected");
+			alert.showAndWait();
+			return;
+		}
 		if(_selectedText.length() - _selectedText.replaceAll(" ", "").length() > 39) {
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.setTitle("Selection error");
@@ -181,10 +190,30 @@ public class CreateMenuController {
 	
 	@FXML
 	private void handleButtonNext(ActionEvent event) throws IOException {
-		Parent createParent = FXMLLoader.load(getClass().getResource("AudioSelection.fxml"));
-		Scene createScene =  new Scene(createParent);
-		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		stage.setScene(createScene);
-		stage.show();
+		// if no audio files have been created, prompt the user to create one
+		String files = "";
+		File dir = new File("audiofiles/");
+		File[] fileList = dir.listFiles();
+		for (File file : fileList) {
+			String fileName = file.getName();
+			if (!fileName.startsWith(".")) {
+				files = files + fileName + " ";
+			}
+		}
+		
+		if (files.length() > 0) {
+			Parent createParent = FXMLLoader.load(getClass().getResource("AudioSelection.fxml"));
+			Scene createScene =  new Scene(createParent);
+			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			stage.setScene(createScene);
+			stage.show();
+		}
+		else {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setContentText("Please create an audio file before continuing");
+			alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+			alert.showAndWait().ifPresent(response -> {
+			});
+		}
 	}
 }

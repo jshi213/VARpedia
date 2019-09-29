@@ -38,8 +38,10 @@ public class ListController {
 		for (File file : fileList) {
 			String fileName = file.getName();
 			String fileWithoutExt =  fileName.substring(0, file.getName().length()-4);
-			listofcreations = listofcreations + fileWithoutExt + "\n";
-		}
+			if (!fileWithoutExt.startsWith(".")) {
+			listofcreations = listofcreations + fileWithoutExt + " ";
+			}
+		}	
 		String[] listofcreationsarray = listofcreations.split("\n");
 		list = listView.getItems();
 		list.setAll(listofcreationsarray);

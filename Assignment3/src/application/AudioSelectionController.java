@@ -32,7 +32,7 @@ public class AudioSelectionController {
 		for (File file : fileList) {
 			String fileName = file.getName();
 			String fileWithoutExt =  fileName.substring(0, file.getName().length()-4);
-			if(!fileWithoutExt.contains("combined") || fileWithoutExt.startsWith(".")) {
+			if(!fileWithoutExt.contains("combined") && !fileWithoutExt.startsWith(".")) {
 				listofaudiofiles = listofaudiofiles + fileWithoutExt + "\n";
 			}
 		}
@@ -73,8 +73,8 @@ public class AudioSelectionController {
 		stage.show();
 	}
 	
-	@FXML
-	private void handleButtonCombine() throws IOException {
+
+	private void combine() throws IOException {
 		//getting the list of selected audiofiles and generating strings for input into bash process
 		ObservableList<String> audioToCombine = listViewSelected.getItems();
 		int audioCount = audioToCombine.size();
@@ -102,6 +102,7 @@ public class AudioSelectionController {
 	
 	@FXML
 	private void handleButtonNext(ActionEvent event) throws IOException {
+		combine();
 		Parent createParent = FXMLLoader.load(getClass().getResource("ImageSelector.fxml"));
 		Scene createScene =  new Scene(createParent);
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
