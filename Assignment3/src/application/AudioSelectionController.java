@@ -44,19 +44,35 @@ public class AudioSelectionController {
 	@FXML
 	private void handleButtonAdd() {
 		// get the selected item from the list of audio files and and it to the selected items (to be combined) list view
-		String selected = listViewAudioFiles.getSelectionModel().getSelectedItem().toString();
-		listSelected = listViewSelected.getItems();
-		listSelected.add(selected);
-		listAudioFiles.remove(selected);
+		if (listViewAudioFiles.getSelectionModel().getSelectedItem() == null) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("No audio files selected");
+			alert.setHeaderText(null);
+			alert.setContentText("Please select an audio file to move across");
+			alert.showAndWait();
+		} else {
+			String selected = listViewAudioFiles.getSelectionModel().getSelectedItem().toString();
+			listSelected = listViewSelected.getItems();
+			listSelected.add(selected);
+			listAudioFiles.remove(selected);
+		}
 	}
 	
 	@FXML
 	private void handleButtonMoveBack() {
 		// get the selected item from the to be combined list view and remove it from that listview
-		String selected = listViewSelected.getSelectionModel().getSelectedItem().toString();
-		listSelected = listViewSelected.getItems();
-		listSelected.remove(selected);
-		listAudioFiles.add(selected);
+		if (listViewSelected.getSelectionModel().getSelectedItem() == null) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("No audio files selected");
+			alert.setHeaderText(null);
+			alert.setContentText("Please select an audio file to move back across");
+			alert.showAndWait();
+		} else {
+			String selected = listViewSelected.getSelectionModel().getSelectedItem().toString();
+			listSelected = listViewSelected.getItems();
+			listSelected.remove(selected);
+			listAudioFiles.add(selected);
+		}
 	}
 	
 	@FXML
@@ -102,11 +118,20 @@ public class AudioSelectionController {
 	
 	@FXML
 	private void handleButtonNext(ActionEvent event) throws IOException {
-		combine();
-		Parent createParent = FXMLLoader.load(getClass().getResource("ImageSelector.fxml"));
-		Scene createScene =  new Scene(createParent);
-		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		stage.setScene(createScene);
-		stage.show();
+		if (listViewSelected.getItems().isEmpty()) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("No audio files selected");
+			alert.setHeaderText(null);
+			alert.setContentText("Please select at least one audio file to be in the video");
+			alert.showAndWait();
+		}
+		else {
+			combine();
+			Parent createParent = FXMLLoader.load(getClass().getResource("ImageSelector.fxml"));
+			Scene createScene =  new Scene(createParent);
+			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			stage.setScene(createScene);
+			stage.show();
+		}
 	}
 }

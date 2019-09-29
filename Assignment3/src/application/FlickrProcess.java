@@ -112,7 +112,7 @@ public class FlickrProcess extends Task<Void> {
 		}
 		
 		double secondsPerImage = durationInSeconds / _number;
-		
+		System.out.println(durationInSeconds + " " + secondsPerImage);
 		// create temporary shell script to run commands for video creation
 		try {
 			File tempScript = File.createTempFile("script", null);
@@ -120,14 +120,18 @@ public class FlickrProcess extends Task<Void> {
 			PrintWriter printWriter = new PrintWriter(streamWriter);
 			printWriter.println("#!/bin/bash");
 			printWriter.println("cd downloads");
-			// create slideshow of images
-			printWriter.println("ffmpeg -framerate 1/" + secondsPerImage + " -pattern_type glob -i '*.jpg' -c:v libx264 -vf \"pad=ceil(iw/2)*2:ceil(ih/2)*2\" -r 30 -pix_fmt yuv420p -t " + secondsPerImage*_number + " slideshow.mp4 &>/dev/null ");
-			// combine slideshow and audio
-			printWriter.println("ffmpeg -i slideshow.mp4 -i ../audiofiles/combined.wav -shortest -map 0:v:0 -map 1:a:0 -y audioslideshow.mp4 &>/dev/null ");
-			// add the search term to video
-			printWriter.println("ffmpeg -i audioslideshow.mp4 -vf \"drawtext=fontfile=myfont.ttf:fontsize=60: fontcolor=white:x=(w-text_w)/2:y=(h-text_h)/2:text=" + SearchController.getSearchTerm() + "\" -codec:a copy ../Creations/" + _creation + ".mp4 &>/dev/null ");
+			// create video
+			if (_number <= 2) {
+				printWriter.println("cat *.jpg | ffmpeg -f image2pipe -framerate $framerate -i - -i audio.wav -c:v libx264 -pix_fmt yuv420p -vf \"scale=width:height\" -r 25 -max_muxing_queue_size 1024 -y slideshow.mp4");
+				
+			}
+			else {
+				printWriter.println("ffmpeg -framerate 1/" + secondsPerImage + " -pattern_type glob -i '*.jpg' -c:v libx264 -vf \"pad=ceil(iw/2)*2:ceil(ih/2)*2\" -r 30 -pix_fmt yuv420p -t " + secondsPerImage*_number + " slideshow.mp4  ");
+			}
+			printWriter.println("ffmpeg -i slideshow.mp4 -i ../audiofiles/combined.wav -shortest -map 0:v:0 -map 1:a:0 -y audioslideshow.mp4");
+			printWriter.println("ffmpeg -i audioslideshow.mp4 -vf \"drawtext=fontfile=myfont.ttf:fontsize=60: fontcolor=white:x=(w-text_w)/2:y=(h-text_h)/2:text=" + SearchController.getSearchTerm() + "\" -codec:a copy ../Creations/" + _creation + ".mp4  ");
 			printWriter.println("rm -f slideshow.mp4 audioslideshow.mp4 *.jpg");
-			printWriter.println("rm -rf  ../downloads");
+			printWriter.println("rm -f *.jpg");
 			printWriter.close();
 			return tempScript;
 		} catch (IOException e) {

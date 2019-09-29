@@ -40,7 +40,7 @@ public class ImageSelectorController {
 	private void handleButtonEnter() {
 		number = -1;
 		String numberField = textFieldNumber.getText();
-		if (!numberField.isEmpty() || numberField.trim().length() != 0){
+		if (!numberField.isEmpty() && numberField.trim().length() != 0){
 			number = Integer.valueOf(textFieldNumber.getText());
 		}
 		// alert if less than 0 or greater than 10, display next question if valid number
