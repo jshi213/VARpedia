@@ -1,5 +1,6 @@
 package application;
 
+import java.io.File;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -56,6 +57,23 @@ public class ImageSelectorController {
 	private void handleButtonCreate(ActionEvent event) {
 		//alert if invalid name
 		String creation = textFieldName.getText();
+		if(creation.isEmpty() || creation.trim().length() == 0) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("Enter a name");
+			alert.setHeaderText(null);
+			alert.setContentText("Please enter a name for you creation");
+			alert.showAndWait();
+			return;
+		}
+		File tempFile = new File("Creations/"+creation+".mp4");
+		if(tempFile.exists()) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("Already exists");
+			alert.setHeaderText(null);
+			alert.setContentText("Creation with same name already exists, please choose a new name");
+			alert.showAndWait();
+			return;
+		}
 		FlickrProcess flickrProcess = new FlickrProcess(number, creation);
 		team.submit(flickrProcess);
 		

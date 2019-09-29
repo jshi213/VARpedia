@@ -28,7 +28,7 @@ public class ListController {
 	@FXML
 	private ObservableList<String> list;
 	
-	private String selected;
+	private static String _selected;
 
 	@FXML
 	private void initialize() {
@@ -43,11 +43,11 @@ public class ListController {
 		String[] listofcreationsarray = listofcreations.split("\n");
 		list = listView.getItems();
 		list.setAll(listofcreationsarray);
-
 	}
 	
 	@FXML
 	private void handleButtonBack(ActionEvent event) throws IOException {
+		_selected = null;
 		Parent createParent = FXMLLoader.load(getClass().getResource("Menu.fxml"));
 		Scene createScene =  new Scene(createParent);
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -57,6 +57,13 @@ public class ListController {
 	
 	@FXML
 	private void handleButtonPlay() throws IOException {
+		if (_selected == null || _selected == "") {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setContentText("Please select a creation.");
+			alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+			alert.showAndWait();
+			return;
+		}
 		Stage stage = new Stage();
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(getClass().getResource("Play.fxml"));
@@ -68,19 +75,19 @@ public class ListController {
 	
 	@FXML
 	private void handleButtonDelete() {
-		if (selected == null || selected == "") {
-			Alert alert = new Alert(AlertType.INFORMATION);
+		if (_selected == null || _selected == "") {
+			Alert alert = new Alert(AlertType.WARNING);
 			alert.setContentText("Please select a creation.");
 			alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-			alert.showAndWait().ifPresent(response -> {
-			});
+			alert.showAndWait();
+			return;
 		}
 		else {
-			String confirmation = "Are you sure you want to delete " + selected + "?";
+			String confirmation = "Are you sure you want to delete " + _selected + "?";
 			Alert alert = new Alert(AlertType.CONFIRMATION, confirmation);
 			alert.showAndWait().ifPresent(response -> {
 			if (response == ButtonType.OK) {
-				File file = new File("Creations/" + selected + ".mp4");
+				File file = new File("Creations/" + _selected + ".mp4");
 				file.delete();
 				initialize();
 			}});
@@ -89,6 +96,10 @@ public class ListController {
 	
 	@FXML
 	private void handleItemSelection() {
-		 selected = listView.getSelectionModel().getSelectedItem();
+		 _selected = listView.getSelectionModel().getSelectedItem();
+	}
+	
+	public static String getSelectedItem() {
+		return _selected;
 	}
 }

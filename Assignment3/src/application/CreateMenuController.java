@@ -78,6 +78,14 @@ public class CreateMenuController {
 		writer.close();
 		String speechRate = Double.toString(sliderRate.getValue());
 		_selectedText = textAreaResults.getSelectedText();
+		if(_selectedText.length() - _selectedText.replaceAll(" ", "").length() > 39) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("Selection error");
+			alert.setHeaderText(null);
+			alert.setContentText("The selected text is too long, please select under 40 words");
+			alert.showAndWait();
+			return;
+		}
 		FileWriter writer2 = new FileWriter("temporaryfiles/preview.scm", true);
 		writer2.write("(SayText \"" + _selectedText + "\")");
 		writer2.close();
@@ -114,32 +122,50 @@ public class CreateMenuController {
 	
 	@FXML
 	private void handleButtonSave() throws IOException {
+		//checking if selected text is too long
+		_selectedText = textAreaResults.getSelectedText();
+		if(_selectedText.length() - _selectedText.replaceAll(" ", "").length() > 39) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("Selection error");
+			alert.setHeaderText(null);
+			alert.setContentText("The selected text is too long, please select under 40 words");
+			alert.showAndWait();
+			return;
+		}
 		String audiofileName = textFieldAudioName.getText();
+		//checking if audiofile name is not just spaces or empty string
+		if(audiofileName.isEmpty() || audiofileName.trim().length() == 0) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("Enter a name");
+			alert.setHeaderText(null);
+			alert.setContentText("Please enter a name for you creation");
+			alert.showAndWait();
+			return;
+		}
 		//checking if audiofile with same name already exists
 		File tempFile = new File("audiofiles/"+audiofileName+".wav");
 		if(tempFile.exists()) {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle("Already exists");
-			alert.setHeaderText(null);
-			alert.setContentText("Audio with same name already exists, please choose a new name");
-			alert.showAndWait();
+			Alert alert2 = new Alert(AlertType.WARNING);
+			alert2.setTitle("Already exists");
+			alert2.setHeaderText(null);
+			alert2.setContentText("Audio with same name already exists, please choose a new name");
+			alert2.showAndWait();
 			return;
 		}
 		FileWriter scmwriter = new FileWriter("temporaryfiles/audiofile.scm", false);
 		scmwriter.write(_voiceSelection);
 		scmwriter.close();
-		_selectedText = textAreaResults.getSelectedText();
 		FileWriter writer = new FileWriter("temporaryfiles/audiotext", false);
 		writer.write(_selectedText);
 		writer.close();
 		ProcessBuilder pb1 = new ProcessBuilder();
 		pb1.command("bash", "-c", "text2wave temporaryfiles/audiotext -o audiofiles/" + audiofileName + ".wav -eval temporaryfiles/audiofile.scm");
 		Process process = pb1.start();
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("Successfully created");
-		alert.setHeaderText(null);
-		alert.setContentText("Your audio file has been saved");
-		alert.showAndWait();
+		Alert infoAlert = new Alert(AlertType.INFORMATION);
+		infoAlert.setTitle("Successfully created");
+		infoAlert.setHeaderText(null);
+		infoAlert.setContentText("Your audio file has been saved");
+		infoAlert.showAndWait();
 		return;
 	}
 	
