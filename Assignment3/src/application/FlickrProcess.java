@@ -127,7 +127,7 @@ public class FlickrProcess extends Task<Void> {
 			// add the search term to video
 			printWriter.println("ffmpeg -i audioslideshow.mp4 -vf \"drawtext=fontfile=myfont.ttf:fontsize=60: fontcolor=white:x=(w-text_w)/2:y=(h-text_h)/2:text=" + SearchController.getSearchTerm() + "\" -codec:a copy ../Creations/" + _creation + ".mp4 &>/dev/null ");
 			printWriter.println("rm -f slideshow.mp4 audioslideshow.mp4 *.jpg");
-			printWriter.println("rm -rf  ../temporaryfiles ../downloads");
+			printWriter.println("rm -rf  ../downloads");
 			printWriter.close();
 			return tempScript;
 		} catch (IOException e) {

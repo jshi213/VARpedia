@@ -50,6 +50,13 @@ public class MenuController {
 	
 	@FXML
 	private void handleButtonCreate(ActionEvent event) throws IOException {
+		File dir = new File("audiofiles");
+		if (dir.isDirectory()) {
+			File[] children = dir.listFiles();
+			for (int i = 0; i < children.length; i++) {
+				children[i].delete();
+			}
+		}
 		Parent createParent = FXMLLoader.load(getClass().getResource("Search.fxml"));
 		Scene createScene =  new Scene(createParent);
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
