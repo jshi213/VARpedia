@@ -6,6 +6,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.animation.FadeTransition;
+import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -41,6 +42,9 @@ public class PlayController implements Initializable {
 	private Pane mediaViewPane;
 	
 	@FXML
+	private Pane mainPane;
+	
+	@FXML
 	private Label timeLabel;
 	
 	@FXML
@@ -50,6 +54,8 @@ public class PlayController implements Initializable {
 	private MediaView mediaView;
 	private MediaPlayer mediaPlayer;
 	private Media media;
+	
+	private static MediaPlayer _staticMediaPlayer;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -78,6 +84,7 @@ public class PlayController implements Initializable {
 		mediaView.setMediaPlayer(mediaPlayer);
 		mediaView.setPreserveRatio(true);
 		mediaPlayer.setAutoPlay(true);
+		_staticMediaPlayer = mediaPlayer;
 	}
 	
 	@FXML
@@ -112,5 +119,9 @@ public class PlayController implements Initializable {
 	@FXML
 	private void handleMouseReleased() {
 		_sliderFlag = true;
+	}
+	
+	public static void stop() {
+		_staticMediaPlayer.stop();
 	}
 }

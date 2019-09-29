@@ -67,6 +67,10 @@ public class ListController {
 		Stage stage = new Stage();
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(getClass().getResource("Play.fxml"));
+		stage.setOnCloseRequest(event -> {
+			stage.close();
+		    PlayController.stop();
+		});
 		Parent layout = loader.load();
 		Scene scene = new Scene(layout);
 		stage.setScene(scene);
