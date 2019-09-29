@@ -121,11 +121,11 @@ public class FlickrProcess extends Task<Void> {
 			printWriter.println("#!/bin/bash");
 			printWriter.println("cd downloads");
 			// create slideshow of images
-			printWriter.println("ffmpeg -framerate 1/" + secondsPerImage + " -pattern_type glob -i '*.jpg' -c:v libx264 -vf \"pad=ceil(iw/2)*2:ceil(ih/2)*2\" -r 30 -pix_fmt yuv420p -t " + secondsPerImage*_number + " slideshow.mp4 ");
+			printWriter.println("ffmpeg -framerate 1/" + secondsPerImage + " -pattern_type glob -i '*.jpg' -c:v libx264 -vf \"pad=ceil(iw/2)*2:ceil(ih/2)*2\" -r 30 -pix_fmt yuv420p -t " + secondsPerImage*_number + " slideshow.mp4 &>/dev/null ");
 			// combine slideshow and audio
-			printWriter.println("ffmpeg -i slideshow.mp4 -i ../audiofiles/combined.wav -shortest -map 0:v:0 -map 1:a:0 -y audioslideshow.mp4");
+			printWriter.println("ffmpeg -i slideshow.mp4 -i ../audiofiles/combined.wav -shortest -map 0:v:0 -map 1:a:0 -y audioslideshow.mp4 &>/dev/null ");
 			// add the search term to video
-			printWriter.println("ffmpeg -i audioslideshow.mp4 -vf \"drawtext=fontfile=myfont.ttf:fontsize=60: fontcolor=white:x=(w-text_w)/2:y=(h-text_h)/2:text=" + SearchController.getSearchTerm() + "\" -codec:a copy ../Creations/" + _creation + ".mp4");
+			printWriter.println("ffmpeg -i audioslideshow.mp4 -vf \"drawtext=fontfile=myfont.ttf:fontsize=60: fontcolor=white:x=(w-text_w)/2:y=(h-text_h)/2:text=" + SearchController.getSearchTerm() + "\" -codec:a copy ../Creations/" + _creation + ".mp4 &>/dev/null ");
 			printWriter.println("rm -f slideshow.mp4 audioslideshow.mp4 *.jpg");
 			printWriter.println("rm -rf  ../temporaryfiles ../downloads");
 			printWriter.close();
