@@ -90,6 +90,8 @@ public class FlickrProcess extends Task<Void> {
 			e.printStackTrace();
 		} finally {
 			tempScript.delete();
+			MenuScene menuScene = new MenuScene();
+			Platform.runLater(menuScene);
 		}
 
 	}
@@ -127,8 +129,6 @@ public class FlickrProcess extends Task<Void> {
 			printWriter.println("rm -f slideshow.mp4 audioslideshow.mp4 *.jpg");
 			printWriter.println("rm -rf  ../temporaryfiles ../downloads");
 			printWriter.close();
-			MenuScene menuScene = new MenuScene();
-			Platform.runLater(menuScene);
 			return tempScript;
 		} catch (IOException e) {
 			e.printStackTrace();
