@@ -7,16 +7,12 @@ import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.text.Font;
 
 
 public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
-		Font.loadFont(
-			      Main.class.getResource("Manjari-Regular.ttf").toExternalForm(), 
-			      10
-			    );
+
 		try {
 			//creating two new directories to store temporary files, audio files and creations in
 			File dirTemp = new File("temporaryfiles");
