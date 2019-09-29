@@ -1,10 +1,8 @@
 package application;
 
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
@@ -41,9 +39,7 @@ public class FlickrProcess extends Task<Void> {
 	@Override
 	protected Void call() throws Exception {
 		try {
-//			String apiKey = getAPIKey("apiKey");
 			String apiKey = "42961b511f71c25efbd3ddcd55e7aed7";
-//			String sharedSecret = getAPIKey("sharedSecret");
 			String sharedSecret = "0a413e7f84de4033";
 
 			Flickr flickr = new Flickr(apiKey, sharedSecret, new REST());
@@ -107,12 +103,10 @@ public class FlickrProcess extends Task<Void> {
 			long frames = audioInputStream.getFrameLength();
 			durationInSeconds = (frames+0.0) / format.getFrameRate();
 		} catch (UnsupportedAudioFileException | IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
 		double secondsPerImage = durationInSeconds / _number;
-		System.out.println(durationInSeconds + " " + secondsPerImage);
 		// create temporary shell script to run commands for video creation
 		try {
 			File tempScript = File.createTempFile("script", null);
@@ -121,17 +115,9 @@ public class FlickrProcess extends Task<Void> {
 			printWriter.println("#!/bin/bash");
 			printWriter.println("cd downloads");
 			// create video
-			if (_number <= 2) {
-				printWriter.println("cat *.jpg | ffmpeg -f image2pipe -framerate $framerate -i - -i audio.wav -c:v libx264 -pix_fmt yuv420p -vf \"scale=width:height\" -r 25 -max_muxing_queue_size 1024 -y slideshow.mp4");
-				
-			}
-			else {
-				printWriter.println("ffmpeg -framerate 1/" + secondsPerImage + " -pattern_type glob -i '*.jpg' -c:v libx264 -vf \"pad=ceil(iw/2)*2:ceil(ih/2)*2\" -r 30 -pix_fmt yuv420p -t " + secondsPerImage*_number + " slideshow.mp4  ");
-			}
-			printWriter.println("ffmpeg -i slideshow.mp4 -i ../audiofiles/combined.wav -shortest -map 0:v:0 -map 1:a:0 -y audioslideshow.mp4");
-			printWriter.println("ffmpeg -i audioslideshow.mp4 -vf \"drawtext=fontfile=myfont.ttf:fontsize=60: fontcolor=white:x=(w-text_w)/2:y=(h-text_h)/2:text=" + SearchController.getSearchTerm() + "\" -codec:a copy ../Creations/" + _creation + ".mp4  ");
+			printWriter.println("cat *.jpg | ffmpeg -f image2pipe -framerate 1/" + secondsPerImage + " -i - -i ../audiofiles/combined.wav -c:v libx264 -pix_fmt yuv420p -vf \"pad=ceil(iw/2)*2:ceil(ih/2)*2\" -r 25 -max_muxing_queue_size 1024 -y audioslideshow.mp4 &>/dev/null");
+			printWriter.println("ffmpeg -i audioslideshow.mp4 -vf \"drawtext=fontfile=myfont.ttf:fontsize=60: fontcolor=white:x=(w-text_w)/2:y=(h-text_h)/2:text=" + SearchController.getSearchTerm() + "\" -codec:a copy ../Creations/" + _creation + ".mp4 &>/dev/null");
 			printWriter.println("rm -f slideshow.mp4 audioslideshow.mp4 *.jpg");
-			printWriter.println("rm -f *.jpg");
 			printWriter.close();
 			return tempScript;
 		} catch (IOException e) {
@@ -141,29 +127,6 @@ public class FlickrProcess extends Task<Void> {
 		
 		
 	}
-	
-//	public static String getAPIKey(String key) throws Exception {
-//		// TODO fix the following based on where you will have your config file stored
-//
-//		String config = System.getProperty("user.dir") 
-//				+ System.getProperty("file.separator")+ "flickr-api-keys.txt"; 
-//		
-////		String config = System.getProperty("user.home")
-////				+ System.getProperty("file.separator")+ "bin" 
-////				+ System.getProperty("file.separator")+ "flickr-api-keys.txt"; 
-//		File file = new File(config); 
-//		BufferedReader br = new BufferedReader(new FileReader(file)); 
-//		
-//		String line;
-//		while ( (line = br.readLine()) != null ) {
-//			if (line.trim().startsWith(key)) {
-//				br.close();
-//				return line.substring(line.indexOf("=")+1).trim();
-//			}
-//		}
-//		br.close();
-//		throw new RuntimeException("Couldn't find " + key +" in config file "+file.getName());
-//	}
 	
 
 }

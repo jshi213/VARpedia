@@ -1,10 +1,6 @@
 package application;
 	
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import javafx.application.Application;
 import javafx.stage.Stage;

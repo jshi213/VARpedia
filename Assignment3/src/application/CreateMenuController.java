@@ -3,7 +3,6 @@ package application;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -18,10 +17,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -200,7 +197,7 @@ public class CreateMenuController {
 		writer.close();
 		ProcessBuilder pb1 = new ProcessBuilder();
 		pb1.command("bash", "-c", "text2wave temporaryfiles/audiotext -o audiofiles/" + audiofileName + ".wav -eval temporaryfiles/audiofile.scm");
-		Process process = pb1.start();
+		pb1.start();
 		Alert infoAlert = new Alert(AlertType.INFORMATION);
 		infoAlert.setTitle("Successfully created");
 		infoAlert.setHeaderText(null);
