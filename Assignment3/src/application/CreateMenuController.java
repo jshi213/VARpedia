@@ -54,7 +54,7 @@ public class CreateMenuController {
 	
 	private String _selectedText;
 	private String _voiceSelection;
-	private String _voiceRate;
+	private String _voiceRate = "";
 	
 
 	@FXML
