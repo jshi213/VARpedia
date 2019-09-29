@@ -39,7 +39,7 @@ public class ListController {
 			String fileName = file.getName();
 			String fileWithoutExt =  fileName.substring(0, file.getName().length()-4);
 			if (!fileWithoutExt.startsWith(".")) {
-			listofcreations = listofcreations + fileWithoutExt + " ";
+			listofcreations = listofcreations + fileWithoutExt + "\n";
 			}
 		}	
 		String[] listofcreationsarray = listofcreations.split("\n");
