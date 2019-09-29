@@ -77,22 +77,9 @@ public class FlickrProcess extends Task<Void> {
 	
 	@Override
 	protected void done() {
-		
-		File tempScript = null;
-		try {
-			tempScript = File.createTempFile("script", null);
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-		try {
-			
-			Writer streamWriter = new OutputStreamWriter(new FileOutputStream(tempScript));
-			PrintWriter printWriter = new PrintWriter(streamWriter);
-			
+		File tempScript = tempScript();
 
-			
+		try {
 			ProcessBuilder builder = new ProcessBuilder("bash", tempScript.toString());
 			builder.inheritIO(); 
 			Process process = builder.start();
@@ -102,6 +89,26 @@ public class FlickrProcess extends Task<Void> {
 		} finally {
 			tempScript.delete();
 		}
+	}
+	
+	private File tempScript() {
+		try {
+			File tempScript = File.createTempFile("script", null);
+			Writer streamWriter = new OutputStreamWriter(new FileOutputStream(tempScript));
+			PrintWriter printWriter = new PrintWriter(streamWriter);
+			printWriter.println("#!/bin/bash");
+			printWriter.println("cd downloads");
+			printWriter.println("ffmpeg -framerate 1 -pattern_type glob -i '*.jpg' -c:v libx264 -vf \"pad=ceil(iw/2)*2:ceil(ih/2)*2\" -r 30 -pix_fmt yuv420p slideshow.mp4");
+			printWriter.println("ffmpeg -stream_loop -1 -i slideshow.mp4 -i ../audiofiles/combined.wav -shortest -map 0:v:0 -map 1:a:0 -y audioslideshow.mp4");
+			printWriter.println("ffmpeg -i audioslideshow.mp4 -vf \"drawtext=fontfile=myfont.ttf:fontsize=60: fontcolor=white:x=(w-text_w)/2:y=(h-text_h)/2:text=" + SearchController._searchTerm + "\" -codec:a copy ../Creations/" + _creation + ".mp4");
+			printWriter.println("rm -f slideshow.mp4 audioslideshow.mp4 *.jpg");
+			printWriter.println("rm -rf ../audiofiles ../temporaryfiles ../downloads");
+			printWriter.close();
+			return tempScript;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 //	public static String getAPIKey(String key) throws Exception {
