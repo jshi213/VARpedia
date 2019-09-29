@@ -13,6 +13,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
@@ -26,7 +28,9 @@ public class AudioSelectionController {
 	
 	@FXML
 	private Pane rootPane;
-
+	
+	private MediaPlayer mediaPlayer;
+	
 	@FXML
 	private void initialize() {
 		rootPane.setStyle("-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #000000, #757575)");
@@ -81,8 +85,19 @@ public class AudioSelectionController {
 	}
 	
 	@FXML
-	private void handleButtonPreview() {
-		
+	private void handleButtonPlay() {
+		String audioToPlay = listViewAudioFiles.getSelectionModel().getSelectedItem();
+		if(audioToPlay == null) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("No audio files selected");
+			alert.setHeaderText(null);
+			alert.setContentText("Please select an audio file to play");
+			alert.showAndWait();
+		} else {
+			Media media = new Media(new File("audiofiles/" + audioToPlay + ".wav").toURI().toString());
+			mediaPlayer = new MediaPlayer(media);
+			mediaPlayer.play();
+		}
 	}
 	
 	@FXML 
