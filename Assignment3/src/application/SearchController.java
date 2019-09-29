@@ -41,6 +41,12 @@ public class SearchController {
 	@FXML
 	private TextField textFieldTerm;
 	
+	
+	@FXML
+	private void initialize() {
+		rootPane.setStyle("-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #000000, #757575)");
+	}
+	
 	@FXML
 	private void handleButtonSearch(ActionEvent event) throws IOException {
 		_searchTerm = textFieldTerm.getText();

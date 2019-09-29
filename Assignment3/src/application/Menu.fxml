@@ -5,17 +5,23 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/" fx:controller="application.MenuController">
+<Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MenuController">
    <children>
-      <Text layoutX="14.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Wiki-Speak authoring tool" textAlignment="CENTER">
+      <Text fill="WHITE" layoutX="185.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="VARpedia" textAlignment="CENTER" wrappingWidth="830.94580078125">
          <font>
-            <Font size="45.0" />
+            <Font name="DejaVu Sans ExtraLight" size="96.0" />
          </font></Text>
-      <Text layoutX="157.0" layoutY="312.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please select one of the following options:">
+      <Text fill="WHITE" layoutX="157.0" layoutY="404.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please select one of the following options:">
          <font>
-            <Font size="42.0" />
+            <Font name="DejaVu Sans ExtraLight" size="42.0" />
          </font></Text>
-      <Button fx:id="buttonList" layoutX="326.0" layoutY="459.0" mnemonicParsing="false" onAction="#handleButtonList" text="View existing creations" />
-      <Button fx:id="buttonCreate" layoutX="706.0" layoutY="459.0" mnemonicParsing="false" onAction="#handleButtonCreate" text="Create a new  creation" />
+      <Button fx:id="buttonList" layoutX="157.0" layoutY="528.0" mnemonicParsing="false" onAction="#handleButtonList" text="View existing creations">
+         <font>
+            <Font name="Manjari Regular" size="24.0" />
+         </font></Button>
+      <Button fx:id="buttonCreate" layoutX="756.0" layoutY="528.0" mnemonicParsing="false" onAction="#handleButtonCreate" prefWidth="286.0" text="Create a new  creation">
+         <font>
+            <Font name="Manjari Regular" size="24.0" />
+         </font></Button>
    </children>
 </Pane>

@@ -6,15 +6,24 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/" fx:controller="application.SearchController">
+<Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SearchController">
    <children>
-      <Text layoutX="36.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="What would you like to search for on wikipedia?">
+      <Text fill="WHITE" layoutX="96.0" layoutY="234.0" strokeType="OUTSIDE" strokeWidth="0.0" text="What would you like to search for on wikipedia?">
          <font>
-            <Font size="22.0" />
+            <Font name="DejaVu Sans ExtraLight" size="42.0" />
          </font>
       </Text>
-      <TextField fx:id="textFieldTerm" layoutX="138.0" layoutY="165.0" prefHeight="26.0" prefWidth="324.0" promptText="Term" />
-      <Button fx:id="buttonSearch" layoutX="269.0" layoutY="214.0" mnemonicParsing="false" onAction="#handleButtonSearch" text="Search" />
-      <Button fx:id="buttonBack" layoutX="14.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleButtonSearchBack" text="Back" />
+      <TextField fx:id="textFieldTerm" layoutX="300.0" layoutY="377.0" prefHeight="26.0" prefWidth="600.0" promptText="Term">
+         <font>
+            <Font size="24.0" />
+         </font></TextField>
+      <Button fx:id="buttonSearch" layoutX="544.0" layoutY="487.0" mnemonicParsing="false" onAction="#handleButtonSearch" text="Search">
+         <font>
+            <Font name="Manjari Regular" size="24.0" />
+         </font></Button>
+      <Button fx:id="buttonBack" layoutX="14.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleButtonSearchBack" text="Back">
+         <font>
+            <Font name="Manjari Regular" size="24.0" />
+         </font></Button>
    </children>
 </Pane>

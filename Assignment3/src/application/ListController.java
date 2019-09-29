@@ -14,6 +14,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -28,10 +29,14 @@ public class ListController {
 	@FXML
 	private ObservableList<String> list;
 	
+	@FXML
+	private Pane rootPane;
+	
 	private static String _selected;
 
 	@FXML
 	private void initialize() {
+		rootPane.setStyle("-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #000000, #757575)");
 		String listofcreations = "";
 		File dir = new File("Creations/");
 		File[] fileList = dir.listFiles();

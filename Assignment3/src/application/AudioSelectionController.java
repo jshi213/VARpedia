@@ -12,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.Pane;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
@@ -22,9 +23,13 @@ public class AudioSelectionController {
 	
 	@FXML
 	private ObservableList<String> listAudioFiles, listSelected;
+	
+	@FXML
+	private Pane rootPane;
 
 	@FXML
 	private void initialize() {
+		rootPane.setStyle("-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #000000, #757575)");
 		// add all the audio files created into the audio files list view
 		String listofaudiofiles = "";
 		File dir = new File("audiofiles/");

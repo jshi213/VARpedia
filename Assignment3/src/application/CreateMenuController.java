@@ -15,6 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -52,6 +53,9 @@ public class CreateMenuController {
 	@FXML
 	private TextField textFieldAudioName;
 	
+	@FXML
+	private Pane rootPane;
+	
 	private String _selectedText;
 	private String _voiceSelection;
 	private String _voiceRate = "";
@@ -59,6 +63,7 @@ public class CreateMenuController {
 
 	@FXML
 	private void initialize() throws IOException {
+		rootPane.setStyle("-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #000000, #757575)");
 		buttonVoiceRate.setText("1x");
 		//initializing default voice
 		_voiceSelection = "(voice_kal_diphone)\n";

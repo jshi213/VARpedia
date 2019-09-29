@@ -28,6 +28,12 @@ public class MenuController {
 	@FXML
 	private Pane rootPane;
 	
+	
+	@FXML
+	private void initialize() {
+		rootPane.setStyle("-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #000000, #757575)");
+	}
+	
 	@FXML
 	private void handleButtonList(ActionEvent event) throws IOException {
 		// check if the Creations folder exists/if it isn't and if true, change to the list scene
