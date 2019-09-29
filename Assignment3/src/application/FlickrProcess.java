@@ -25,6 +25,7 @@ import com.flickr4java.flickr.photos.PhotosInterface;
 import com.flickr4java.flickr.photos.SearchParameters;
 import com.flickr4java.flickr.photos.Size;
 
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 
 public class FlickrProcess extends Task<Void> {
@@ -126,6 +127,8 @@ public class FlickrProcess extends Task<Void> {
 			printWriter.println("rm -f slideshow.mp4 audioslideshow.mp4 *.jpg");
 			printWriter.println("rm -rf  ../temporaryfiles ../downloads");
 			printWriter.close();
+			MenuScene menuScene = new MenuScene();
+			Platform.runLater(menuScene);
 			return tempScript;
 		} catch (IOException e) {
 			e.printStackTrace();

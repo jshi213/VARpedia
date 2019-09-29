@@ -34,6 +34,7 @@ public class ImageSelectorController {
 	private Text textName;
 	
 	private int number;
+	private static Alert _staticAlert;
 	
 	@FXML
 	private void handleButtonEnter() {
@@ -71,6 +72,13 @@ public class ImageSelectorController {
 			alert.showAndWait();
 			return;
 		}
+		//loading alert while creation gets created
+		Alert loadingAlert = new Alert(AlertType.INFORMATION);
+		_staticAlert = loadingAlert;
+		loadingAlert.setTitle("Loading...");
+		loadingAlert.setHeaderText(null);
+		loadingAlert.setContentText("Your creation is being generated...");
+		loadingAlert.show();
 		File tempFile = new File("Creations/"+creation+".mp4");
 		if(tempFile.exists()) {
 			Alert alert = new Alert(AlertType.WARNING);
@@ -95,4 +103,7 @@ public class ImageSelectorController {
 		stage.show();
 	}
 	
+	public static Alert getAlert() {
+		return _staticAlert;
+	}
 }
