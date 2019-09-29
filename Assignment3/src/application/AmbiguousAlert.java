@@ -10,5 +10,6 @@ public class AmbiguousAlert implements Runnable {
 		alert.setHeaderText(null);
 		alert.setContentText("Search term not found, please try again");
 		alert.showAndWait();
+		SearchController.getAlert().close();
 	}
 }

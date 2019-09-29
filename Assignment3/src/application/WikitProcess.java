@@ -32,6 +32,7 @@ public class WikitProcess extends Task<String> {
 				if(line.contains("? Ambiguous") || line.contains(":^(")) {
 					AmbiguousAlert ambiguousAlert = new AmbiguousAlert();
 					Platform.runLater(ambiguousAlert);
+					return null;
 				} if(_isCancelled == true) {
 					
 					try {

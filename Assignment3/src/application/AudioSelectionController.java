@@ -32,7 +32,9 @@ public class AudioSelectionController {
 		for (File file : fileList) {
 			String fileName = file.getName();
 			String fileWithoutExt =  fileName.substring(0, file.getName().length()-4);
-			listofaudiofiles = listofaudiofiles + fileWithoutExt + "\n";
+			if(!fileWithoutExt.contains("combined")) {
+				listofaudiofiles = listofaudiofiles + fileWithoutExt + "\n";
+			}
 		}
 		String[] listofaudiofilesarray = listofaudiofiles.split("\n");
 		listAudioFiles = listViewAudioFiles.getItems();
