@@ -72,4 +72,9 @@ public class MenuController {
 		
 	}
 	
+	@FXML
+	private void handleButtonQuiz() {
+		
+	}
+	
 }

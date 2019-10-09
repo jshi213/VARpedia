@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Pane;
@@ -27,6 +28,9 @@ public class ImageSelectorController {
 	
 	@FXML
 	private Button buttonEnter, buttonCreate;
+	
+	@FXML
+	private MenuButton menuButtonNumber;
 	
 	@FXML
 	private TextField textFieldNumber, textFieldName;
@@ -47,28 +51,34 @@ public class ImageSelectorController {
 	
 	@FXML
 	private void handleButtonEnter() {
-		number = -1;
-		String numberField = textFieldNumber.getText();
-		if (!numberField.isEmpty() && numberField.trim().length() != 0){
-			number = Integer.valueOf(textFieldNumber.getText());
-		}
-		// alert if less than 0 or greater than 10, display next question if valid number
-		if (number > 10 || number < 1) {
-			String error = "Please enter a number between 1 and 10";
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setContentText(error);
-			alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-			alert.showAndWait().ifPresent(response -> {
-				if (response == ButtonType.OK) {
-					textFieldNumber.setText("");
-				}
-			});
-		} else { 
-			textName.setVisible(true);
-			textFieldName.setVisible(true);
-			buttonCreate.setVisible(true);
-			textFieldNumber.setEditable(false);
-		}
+//		number = -1;
+//		String numberField = textFieldNumber.getText();
+//		if (!numberField.isEmpty() && numberField.trim().length() != 0){
+//			number = Integer.valueOf(textFieldNumber.getText());
+//		}
+//		// alert if less than 0 or greater than 10, display next question if valid number
+//		if (number > 10 || number < 1) {
+//			String error = "Please enter a number between 1 and 10";
+//			Alert alert = new Alert(AlertType.ERROR);
+//			alert.setContentText(error);
+//			alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+//			alert.showAndWait().ifPresent(response -> {
+//				if (response == ButtonType.OK) {
+//					textFieldNumber.setText("");
+//				}
+//			});
+//		} else { 
+//			textName.setVisible(true);
+//			textFieldName.setVisible(true);
+//			buttonCreate.setVisible(true);
+//			textFieldNumber.setEditable(false);
+//		}
+			
+		//String number = menuButtonNumber.
+		
+		textName.setVisible(true);
+		textFieldName.setVisible(true);
+		buttonCreate.setVisible(true);
 	
 	}
 	
@@ -118,4 +128,69 @@ public class ImageSelectorController {
 	public static Alert getAlert() {
 		return _staticAlert;
 	}
+	
+	@FXML
+	private void handleNumber1() {
+		menuButtonNumber.setText("1");
+		number = 1;
+		buttonEnter.setDisable(false);
+	}
+	@FXML
+	private void handleNumber2() {
+		menuButtonNumber.setText("2");
+		number = 2;
+		buttonEnter.setDisable(false);
+	}
+	@FXML
+	private void handleNumber3() {
+		menuButtonNumber.setText("3");
+		number = 3;
+		buttonEnter.setDisable(false);
+	}
+	@FXML
+	private void handleNumber4() {
+		menuButtonNumber.setText("4");
+		number = 4;
+		buttonEnter.setDisable(false);
+	}
+	@FXML
+	private void handleNumber5() {
+		menuButtonNumber.setText("5");
+		number = 5;
+		buttonEnter.setDisable(false);
+	}
+	@FXML
+	private void handleNumber6() {
+		menuButtonNumber.setText("6");
+		number = 6;
+		buttonEnter.setDisable(false);
+	}
+	@FXML
+	private void handleNumber7() {
+		menuButtonNumber.setText("7");
+		number = 7;
+		buttonEnter.setDisable(false);
+	}
+	@FXML
+	private void handleNumber8() {
+		menuButtonNumber.setText("8");
+		number = 8;
+		buttonEnter.setDisable(false);
+	}
+	@FXML
+	private void handleNumber9() {
+		menuButtonNumber.setText("9");
+		number = 9;
+		buttonEnter.setDisable(false);
+	}
+	@FXML
+	private void handleNumber10() {
+		menuButtonNumber.setText("10");
+		number = 10;
+		buttonEnter.setDisable(false);
+	}
+	
+	
+	
+	
 }
