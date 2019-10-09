@@ -13,10 +13,10 @@ public class CreateMenuScene implements Runnable {
 		try {
 			createParent = FXMLLoader.load(getClass().getResource("CreateMenu.fxml"));
 			Scene createScene =  new Scene(createParent);
-			Stage stage = SearchController.getStage();
+			Stage stage = MenuController.getStage();
 			stage.setScene(createScene);
 			stage.show();
-			SearchController.getAlert().close();
+			MenuController.getAlert().close();
 		} catch (IOException e) {
 		e.printStackTrace();
 		}
