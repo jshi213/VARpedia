@@ -23,6 +23,9 @@
          <font>
             <Font name="Manjari Regular" size="24.0" />
          </font></Button>
-      <Button fx:id="buttonQuiz" layoutX="204.0" layoutY="619.0" mnemonicParsing="false" onAction="#handleButtonQuiz" prefHeight="49.0" prefWidth="217.0" text="Quiz" />
+      <Button fx:id="buttonQuiz" layoutX="504.0" layoutY="627.0" mnemonicParsing="false" onAction="#handleButtonQuiz" prefHeight="49.0" prefWidth="217.0" text="Quiz">
+         <font>
+            <Font size="24.0" />
+         </font></Button>
    </children>
 </Pane>

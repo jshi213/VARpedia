@@ -2,6 +2,7 @@ package application;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,6 +28,8 @@ public class MenuController {
 
 	@FXML
 	private Pane rootPane;
+
+	private String[] list;
 	
 	
 	@FXML
@@ -38,7 +41,16 @@ public class MenuController {
 	private void handleButtonList(ActionEvent event) throws IOException {
 		// check if the Creations folder exists/if it isn't and if true, change to the list scene
 		File dir = new File("Creations/");
-		if (dir.exists() && dir.list().length > 0) {
+		int length = 0;
+		list = dir.list();
+		for (String fileName : list) {
+			File file = new File("Creations/"+fileName);
+			if (!file.isHidden()){
+				length++;
+			}
+		}
+		
+		if (dir.exists() && length > 0) {
 			Parent createParent = FXMLLoader.load(getClass().getResource("List.fxml"));
 			Scene createScene =  new Scene(createParent);
 			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -73,7 +85,12 @@ public class MenuController {
 	}
 	
 	@FXML
-	private void handleButtonQuiz() {
+	private void handleButtonQuiz(ActionEvent event) throws IOException {
+		Parent createParent = FXMLLoader.load(getClass().getResource("Quiz.fxml"));
+		Scene createScene =  new Scene(createParent);
+		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		stage.setScene(createScene);
+		stage.show();
 		
 	}
 	
