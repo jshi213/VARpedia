@@ -800,7 +800,6 @@ public class MenuController {
 	@FXML
 	private void handleItemSelection() {
 		 _selected = listView.getSelectionModel().getSelectedItem();
-		 System.out.println(_selected);
 	}
 	
 	public static String getSelectedItem() {
