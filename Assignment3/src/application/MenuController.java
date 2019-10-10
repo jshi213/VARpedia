@@ -32,7 +32,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.media.Media;
@@ -65,19 +64,10 @@ public class MenuController {
 	private TextArea textAreaResults;
 	
 	@FXML
-	private MenuButton menuButtonVoices;
+	private MenuButton menuButtonVoices, buttonVoiceRate;
 	
 	@FXML
-	private MenuButton buttonVoiceRate;
-	
-	@FXML
-	private MenuItem voice1;
-	
-	@FXML
-	private MenuItem voice2;
-	
-	@FXML
-	private MenuItem voice3;
+	private MenuItem voice1, voice2, voice3;
 	
 	@FXML
 	private ListView<String> audioList;
@@ -146,7 +136,7 @@ public class MenuController {
 
 	public static ArrayList<String> correct, incorrect;
 	
-	boolean incorrectAttempt = false;
+	boolean incorrectAttempt = false, added = false;
 	
 	@FXML
 	private Pane paneQuiz, paneSummary;
@@ -236,6 +226,7 @@ public class MenuController {
 		});
 		
 		quizTab.setOnSelectionChanged(e -> {
+			resetQuiz();
 			textFieldAnswer.clear();
 			textCorrect.setVisible(false);
 			textIncorrect.setVisible(false);
@@ -271,17 +262,6 @@ public class MenuController {
 				
 		});
 		
-//		quizSummaryTab.setOnSelectionChanged(e -> {
-//			System.out.println(score);
-//			System.out.println(levels);
-//			textScoreSummary.setText(score + "/" + levels);
-//			
-//			listCorrect = listViewCorrect.getItems();
-//			listCorrect.setAll(correct);
-//			
-//			listIncorrect = listViewIncorrect.getItems();
-//			listIncorrect.setAll(incorrect);
-//		});
 	}
 	
 	private void setGlobalEventHandler(Node root) {
@@ -323,6 +303,11 @@ public class MenuController {
 		tabPane.getSelectionModel().select(1);
 		
 		
+	}
+	
+	@FXML
+	private void handleButtonQuiz() {
+		tabPane.getSelectionModel().select(6);
 	}
 	
 	//search tab
@@ -824,6 +809,8 @@ public class MenuController {
 	
 	
 	// quiz handlers 
+	
+	// check if answer entered is correct, display whether it is correct or incorrect and adjust score accordingly
 	@FXML
 	private void handleButtonQuizEnter() {
 		buttonQuizNext.setDisable(false);
@@ -841,7 +828,10 @@ public class MenuController {
 			incorrectAttempt = true;
 			textCorrect.setVisible(false);
 			textIncorrect.setVisible(true);
-			incorrect.add(listQuiz[currentLevel]);
+			if (!added) {
+				incorrect.add(listQuiz[currentLevel]);
+			}
+			added = true;
 		}
 		textScore.setText(score + "/" + levels);
 		
@@ -849,14 +839,17 @@ public class MenuController {
 		
 	}
 	
+	// go back to the main menu
 	@FXML
 	private void handleButtonQuizBack(ActionEvent event) throws IOException {
 		tabPane.getSelectionModel().select(0);
 	}
 	
+	// go to the next question or to the summary if on the last question
 	@FXML
 	private void handleButtonQuizNext(ActionEvent event) throws IOException {	
 		incorrectAttempt = false;
+		added = false;
 		buttonQuizNext.setDisable(true);
 		if (buttonQuizNext.getText().equals("Finish")) {
 			setSummary();
@@ -883,6 +876,7 @@ public class MenuController {
 		
 	}
 	
+	// set the summary scene for the quiz
 	@FXML
 	private void setSummary() {
 		paneSummary.setVisible(true);
@@ -897,6 +891,7 @@ public class MenuController {
 		listIncorrect.setAll(incorrect);
 	}
 	
+	// reset the scene for the quiz
 	@FXML
 	private void resetQuiz() {
 		paneSummary.setVisible(false);
@@ -904,6 +899,7 @@ public class MenuController {
 	}
 	
 	// quiz summary handlers
+	
 	@FXML
 	private void handleListViewCorrect() {
 		String selected = listViewCorrect.getSelectionModel().getSelectedItem();
@@ -928,6 +924,7 @@ public class MenuController {
 		}
 	}
 	
+	// start the quiz from teh beginning
 	@FXML
 	private void handleButtonRetry(ActionEvent event) throws IOException {
 		EventHandler<Event> e = quizTab.getOnSelectionChanged();
@@ -935,6 +932,7 @@ public class MenuController {
 		resetQuiz();
 	}
 	
+	// return to the main menu
 	@FXML
 	private void handleButtonMenu(ActionEvent event) throws IOException {
 		tabPane.getSelectionModel().select(0);

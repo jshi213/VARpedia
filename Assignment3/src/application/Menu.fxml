@@ -34,14 +34,19 @@
                               <Font name="DejaVu Sans ExtraLight" size="42.0" />
                            </font>
                         </Text>
-                        <Button fx:id="buttonList" layoutX="185.0" layoutY="486.0" mnemonicParsing="false" onAction="#handleButtonList" text="View existing creations">
+                        <Button fx:id="buttonList" layoutX="99.0" layoutY="486.0" mnemonicParsing="false" onAction="#handleButtonList" text="View existing creations">
                            <font>
                               <Font name="Manjari Regular" size="24.0" />
                            </font>
                         </Button>
-                        <Button fx:id="buttonCreate" layoutX="688.0" layoutY="486.0" mnemonicParsing="false" onAction="#handleButtonCreate" prefHeight="46.0" prefWidth="328.0" text="Create a new  creation">
+                        <Button fx:id="buttonCreate" layoutX="800.0" layoutY="486.0" mnemonicParsing="false" onAction="#handleButtonCreate" prefHeight="46.0" prefWidth="328.0" text="Create a new  creation">
                            <font>
                               <Font name="Manjari Regular" size="24.0" />
+                           </font>
+                        </Button>
+                        <Button layoutX="505.0" layoutY="486.0" mnemonicParsing="false" onAction="#handleButtonQuiz" text="Quiz yourself">
+                           <font>
+                              <Font size="24.0" />
                            </font>
                         </Button>
                      </children>
@@ -387,7 +392,7 @@
                                     <MediaView fx:id="mediaViewQuiz" fitHeight="500.0" fitWidth="700.0" />
                                  </children>
                               </StackPane>
-                              <Button fx:id="buttonQuizNext" disable="true" layoutX="1097.0" layoutY="709.0" mnemonicParsing="false" onAction="#handleButtonQuizNext" text="Next">
+                              <Button fx:id="buttonQuizNext" disable="true" layoutX="1088.0" layoutY="709.0" mnemonicParsing="false" onAction="#handleButtonQuizNext" text="Next">
                                  <font>
                                     <Font size="24.0" />
                                  </font>
