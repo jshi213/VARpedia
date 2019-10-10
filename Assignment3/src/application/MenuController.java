@@ -86,11 +86,30 @@ public class MenuController {
 	
 	@FXML
 	private void handleButtonQuiz(ActionEvent event) throws IOException {
-		Parent createParent = FXMLLoader.load(getClass().getResource("Quiz.fxml"));
-		Scene createScene =  new Scene(createParent);
-		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		stage.setScene(createScene);
-		stage.show();
+		File dir = new File("Quiz/");
+		int length = 0;
+		list = dir.list();
+		for (String fileName : list) {
+			File file = new File("Quiz/"+fileName);
+			if (!file.isHidden()){
+				length++;
+			}
+		}
+		
+		if (dir.exists() && length > 0) {
+			Parent createParent = FXMLLoader.load(getClass().getResource("Quiz.fxml"));
+			Scene createScene =  new Scene(createParent);
+			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			stage.setScene(createScene);
+			stage.show();	
+		}
+		else {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setContentText("There are no creations to test you on");
+			alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+			alert.showAndWait().ifPresent(response -> {
+			});
+		}
 		
 	}
 	

@@ -62,6 +62,8 @@ public class QuizController {
 			mediaPlayer = new MediaPlayer(media);
 			mediaViewQuiz.setMediaPlayer(mediaPlayer);
 			mediaPlayer.setAutoPlay(true);
+			mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+			
 			
 		
 			String[] termNames = list[currentLevel].split("-");

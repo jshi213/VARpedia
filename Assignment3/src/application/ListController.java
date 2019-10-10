@@ -97,6 +97,13 @@ public class ListController {
 			if (response == ButtonType.OK) {
 				File file = new File("Creations/" + _selected + ".mp4");
 				file.delete();
+				File dir = new File("Quiz/");
+				File[] files = dir.listFiles(); 
+				for (File f : files) {
+					if (f.getName().startsWith(_selected)) {
+						f.delete();
+					}
+				}
 				_selected = null;
 				initialize();
 			}});
