@@ -43,7 +43,8 @@ public class PlayController implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		String creationName = ListController.getSelectedItem() + ".mp4";
+		String creationName = MenuController.getSelectedItem() + ".mp4";
+		System.out.println(creationName);
 		mediaViewPane.setStyle("-fx-background-color: #000000;");
 		String path = new File("Creations/" + creationName).getAbsolutePath();
 		media = new Media(new File(path).toURI().toString());

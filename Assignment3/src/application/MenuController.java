@@ -170,6 +170,23 @@ public class MenuController {
 			list = listView.getItems();
 			list.setAll(listofcreationsarray);
 		});
+		
+		audioSelectionTab.setOnSelectionChanged(e -> {
+			// add all the audio files created into the audio files list view
+			String listofaudiofiles = "";
+			File dir = new File("audiofiles/");
+			File[] fileList = dir.listFiles();
+			for (File file : fileList) {
+				String fileName = file.getName();
+				String fileWithoutExt =  fileName.substring(0, file.getName().length()-4);
+				if(!fileWithoutExt.contains("combined") && !fileWithoutExt.startsWith(".")) {
+					listofaudiofiles = listofaudiofiles + fileWithoutExt + "\n";
+				}
+			}
+			String[] listofaudiofilesarray = listofaudiofiles.split("\n");
+			audioFiles = audioList.getItems();
+			audioFiles.setAll(listofaudiofilesarray);
+		});
 	}
 	
 	private void setGlobalEventHandler(Node root) {
@@ -680,10 +697,22 @@ public class MenuController {
 			Alert alert = new Alert(AlertType.CONFIRMATION, confirmation);
 			alert.showAndWait().ifPresent(response -> {
 			if (response == ButtonType.OK) {
-				File file = new File("Creations/" + _selected + ".mp4");
-				file.delete();
+				File fileDelete = new File("Creations/" + _selected + ".mp4");
+				fileDelete.delete();
 				_selected = null;
-				initialize();
+				String listofcreations = "";
+				File dir = new File("Creations/");
+				File[] fileList = dir.listFiles();
+				for (File file : fileList) {
+					String fileName = file.getName();
+					String fileWithoutExt =  fileName.substring(0, file.getName().length()-4);
+					if (!fileWithoutExt.startsWith(".")) {
+					listofcreations = listofcreations + fileWithoutExt + "\n";
+					}
+				}	
+				String[] listofcreationsarray = listofcreations.split("\n");
+				list = listView.getItems();
+				list.setAll(listofcreationsarray);
 			}});
 		}
 	}
@@ -691,6 +720,7 @@ public class MenuController {
 	@FXML
 	private void handleItemSelection() {
 		 _selected = listView.getSelectionModel().getSelectedItem();
+		 System.out.println(_selected);
 	}
 	
 	public static String getSelectedItem() {
