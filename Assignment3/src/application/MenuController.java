@@ -558,7 +558,7 @@ public class MenuController {
 		ProcessBuilder pb1 = new ProcessBuilder();
 		pb1.command("bash", "-c", "ffmpeg " + commandFileInputs +  "\\" + 
 				"-filter_complex '" + commandFilterInput + "concat=n=" + Integer.toString(audioCount) + ":v=0:a=1[out]' \\" + 
-				"-map '[out]' audiofiles/combined.wav");
+				"-map '[out]' audiofiles/combined.wav -y");
 		pb1.start();
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Successfully combined");
