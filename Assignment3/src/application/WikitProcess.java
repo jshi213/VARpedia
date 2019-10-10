@@ -22,17 +22,16 @@ public class WikitProcess extends Task<String> {
 		try {
 			//starting process for wikit command and reading output from command
 			ProcessBuilder pb = new ProcessBuilder();
-			System.out.println(_searchTerm);
 			pb.command("bash", "-c", "wikit "+_searchTerm);
 			Process process = pb.start();
 			InputStream stdout = process.getInputStream();
 			BufferedReader stdoutBuffered = new BufferedReader(new InputStreamReader(stdout));
 			String line = null;
 			while ((line = stdoutBuffered.readLine()) != null) {
-				System.out.println(line);
 				if(line.contains("? Ambiguous") || line.contains(":^(")) {
 					AmbiguousAlert ambiguousAlert = new AmbiguousAlert();
 					Platform.runLater(ambiguousAlert);
+					MenuController.getProgressIndicator().setVisible(false);
 					return null;
 				} if(_isCancelled == true) {
 					

@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
@@ -50,7 +55,7 @@
                               <Font size="24.0" />
                            </font>
                         </TextField>
-                        <Button fx:id="buttonSearch" layoutX="545.0" layoutY="416.0" mnemonicParsing="false" onAction="#handleButtonSearch" text="Search">
+                        <Button fx:id="buttonSearch" layoutX="545.0" layoutY="432.0" mnemonicParsing="false" onAction="#handleButtonSearch" text="Search">
                            <font>
                               <Font name="Manjari Regular" size="24.0" />
                            </font>
@@ -68,6 +73,230 @@
                      </children>
                   </AnchorPane>
                </content>
+            </Tab>
+            <Tab fx:id="audioSelectionTab" text="Audio Selection">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="767.0" prefWidth="1200.0">
+                     <children>
+                        <TextField fx:id="textFieldTerm1" layoutX="300.0" layoutY="44.0" prefHeight="26.0" prefWidth="600.0" promptText="Term">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </TextField>
+                        <Button fx:id="buttonSearch1" layoutX="915.0" layoutY="42.0" mnemonicParsing="false" onAction="#handleButtonSearch" text="Search">
+                           <font>
+                              <Font name="Manjari Regular" size="24.0" />
+                           </font>
+                        </Button>
+                        <TextArea fx:id="textAreaResults" layoutX="26.0" layoutY="211.0" prefHeight="335.0" prefWidth="800.0" wrapText="true">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </TextArea>
+                        <Button fx:id="buttonBack1" layoutX="35.0" layoutY="29.0" mnemonicParsing="false" onAction="#handleButtonCreateMenuBack" text="Back">
+                           <font>
+                              <Font name="Manjari Regular" size="24.0" />
+                           </font>
+                        </Button>
+                        <Text fill="WHITE" layoutX="35.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select text to preview or save to an audio file">
+                           <font>
+                              <Font name="DejaVu Sans ExtraLight" size="38.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="850.0" layoutY="193.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Saved audio files">
+                           <font>
+                              <Font name="DejaVu Sans ExtraLight" size="28.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="26.0" layoutY="193.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search results">
+                           <font>
+                              <Font name="DejaVu Sans ExtraLight" size="28.0" />
+                           </font>
+                        </Text>
+                        <ListView fx:id="audioList" layoutX="850.0" layoutY="211.0" prefHeight="335.0" prefWidth="320.0" />
+                        <Button fx:id="buttonPreview" layoutX="26.0" layoutY="554.0" mnemonicParsing="false" onAction="#handleButtonPreview" text="Preview">
+                           <font>
+                              <Font name="Manjari Regular" size="24.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="buttonSave" layoutX="1082.0" layoutY="554.0" mnemonicParsing="false" onAction="#handleButtonSave" text="Save">
+                           <font>
+                              <Font name="Manjari Regular" size="24.0" />
+                           </font>
+                        </Button>
+                        <TextField fx:id="textFieldAudioName" layoutX="850.0" layoutY="560.0" prefHeight="39.0" prefWidth="214.0" promptText="Audio file name">
+                           <font>
+                              <Font size="22.0" />
+                           </font>
+                        </TextField>
+                        <Text fill="WHITE" layoutX="26.0" layoutY="667.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Speech synthesis settings">
+                           <font>
+                              <Font name="DejaVu Sans ExtraLight" size="28.0" />
+                           </font>
+                        </Text>
+                        <MenuButton fx:id="menuButtonVoices" layoutX="26.0" layoutY="693.0" mnemonicParsing="false" text="Voices">
+                           <items>
+                              <MenuItem fx:id="voice1" mnemonicParsing="false" onAction="#handleVoice1" text="Voice 1" />
+                              <MenuItem fx:id="voice2" mnemonicParsing="false" onAction="#handleVoice2" text="Voice 2" />
+                              <MenuItem fx:id="voice3" mnemonicParsing="false" onAction="#handleVoice3" text="Voice 3" />
+                           </items>
+                           <font>
+                              <Font name="Manjari Regular" size="24.0" />
+                           </font>
+                        </MenuButton>
+                        <MenuButton fx:id="buttonVoiceRate" layoutX="267.0" layoutY="693.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" text="0.75x">
+                           <items>
+                              <MenuItem mnemonicParsing="false" onAction="#handleSpeedOne" text="0.5x" />
+                              <MenuItem mnemonicParsing="false" onAction="#handleSpeedTwo" text="0.75x" />
+                              <MenuItem mnemonicParsing="false" onAction="#handleSpeedThree" text="1x" />
+                              <MenuItem mnemonicParsing="false" onAction="#handleSpeedFour" text="1.5x" />
+                              <MenuItem mnemonicParsing="false" onAction="#handleSpeedFive" text="2x" />
+                           </items>
+                           <font>
+                              <Font name="Manjari Regular" size="24.0" />
+                           </font>
+                        </MenuButton>
+                        <Button fx:id="buttonNext" layoutX="782.0" layoutY="693.0" mnemonicParsing="false" onAction="#handleButtonNext" text="Next: Select/Combine audio files">
+                           <font>
+                              <Font name="Manjari Regular" size="24.0" />
+                           </font>
+                        </Button>
+                        <ProgressIndicator fx:id="progressIndicator" layoutX="246.0" layoutY="46.0" prefHeight="43.0" prefWidth="43.0" visible="false" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab fx:id="audioCombinationTab" disable="true" text="Audio Combination">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="767.0" prefWidth="1200.0">
+                     <children>
+                        <ListView fx:id="listViewAudioFiles" layoutX="56.0" layoutY="209.0" prefHeight="350.0" prefWidth="400.0" />
+                        <ListView fx:id="listViewSelected" layoutX="659.0" layoutY="209.0" prefHeight="350.0" prefWidth="400.0" />
+                        <Button layoutX="525.0" layoutY="288.0" mnemonicParsing="false" onAction="#handleButtonAdd" text="&gt;&gt;">
+                           <font>
+                              <Font name="Manjari Regular" size="24.0" />
+                           </font>
+                        </Button>
+                        <Button layoutX="525.0" layoutY="435.0" mnemonicParsing="false" onAction="#handleButtonMoveBack" text="&lt;&lt;">
+                           <font>
+                              <Font name="Manjari Regular" size="24.0" />
+                           </font>
+                        </Button>
+                        <Button layoutX="638.0" layoutY="693.0" mnemonicParsing="false" onAction="#handleButtonCombineNext" text="Next: Select number of images &amp; Create video">
+                           <font>
+                              <Font name="Manjari Regular" size="24.0" />
+                           </font>
+                        </Button>
+                        <Button layoutX="482.0" layoutY="585.0" mnemonicParsing="false" onAction="#handleButtonPlay" text="Play audio">
+                           <font>
+                              <Font name="Manjari Regular" size="24.0" />
+                           </font>
+                        </Button>
+                        <Button layoutX="35.0" layoutY="29.0" mnemonicParsing="false" onAction="#handleButtonCombineBack" text="Back">
+                           <font>
+                              <Font name="Manjari Regular" size="24.0" />
+                           </font>
+                        </Button>
+                        <Text fill="WHITE" layoutX="729.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Audio files to be">
+                           <font>
+                              <Font name="DejaVu Sans ExtraLight" size="32.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="95.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Existing audio files">
+                           <font>
+                              <Font name="DejaVu Sans ExtraLight" size="32.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="179.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Combine your audio files into a creation">
+                           <font>
+                              <Font name="DejaVu Sans ExtraLight" size="42.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="722.0" layoutY="189.0" strokeType="OUTSIDE" strokeWidth="0.0" text="included in video">
+                           <font>
+                              <Font name="DejaVu Sans ExtraLight" size="32.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab fx:id="imageTab" disable="true" text="Image Selection">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Text fx:id="textName" fill="WHITE" layoutX="59.0" layoutY="536.0" strokeType="OUTSIDE" strokeWidth="0.0" text="What would you like to name your final creation?" visible="false">
+                           <font>
+                              <Font name="DejaVu Sans ExtraLight" size="42.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="textFieldName" layoutX="420.0" layoutY="564.0" promptText="Enter a name" visible="false">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </TextField>
+                        <Button fx:id="buttonImageCreate" layoutX="522.0" layoutY="651.0" mnemonicParsing="false" onAction="#handleButtonImageCreate" text="Create" visible="false">
+                           <font>
+                              <Font name="Manjari Regular" size="24.0" />
+                           </font>
+                        </Button>
+                        <Text fill="WHITE" layoutX="65.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="How many images would you like in your creation?">
+                           <font>
+                              <Font name="DejaVu Sans ExtraLight" size="42.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="textFieldNumber" layoutX="420.0" layoutY="237.0" promptText="Enter a number">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </TextField>
+                        <Text fill="WHITE" layoutX="369.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(Between 1 and 10)">
+                           <font>
+                              <Font name="DejaVu Sans ExtraLight" size="42.0" />
+                           </font>
+                        </Text>
+                        <Button fx:id="buttonEnter" layoutX="530.0" layoutY="320.0" mnemonicParsing="false" onAction="#handleButtonEnter" text="Enter">
+                           <font>
+                              <Font name="Manjari Regular" size="24.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="buttonBack2" layoutX="35.0" layoutY="29.0" mnemonicParsing="false" onAction="#handleButtonBack" text="Back">
+                           <font>
+                              <Font name="Manjari Regular" size="24.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab fx:id="listTab" text="View Creations">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ListView fx:id="listView" layoutX="350.0" layoutY="149.0" onMouseClicked="#handleItemSelection" prefHeight="400.0" prefWidth="500.0" />
+                        <Button fx:id="buttonBack3" layoutX="35.0" layoutY="29.0" mnemonicParsing="false" onAction="#handleButtonListBack" text="Back">
+                           <font>
+                              <Font name="Manjari Regular" size="24.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="buttonPlay" layoutX="198.0" layoutY="613.0" mnemonicParsing="false" onAction="#handleButtonListPlay" prefWidth="305.0" text="Play Selected Creation">
+                           <font>
+                              <Font name="Manjari Regular" size="24.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="buttonDelete" layoutX="697.0" layoutY="613.0" mnemonicParsing="false" onAction="#handleButtonDelete" text="Delete Selected Creation">
+                           <font>
+                              <Font name="Manjari Regular" size="24.0" />
+                           </font>
+                        </Button>
+                        <Text fill="WHITE" layoutX="298.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Play or delete your creations">
+                           <font>
+                              <Font name="DejaVu Sans ExtraLight" size="42.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </AnchorPane>
+              </content>
             </Tab>
         </tabs>
       </TabPane>

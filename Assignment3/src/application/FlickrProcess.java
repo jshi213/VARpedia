@@ -44,7 +44,7 @@ public class FlickrProcess extends Task<Void> {
 
 			Flickr flickr = new Flickr(apiKey, sharedSecret, new REST());
 			
-			String query = SearchController.getSearchTerm();
+			String query = MenuController.getSearchTerm();
 			int resultsPerPage = _number;
 			int page = 0;
 			
@@ -116,7 +116,7 @@ public class FlickrProcess extends Task<Void> {
 			printWriter.println("cd downloads");
 			// create video
 			printWriter.println("cat *.jpg | ffmpeg -f image2pipe -framerate 1/" + secondsPerImage + " -i - -i ../audiofiles/combined.wav -c:v libx264 -pix_fmt yuv420p -vf \"pad=ceil(iw/2)*2:ceil(ih/2)*2\" -r 25 -max_muxing_queue_size 1024 -y audioslideshow.mp4 &>/dev/null");
-			printWriter.println("ffmpeg -i audioslideshow.mp4 -vf \"drawtext=fontfile=myfont.ttf:fontsize=60: fontcolor=white:x=(w-text_w)/2:y=(h-text_h)/2:text=" + SearchController.getSearchTerm() + "\" -codec:a copy ../Creations/" + _creation + ".mp4 &>/dev/null");
+			printWriter.println("ffmpeg -i audioslideshow.mp4 -vf \"drawtext=fontfile=myfont.ttf:fontsize=60: fontcolor=white:x=(w-text_w)/2:y=(h-text_h)/2:text=" + MenuController.getSearchTerm() + "\" -codec:a copy ../Creations/" + _creation + ".mp4 &>/dev/null");
 			printWriter.println("rm -f slideshow.mp4 audioslideshow.mp4 *.jpg");
 			printWriter.close();
 			return tempScript;
