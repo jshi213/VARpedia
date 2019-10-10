@@ -11,6 +11,8 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -156,7 +158,7 @@
                               <Font name="Manjari Regular" size="24.0" />
                            </font>
                         </MenuButton>
-                        <Button fx:id="buttonNext" layoutX="782.0" layoutY="693.0" mnemonicParsing="false" onAction="#handleButtonNext" text="Next: Select/Combine audio files">
+                        <Button fx:id="buttonNext" layoutX="761.0" layoutY="693.0" mnemonicParsing="false" onAction="#handleButtonNext" text="Next: Select/Combine audio files">
                            <font>
                               <Font name="Manjari Regular" size="24.0" />
                            </font>
@@ -182,7 +184,7 @@
                               <Font name="Manjari Regular" size="24.0" />
                            </font>
                         </Button>
-                        <Button layoutX="638.0" layoutY="693.0" mnemonicParsing="false" onAction="#handleButtonCombineNext" text="Next: Select number of images &amp; Create video">
+                        <Button layoutX="593.0" layoutY="694.0" mnemonicParsing="false" onAction="#handleButtonCombineNext" text="Next: Select number of images &amp; Create video">
                            <font>
                               <Font name="Manjari Regular" size="24.0" />
                            </font>
@@ -294,6 +296,114 @@
                               <Font name="DejaVu Sans ExtraLight" size="42.0" />
                            </font>
                         </Text>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab fx:id="quizTab" text="Quiz">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pane fx:id="paneSummary" prefHeight="767.0" prefWidth="1200.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <Button layoutX="35.0" layoutY="29.0" mnemonicParsing="false" onAction="#handleButtonMenu" text="Menu">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Button>
+                              <Button layoutX="1089.0" layoutY="709.0" mnemonicParsing="false" onAction="#handleButtonRetry" text="Retry">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Button>
+                              <Text fill="WHITE" layoutX="489.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quiz Summary" underline="true">
+                                 <font>
+                                    <Font size="30.0" />
+                                 </font>
+                              </Text>
+                              <Text fill="WHITE" layoutX="562.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Score:">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="textScoreSummary" fill="WHITE" layoutX="579.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="N/A">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Text>
+                              <Text fill="WHITE" layoutX="380.0" layoutY="219.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Correct ">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Text>
+                              <Text fill="WHITE" layoutX="643.0" layoutY="219.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Incorrect/Multiple Attempts">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Text>
+                              <ListView fx:id="listViewCorrect" layoutX="320.0" layoutY="230.0" onMouseClicked="#handleListViewCorrect" prefHeight="200.0" prefWidth="200.0" />
+                              <ListView fx:id="listViewIncorrect" layoutX="680.0" layoutY="230.0" onMouseClicked="#handleListViewIncorrect" prefHeight="200.0" prefWidth="200.0" />
+                              <StackPane layoutX="425.0" layoutY="459.0" prefHeight="250.0" prefWidth="350.0">
+                                 <children>
+                                    <MediaView fx:id="mediaViewSummary" fitHeight="250.0" fitWidth="350.0" />
+                                 </children>
+                              </StackPane>
+                           </children>
+                        </Pane>
+                        <Pane fx:id="paneQuiz" layoutX="14.0" layoutY="134.0" prefHeight="767.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <Button layoutX="35.0" layoutY="29.0" mnemonicParsing="false" onAction="#handleButtonQuizBack" text="Menu">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Button>
+                              <Text fill="WHITE" layoutX="1082.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Score:">
+                                 <font>
+                                    <Font size="30.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="textScore" fill="WHITE" layoutX="1102.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="N/A">
+                                 <font>
+                                    <Font size="30.0" />
+                                 </font>
+                              </Text>
+                              <Text fill="WHITE" layoutX="424.0" layoutY="572.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Guess the search term:">
+                                 <font>
+                                    <Font size="30.0" />
+                                 </font>
+                              </Text>
+                              <TextField fx:id="textFieldAnswer" layoutX="444.0" layoutY="589.0" promptText="Term">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </TextField>
+                              <Button fx:id="buttonQuizEnter" layoutX="552.0" layoutY="646.0" mnemonicParsing="false" onAction="#handleButtonQuizEnter" text="Enter" textFill="#030303">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Button>
+                              <StackPane layoutX="260.0" layoutY="39.0" prefHeight="500.0" prefWidth="700.0">
+                                 <children>
+                                    <MediaView fx:id="mediaViewQuiz" fitHeight="500.0" fitWidth="700.0" />
+                                 </children>
+                              </StackPane>
+                              <Button fx:id="buttonQuizNext" disable="true" layoutX="1097.0" layoutY="709.0" mnemonicParsing="false" onAction="#handleButtonQuizNext" text="Next">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Button>
+                              <Text fx:id="textCorrect" fill="WHITE" layoutX="464.0" layoutY="742.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Correct, good job!" visible="false">
+                                 <font>
+                                    <Font size="30.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="textIncorrect" fill="WHITE" layoutX="406.0" layoutY="737.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Incorrect, please try again!" visible="false">
+                                 <font>
+                                    <Font size="30.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </Pane>
                      </children>
                   </AnchorPane>
               </content>

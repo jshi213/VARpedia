@@ -5,11 +5,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -29,10 +32,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -51,7 +56,7 @@ public class MenuController {
 	private TabPane tabPane;
 	
 	@FXML
-	private Tab searchTab, audioSelectionTab, audioCombinationTab, imageTab, listTab;
+	private Tab searchTab, audioSelectionTab, audioCombinationTab, imageTab, listTab, quizTab, quizSummaryTab;
 	
 	@FXML
 	private TextField textFieldTerm, textFieldTerm1, textFieldAudioName;
@@ -118,6 +123,48 @@ public class MenuController {
 	private static TextArea staticTextAreaResults;
 	private static ProgressIndicator _staticProgressIndicator;
 	private MediaPlayer mediaPlayer;
+	
+	// quiz fields
+	private String[] listQuiz;
+	
+	private String term;
+	public static int levels, currentLevel, score;
+	
+	@FXML
+	private MediaView mediaViewQuiz;
+	private MediaPlayer mediaPlayerQuiz;
+	private Media mediaQuiz;
+	
+	@FXML
+	private TextField textFieldAnswer;
+	
+	@FXML
+	private Text textScore, textCorrect, textIncorrect;
+	
+	@FXML
+	private Button buttonQuizEnter, buttonQuizNext;
+
+	public static ArrayList<String> correct, incorrect;
+	
+	boolean incorrectAttempt = false;
+	
+	@FXML
+	private Pane paneQuiz, paneSummary;
+	
+	// quiz summary fields
+	@FXML
+	private ObservableList<String> listCorrect, listIncorrect;
+	
+	@FXML
+	private ListView<String> listViewCorrect, listViewIncorrect;
+
+	@FXML
+	private MediaView mediaViewSummary;
+	private MediaPlayer mediaPlayerSummary;
+	private Media mediaSummary;
+	
+	@FXML
+	private Text textScoreSummary;
 	
 	
 	@FXML
@@ -187,6 +234,54 @@ public class MenuController {
 			audioFiles = audioList.getItems();
 			audioFiles.setAll(listofaudiofilesarray);
 		});
+		
+		quizTab.setOnSelectionChanged(e -> {
+			textFieldAnswer.clear();
+			textCorrect.setVisible(false);
+			textIncorrect.setVisible(false);
+			buttonQuizNext.setText("Next");
+			buttonQuizEnter.setDisable(false);
+			score = 0;
+			File dir = new File("Quiz/");
+			listQuiz = dir.list();
+			currentLevel = 0;
+			levels = listQuiz.length;
+			textScore.setText("0/" + levels);
+			int i = 0;
+			while (i < listQuiz.length) {
+				listQuiz[i] = listQuiz[i].substring(0, listQuiz[i].length()-4);
+				i++;
+			}
+				String path = new File("Quiz/" + listQuiz[currentLevel] + ".mp4").getAbsolutePath();
+				mediaQuiz = new Media(new File(path).toURI().toString());
+				mediaPlayer = new MediaPlayer(mediaQuiz);
+				mediaViewQuiz.setMediaPlayer(mediaPlayer);
+				mediaPlayer.setAutoPlay(true);
+				mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+				
+				
+			
+				String[] termNames = listQuiz[currentLevel].split("-");
+				term = termNames[1];
+
+				textScore.setText("0/" + levels);
+				
+				correct = new ArrayList<>();
+				incorrect = new ArrayList<>();
+				
+		});
+		
+//		quizSummaryTab.setOnSelectionChanged(e -> {
+//			System.out.println(score);
+//			System.out.println(levels);
+//			textScoreSummary.setText(score + "/" + levels);
+//			
+//			listCorrect = listViewCorrect.getItems();
+//			listCorrect.setAll(correct);
+//			
+//			listIncorrect = listViewIncorrect.getItems();
+//			listIncorrect.setAll(incorrect);
+//		});
 	}
 	
 	private void setGlobalEventHandler(Node root) {
@@ -726,6 +821,126 @@ public class MenuController {
 	public static String getSelectedItem() {
 		return _selected;
 	}
+	
+	
+	// quiz handlers 
+	@FXML
+	private void handleButtonQuizEnter() {
+		buttonQuizNext.setDisable(false);
+		if (textFieldAnswer.getText().equals(term)) {
+			textIncorrect.setVisible(false);
+			textCorrect.setVisible(true);
+			buttonQuizEnter.setDisable(true);
+			
+			if (!incorrectAttempt) {
+				correct.add(listQuiz[currentLevel]);
+				score++;
+			}
+		}
+		else {
+			incorrectAttempt = true;
+			textCorrect.setVisible(false);
+			textIncorrect.setVisible(true);
+			incorrect.add(listQuiz[currentLevel]);
+		}
+		textScore.setText(score + "/" + levels);
+		
+
+		
+	}
+	
+	@FXML
+	private void handleButtonQuizBack(ActionEvent event) throws IOException {
+		tabPane.getSelectionModel().select(0);
+	}
+	
+	@FXML
+	private void handleButtonQuizNext(ActionEvent event) throws IOException {	
+		incorrectAttempt = false;
+		buttonQuizNext.setDisable(true);
+		if (buttonQuizNext.getText().equals("Finish")) {
+			setSummary();
+		}
+		else {
+			currentLevel++;
+			if (currentLevel == levels - 1) {
+				buttonQuizNext.setText("Finish");
+			}
+			textCorrect.setVisible(false);
+			textIncorrect.setVisible(false);
+			textFieldAnswer.clear();
+			buttonQuizEnter.setDisable(false);
+			String path = new File("Quiz/" + listQuiz[currentLevel] + ".mp4").getAbsolutePath();
+			mediaQuiz = new Media(new File(path).toURI().toString());
+			mediaPlayerQuiz = new MediaPlayer(mediaQuiz);
+			mediaViewQuiz.setMediaPlayer(mediaPlayerQuiz);
+			mediaPlayerQuiz.setAutoPlay(true);
+
+
+			String[] termNames = listQuiz[currentLevel].split("-");
+			term = termNames[1];
+		}
+		
+	}
+	
+	@FXML
+	private void setSummary() {
+		paneSummary.setVisible(true);
+		paneQuiz.setVisible(false);
+		
+		textScoreSummary.setText(score + "/" + levels);
+		
+		listCorrect = listViewCorrect.getItems();
+		listCorrect.setAll(correct);
+		
+		listIncorrect = listViewIncorrect.getItems();
+		listIncorrect.setAll(incorrect);
+	}
+	
+	@FXML
+	private void resetQuiz() {
+		paneSummary.setVisible(false);
+		paneQuiz.setVisible(true);
+	}
+	
+	// quiz summary handlers
+	@FXML
+	private void handleListViewCorrect() {
+		String selected = listViewCorrect.getSelectionModel().getSelectedItem();
+		if (selected != null) {
+			String path = new File("Quiz/" + selected + ".mp4").getAbsolutePath();
+			mediaSummary = new Media(new File(path).toURI().toString());
+			mediaPlayerSummary = new MediaPlayer(mediaSummary);
+			mediaViewSummary.setMediaPlayer(mediaPlayerSummary);
+			mediaPlayerSummary.setAutoPlay(true);
+		}
+	}
+	
+	@FXML
+	private void handleListViewIncorrect() {
+		String selected = listViewIncorrect.getSelectionModel().getSelectedItem();
+		if (selected != null) {
+			String path = new File("Quiz/" + selected + ".mp4").getAbsolutePath();
+			mediaSummary = new Media(new File(path).toURI().toString());
+			mediaPlayerSummary = new MediaPlayer(mediaSummary);
+			mediaViewSummary.setMediaPlayer(mediaPlayerSummary);
+			mediaPlayerSummary.setAutoPlay(true);
+		}
+	}
+	
+	@FXML
+	private void handleButtonRetry(ActionEvent event) throws IOException {
+		EventHandler<Event> e = quizTab.getOnSelectionChanged();
+		e.handle(event);
+		resetQuiz();
+	}
+	
+	@FXML
+	private void handleButtonMenu(ActionEvent event) throws IOException {
+		tabPane.getSelectionModel().select(0);
+		resetQuiz();
+	}
+	
 	
 	
 }
