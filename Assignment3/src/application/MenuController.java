@@ -42,7 +42,7 @@ public class MenuController {
 	private Text text;
 	
 	@FXML
-	private Button buttonCreate, buttonList, buttonSearch, buttonSave;
+	private Button buttonCreate, buttonList, buttonSearch, buttonSave, buttonEnter, buttonImageCreate;
 
 	@FXML
 	private Pane rootPane;
@@ -54,7 +54,7 @@ public class MenuController {
 	private Tab searchTab, audioSelectionTab, audioCombinationTab, imageTab, listTab;
 	
 	@FXML
-	private TextField textFieldTerm, textFieldTerm1, textFieldAudioName;
+	private TextField textFieldTerm, textFieldTerm1, textFieldAudioName, textFieldNumber, textFieldName;
 	
 	@FXML
 	private TextArea textAreaResults;
@@ -78,19 +78,13 @@ public class MenuController {
 	private ListView<String> audioList;
 	
 	@FXML
-	private ProgressIndicator progressIndicator;
+	private ProgressIndicator progressIndicator, createProgress;
 	
 	@FXML
 	private ListView<String> listViewAudioFiles, listViewSelected;
 	
 	@FXML
 	private ObservableList<String> listAudioFiles, listSelected;
-	
-	@FXML
-	private Button buttonEnter, buttonImageCreate;
-	
-	@FXML
-	private TextField textFieldNumber, textFieldName;
 	
 	@FXML 
 	private Text textName;
@@ -116,7 +110,8 @@ public class MenuController {
 	private String _voiceRate = "";
 	private ObservableList<String> audioFiles;
 	private static TextArea staticTextAreaResults;
-	private static ProgressIndicator _staticProgressIndicator;
+	private static ProgressIndicator _staticProgressIndicator, _staticCreateProgress;
+	private static TabPane _staticTabPane;
 	private MediaPlayer mediaPlayer;
 	
 	
@@ -127,6 +122,8 @@ public class MenuController {
 		setGlobalEventHandler(rootPane);
 		staticTextAreaResults = textAreaResults;
 		_staticProgressIndicator = progressIndicator;
+		_staticCreateProgress = createProgress;
+		_staticTabPane = tabPane;
 		
 		buttonVoiceRate.setText("1x");
 		//initializing default voice
@@ -195,6 +192,9 @@ public class MenuController {
 	        	if(tabPane.getSelectionModel().getSelectedItem() == searchTab || tabPane.getSelectionModel().getSelectedItem() == audioSelectionTab) {
 	        		buttonSearch.fire();
 	        		ev.consume(); 
+	        	} else if (Main.getScene().getFocusOwner() == textFieldAudioName) {
+	        		buttonSave.fire();
+	        		ev.consume();
 	        	}
 	        }
 	    });
@@ -613,6 +613,7 @@ public class MenuController {
 	
 	@FXML
 	private void handleButtonImageCreate(ActionEvent event) {
+		createProgress.setVisible(true);
 		//alert if invalid name
 		String creation = textFieldName.getText();
 		if(creation.isEmpty() || creation.trim().length() == 0) {
@@ -633,15 +634,8 @@ public class MenuController {
 			return;
 		}
 		//loading alert while creation gets created
-		Alert loadingAlert = new Alert(AlertType.INFORMATION);
-		staticImageAlert = loadingAlert;
-		loadingAlert.setTitle("Loading...");
-		loadingAlert.setHeaderText(null);
-		loadingAlert.setContentText("Your creation is being generated...");
-		loadingAlert.show();
 		FlickrProcess flickrProcess = new FlickrProcess(number, creation);
 		team.submit(flickrProcess);
-		tabPane.getSelectionModel().select(0);
 	}
 	
 	@FXML
@@ -725,6 +719,14 @@ public class MenuController {
 	
 	public static String getSelectedItem() {
 		return _selected;
+	}
+	
+	public static ProgressIndicator getCreateProgress() {
+		return _staticCreateProgress;
+	}
+	
+	public static TabPane getTabPane() {
+		return _staticTabPane;
 	}
 	
 }

@@ -265,6 +265,7 @@
                               <Font name="Manjari Regular" size="24.0" />
                            </font>
                         </Button>
+                        <ProgressIndicator fx:id="createProgress" layoutX="644.0" layoutY="650.0" visible="false" />
                      </children>
                   </AnchorPane>
               </content>
