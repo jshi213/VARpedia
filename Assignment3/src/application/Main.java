@@ -31,6 +31,7 @@ public class Main extends Application {
 			loader.setLocation(getClass().getResource("Menu.fxml"));
 			Parent layout = loader.load();
 			Scene scene = new Scene(layout);
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			_staticScene = scene;
 			primaryStage.setScene(scene);
 			primaryStage.show();

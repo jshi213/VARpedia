@@ -7,7 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -117,8 +116,6 @@ public class MenuController {
 	
 	@FXML
 	private void initialize() {
-		rootPane.setStyle("-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #000000, #757575)");
-		
 		setGlobalEventHandler(rootPane);
 		staticTextAreaResults = textAreaResults;
 		_staticProgressIndicator = progressIndicator;
