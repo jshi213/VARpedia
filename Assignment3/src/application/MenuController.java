@@ -55,7 +55,7 @@ public class MenuController {
 	private TabPane tabPane;
 	
 	@FXML
-	private Tab searchTab, audioSelectionTab, audioCombinationTab, imageTab, listTab, quizTab, quizSummaryTab;
+	private Tab menuTab, searchTab, audioSelectionTab, audioCombinationTab, imageTab, listTab, quizTab, quizSummaryTab;
 	
 	@FXML
 	private TextField textFieldTerm, textFieldTerm1, textFieldAudioName;
@@ -73,7 +73,7 @@ public class MenuController {
 	private ListView<String> audioList;
 	
 	@FXML
-	private ProgressIndicator progressIndicator;
+	private ProgressIndicator progressIndicator, createProgress;
 	
 	@FXML
 	private ListView<String> listViewAudioFiles, listViewSelected;
@@ -111,7 +111,8 @@ public class MenuController {
 	private String _voiceRate = "";
 	private ObservableList<String> audioFiles;
 	private static TextArea staticTextAreaResults;
-	private static ProgressIndicator _staticProgressIndicator;
+	private static ProgressIndicator _staticProgressIndicator, _staticCreateProgress;
+	private static TabPane _staticTabPane;
 	private MediaPlayer mediaPlayer;
 	
 	// quiz fields
@@ -169,6 +170,8 @@ public class MenuController {
 		setGlobalEventHandler(rootPane);
 		staticTextAreaResults = textAreaResults;
 		_staticProgressIndicator = progressIndicator;
+		_staticCreateProgress = createProgress;
+		_staticTabPane = tabPane;
 		
 		buttonVoiceRate.setText("1x");
 		//initializing default voice
@@ -179,6 +182,29 @@ public class MenuController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		menuTab.setOnSelectionChanged(e -> {
+			File dir = new File("audiofiles");
+			if (dir.isDirectory()) {
+				File[] children = dir.listFiles();
+				for (int i = 0; i < children.length; i++) {
+					children[i].delete();
+				}
+			}
+			
+			textFieldTerm1.clear();
+			textAreaResults.clear();
+			audioList.refresh();
+			textFieldAudioName.clear();
+			
+			listViewAudioFiles.refresh();
+			listViewSelected.refresh();
+			
+			menuButtonMusic.setText("Music");
+			menuButtonNumber.setText("Images");
+			textFieldName.clear();
+		});
+		
 		audioCombinationTab.setOnSelectionChanged (e -> {
 			// add all the audio files created into the audio files list view
 			File dir = new File("audiofiles/");
@@ -272,9 +298,15 @@ public class MenuController {
 	private void setGlobalEventHandler(Node root) {
 	    root.addEventHandler(KeyEvent.KEY_PRESSED, ev -> {
 	        if (ev.getCode() == KeyCode.ENTER) {
-	        	if(tabPane.getSelectionModel().getSelectedItem() == searchTab || tabPane.getSelectionModel().getSelectedItem() == audioSelectionTab) {
+	        	if(Main.getScene().getFocusOwner() == textFieldTerm || Main.getScene().getFocusOwner() == textFieldTerm1) {
 	        		buttonSearch.fire();
 	        		ev.consume(); 
+	        	} else if (Main.getScene().getFocusOwner() == textFieldAudioName) {
+	        		buttonSave.fire();
+	        		ev.consume();
+	        	} else if (Main.getScene().getFocusOwner() == textFieldName) {
+	        		buttonImageCreate.fire();
+	        		ev.consume();
 	        	}
 	        }
 	    });
@@ -771,6 +803,7 @@ public class MenuController {
 	
 	@FXML
 	private void handleButtonImageCreate(ActionEvent event) {
+		createProgress.setVisible(true);
 		//alert if invalid name
 		String creation = textFieldName.getText();
 		if(creation.isEmpty() || creation.trim().length() == 0) {
@@ -790,26 +823,15 @@ public class MenuController {
 			alert.showAndWait();
 			return;
 		}
-		//loading alert while creation gets created
-		Alert loadingAlert = new Alert(AlertType.INFORMATION);
-		staticImageAlert = loadingAlert;
-		loadingAlert.setTitle("Loading...");
-		loadingAlert.setHeaderText(null);
-		loadingAlert.setContentText("Your creation is being generated...");
-		loadingAlert.show();
+
 		FlickrProcess flickrProcess = new FlickrProcess(number, creation);
 		team.submit(flickrProcess);
-		tabPane.getSelectionModel().select(0);
 	}
 	
 	@FXML
 	private void handleButtonBack(ActionEvent event) throws IOException {
 		// return to the previous scene where you select the audio
 		tabPane.getSelectionModel().selectPrevious();
-	}
-	
-	public static Alert getImageAlert() {
-		return staticImageAlert;
 	}
 	
 	//list tab
@@ -889,6 +911,14 @@ public class MenuController {
 	
 	public static String getSelectedItem() {
 		return _selected;
+	}
+	
+	public static ProgressIndicator getCreateProgress() {
+		return _staticCreateProgress;
+	}
+	
+	public static TabPane getTabPane() {
+		return _staticTabPane;
 	}
 	
 	

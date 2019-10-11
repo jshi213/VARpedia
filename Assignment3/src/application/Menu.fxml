@@ -16,11 +16,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MenuController">
+<Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MenuController">
    <children>
       <TabPane fx:id="tabPane" prefHeight="800.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab text="Main Menu">
+          <Tab fx:id="menuTab" text="Main Menu">
                <content>
                   <AnchorPane prefHeight="767.0" prefWidth="1200.0">
                      <children>
@@ -126,7 +126,7 @@
                               <Font name="Manjari Regular" size="24.0" />
                            </font>
                         </Button>
-                        <Button fx:id="buttonSave" layoutX="1082.0" layoutY="554.0" mnemonicParsing="false" onAction="#handleButtonSave" text="Save">
+                        <Button fx:id="buttonSave" layoutX="1075.0" layoutY="558.0" mnemonicParsing="false" onAction="#handleButtonSave" text="Save">
                            <font>
                               <Font name="Manjari Regular" size="24.0" />
                            </font>
@@ -141,17 +141,17 @@
                               <Font name="DejaVu Sans ExtraLight" size="28.0" />
                            </font>
                         </Text>
-                        <MenuButton fx:id="menuButtonVoices" layoutX="26.0" layoutY="693.0" mnemonicParsing="false" text="Voices">
+                        <MenuButton fx:id="menuButtonVoices" layoutX="26.0" layoutY="685.0" mnemonicParsing="false" prefWidth="179.0" text="Voices" textFill="#79b4d1">
                            <items>
                               <MenuItem fx:id="voice1" mnemonicParsing="false" onAction="#handleVoice1" text="Voice 1" />
                               <MenuItem fx:id="voice2" mnemonicParsing="false" onAction="#handleVoice2" text="Voice 2" />
                               <MenuItem fx:id="voice3" mnemonicParsing="false" onAction="#handleVoice3" text="Voice 3" />
                            </items>
                            <font>
-                              <Font name="Manjari Regular" size="24.0" />
+                              <Font name="DejaVu Sans" size="24.0" />
                            </font>
                         </MenuButton>
-                        <MenuButton fx:id="buttonVoiceRate" layoutX="267.0" layoutY="693.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" text="0.75x">
+                        <MenuButton fx:id="buttonVoiceRate" layoutX="268.0" layoutY="685.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="179.0" text="0.75x" textFill="#79b4d1">
                            <items>
                               <MenuItem mnemonicParsing="false" onAction="#handleSpeedOne" text="0.5x" />
                               <MenuItem mnemonicParsing="false" onAction="#handleSpeedTwo" text="0.75x" />
@@ -160,10 +160,10 @@
                               <MenuItem mnemonicParsing="false" onAction="#handleSpeedFive" text="2x" />
                            </items>
                            <font>
-                              <Font name="Manjari Regular" size="24.0" />
+                              <Font name="DejaVu Sans" size="24.0" />
                            </font>
                         </MenuButton>
-                        <Button fx:id="buttonNext" layoutX="761.0" layoutY="693.0" mnemonicParsing="false" onAction="#handleButtonNext" text="Next: Select/Combine audio files">
+                        <Button fx:id="buttonNext" layoutX="742.0" layoutY="693.0" mnemonicParsing="false" onAction="#handleButtonNext" text="Next: Select/Combine audio files">
                            <font>
                               <Font name="Manjari Regular" size="24.0" />
                            </font>
@@ -189,7 +189,7 @@
                               <Font name="Manjari Regular" size="24.0" />
                            </font>
                         </Button>
-                        <Button layoutX="593.0" layoutY="694.0" mnemonicParsing="false" onAction="#handleButtonCombineNext" text="Next: Select number of images &amp; Create video">
+                        <Button layoutX="574.0" layoutY="693.0" mnemonicParsing="false" onAction="#handleButtonCombineNext" text="Next: Select number of images &amp; Create video">
                            <font>
                               <Font name="Manjari Regular" size="24.0" />
                            </font>
@@ -237,7 +237,7 @@
                               <Font name="DejaVu Sans ExtraLight" size="42.0" />
                            </font>
                         </Text>
-                        <TextField fx:id="textFieldName" layoutX="420.0" layoutY="564.0" promptText="Enter a name" visible="false">
+                        <TextField fx:id="textFieldName" layoutX="417.0" layoutY="575.0" promptText="Enter a name" visible="false">
                            <font>
                               <Font size="24.0" />
                            </font>
@@ -252,7 +252,7 @@
                               <Font name="DejaVu Sans ExtraLight" size="42.0" />
                            </font>
                         </Text>
-                        <Button fx:id="buttonEnter" layoutX="657.0" layoutY="164.0" mnemonicParsing="false" onAction="#handleButtonEnter" text="Enter">
+                        <Button fx:id="buttonEnter" layoutX="672.0" layoutY="172.0" mnemonicParsing="false" onAction="#handleButtonEnter" text="Enter">
                            <font>
                               <Font name="Manjari Regular" size="24.0" />
                            </font>
@@ -262,7 +262,7 @@
                               <Font name="Manjari Regular" size="24.0" />
                            </font>
                         </Button>
-                        <MenuButton fx:id="menuButtonNumber" layoutX="442.0" layoutY="164.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="161.0" text="Images">
+                        <MenuButton fx:id="menuButtonNumber" layoutX="380.0" layoutY="164.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="259.0" text="Images" textFill="#79b4d1">
                           <items>
                             <MenuItem mnemonicParsing="false" onAction="#handleNumber1" text="1" />
                             <MenuItem mnemonicParsing="false" onAction="#handleNumber2" text="2" />
@@ -276,7 +276,7 @@
                               <MenuItem mnemonicParsing="false" onAction="#handleNumber10" text="10" />
                           </items>
                            <font>
-                              <Font size="24.0" />
+                              <Font name="DejaVu Sans" size="24.0" />
                            </font>
                         </MenuButton>
                         <Text fx:id="textMusic" fill="WHITE" layoutX="97.0" layoutY="337.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Would you like music included in your creation?" visible="false">
@@ -284,21 +284,22 @@
                               <Font name="DejaVu Sans ExtraLight" size="42.0" />
                            </font>
                         </Text>
-                        <MenuButton fx:id="menuButtonMusic" layoutX="442.0" layoutY="384.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="161.0" text="Music" visible="false">
+                        <MenuButton fx:id="menuButtonMusic" layoutX="380.0" layoutY="384.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="260.0" text="Music" textFill="#79b4d1" visible="false">
                           <items>
                               <MenuItem mnemonicParsing="false" onAction="#handleMenuNoMusic" text="No music" />
                               <MenuItem mnemonicParsing="false" onAction="#handleMenuMusic1" text="Life-World" />
                               <MenuItem mnemonicParsing="false" onAction="#handleMenuMusic2" text="Marcello" />
                           </items>
                            <font>
-                              <Font size="24.0" />
+                              <Font name="DejaVu Sans" size="24.0" />
                            </font>
                         </MenuButton>
-                        <Button fx:id="buttonMusicEnter" layoutX="657.0" layoutY="384.0" mnemonicParsing="false" onAction="#handleButtonMusicEnter" text="Enter" visible="false">
+                        <Button fx:id="buttonMusicEnter" layoutX="672.0" layoutY="392.0" mnemonicParsing="false" onAction="#handleButtonMusicEnter" text="Enter" visible="false">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Button>
+                        <ProgressIndicator fx:id="createProgress" layoutX="664.0" layoutY="650.0" visible="false" />
                      </children>
                   </AnchorPane>
               </content>
@@ -313,12 +314,12 @@
                               <Font name="Manjari Regular" size="24.0" />
                            </font>
                         </Button>
-                        <Button fx:id="buttonPlay" layoutX="198.0" layoutY="613.0" mnemonicParsing="false" onAction="#handleButtonListPlay" prefWidth="305.0" text="Play Selected Creation">
+                        <Button fx:id="buttonPlay" layoutX="183.0" layoutY="613.0" mnemonicParsing="false" onAction="#handleButtonListPlay" prefHeight="50.0" prefWidth="334.0" text="Play Selected Creation">
                            <font>
                               <Font name="Manjari Regular" size="24.0" />
                            </font>
                         </Button>
-                        <Button fx:id="buttonDelete" layoutX="697.0" layoutY="613.0" mnemonicParsing="false" onAction="#handleButtonDelete" text="Delete Selected Creation">
+                        <Button fx:id="buttonDelete" layoutX="682.0" layoutY="613.0" mnemonicParsing="false" onAction="#handleButtonDelete" text="Delete Selected Creation">
                            <font>
                               <Font name="Manjari Regular" size="24.0" />
                            </font>
@@ -343,34 +344,34 @@
                                     <Font size="24.0" />
                                  </font>
                               </Button>
-                              <Button layoutX="1089.0" layoutY="709.0" mnemonicParsing="false" onAction="#handleButtonRetry" text="Retry">
+                              <Button layoutX="1066.0" layoutY="693.0" mnemonicParsing="false" onAction="#handleButtonRetry" text="Retry">
                                  <font>
                                     <Font size="24.0" />
                                  </font>
                               </Button>
-                              <Text fill="WHITE" layoutX="489.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quiz Summary" underline="true">
+                              <Text fill="WHITE" layoutX="459.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quiz Summary" underline="true">
                                  <font>
-                                    <Font size="30.0" />
+                                    <Font name="DejaVu Sans ExtraLight" size="38.0" />
                                  </font>
                               </Text>
                               <Text fill="WHITE" layoutX="562.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Score:">
                                  <font>
-                                    <Font size="24.0" />
+                                    <Font name="DejaVu Sans ExtraLight" size="24.0" />
                                  </font>
                               </Text>
                               <Text fx:id="textScoreSummary" fill="WHITE" layoutX="579.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="N/A">
                                  <font>
-                                    <Font size="24.0" />
+                                    <Font name="DejaVu Sans ExtraLight" size="24.0" />
                                  </font>
                               </Text>
                               <Text fill="WHITE" layoutX="380.0" layoutY="219.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Correct ">
                                  <font>
-                                    <Font size="20.0" />
+                                    <Font name="DejaVu Sans ExtraLight" size="20.0" />
                                  </font>
                               </Text>
                               <Text fill="WHITE" layoutX="643.0" layoutY="219.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Incorrect/Multiple Attempts">
                                  <font>
-                                    <Font size="20.0" />
+                                    <Font name="DejaVu Sans ExtraLight" size="20.0" />
                                  </font>
                               </Text>
                               <ListView fx:id="listViewCorrect" layoutX="320.0" layoutY="230.0" onMouseClicked="#handleListViewCorrect" prefHeight="200.0" prefWidth="200.0" />
@@ -391,17 +392,17 @@
                               </Button>
                               <Text fill="WHITE" layoutX="1082.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Score:">
                                  <font>
-                                    <Font size="30.0" />
+                                    <Font name="DejaVu Sans ExtraLight" size="30.0" />
                                  </font>
                               </Text>
                               <Text fx:id="textScore" fill="WHITE" layoutX="1102.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="N/A">
                                  <font>
-                                    <Font size="30.0" />
+                                    <Font name="DejaVu Sans ExtraLight" size="30.0" />
                                  </font>
                               </Text>
-                              <Text fill="WHITE" layoutX="424.0" layoutY="572.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Guess the search term:">
+                              <Text fill="WHITE" layoutX="412.0" layoutY="581.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Guess the search term:">
                                  <font>
-                                    <Font size="30.0" />
+                                    <Font name="DejaVu Sans ExtraLight" size="32.0" />
                                  </font>
                               </Text>
                               <TextField fx:id="textFieldAnswer" layoutX="444.0" layoutY="589.0" promptText="Term">
@@ -419,19 +420,19 @@
                                     <MediaView fx:id="mediaViewQuiz" fitHeight="500.0" fitWidth="700.0" />
                                  </children>
                               </StackPane>
-                              <Button fx:id="buttonQuizNext" disable="true" layoutX="1088.0" layoutY="709.0" mnemonicParsing="false" onAction="#handleButtonQuizNext" text="Next">
+                              <Button fx:id="buttonQuizNext" disable="true" layoutX="1066.0" layoutY="693.0" mnemonicParsing="false" onAction="#handleButtonQuizNext" text="Next">
                                  <font>
                                     <Font size="24.0" />
                                  </font>
                               </Button>
                               <Text fx:id="textCorrect" fill="WHITE" layoutX="464.0" layoutY="742.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Correct, good job!" visible="false">
                                  <font>
-                                    <Font size="30.0" />
+                                    <Font name="DejaVu Sans ExtraLight" size="30.0" />
                                  </font>
                               </Text>
                               <Text fx:id="textIncorrect" fill="WHITE" layoutX="406.0" layoutY="737.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Incorrect, please try again!" visible="false">
                                  <font>
-                                    <Font size="30.0" />
+                                    <Font name="DejaVu Sans ExtraLight" size="30.0" />
                                  </font>
                               </Text>
                            </children>

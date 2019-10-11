@@ -10,6 +10,9 @@ import javafx.fxml.FXMLLoader;
 
 
 public class Main extends Application {
+	
+	private static Scene _staticScene;
+	
 	@Override
 	public void start(Stage primaryStage) {
 
@@ -28,6 +31,8 @@ public class Main extends Application {
 			loader.setLocation(getClass().getResource("Menu.fxml"));
 			Parent layout = loader.load();
 			Scene scene = new Scene(layout);
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			_staticScene = scene;
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch(Exception e) {
@@ -37,6 +42,10 @@ public class Main extends Application {
 	
 	public static void main(String[] args) {
 		launch(args);
+	}
+	
+	public static Scene getScene() {
+		return _staticScene;
 	}
 	
 	
