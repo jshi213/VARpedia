@@ -64,7 +64,7 @@ public class MenuController {
 	private TextArea textAreaResults;
 	
 	@FXML
-	private MenuButton menuButtonVoices, buttonVoiceRate;
+	private MenuButton menuButtonVoices, buttonVoiceRate, menuButtonNumber, menuButtonMusic;
 	
 	@FXML
 	private MenuItem voice1, voice2, voice3;
@@ -82,13 +82,13 @@ public class MenuController {
 	private ObservableList<String> listAudioFiles, listSelected;
 	
 	@FXML
-	private Button buttonEnter, buttonImageCreate;
+	private Button buttonEnter, buttonImageCreate, buttonMusicEnter;
 	
 	@FXML
-	private TextField textFieldNumber, textFieldName;
+	private TextField textFieldName;
 	
 	@FXML 
-	private Text textName;
+	private Text textName, textMusic;
 	
 	@FXML
 	private ListView<String> listView;
@@ -138,6 +138,8 @@ public class MenuController {
 	
 	boolean incorrectAttempt = false, added = false;
 	
+	public static boolean music = false;
+	
 	@FXML
 	private Pane paneQuiz, paneSummary;
 	
@@ -155,6 +157,9 @@ public class MenuController {
 	
 	@FXML
 	private Text textScoreSummary;
+	
+	//music
+	public static String musicFile;
 	
 	
 	@FXML
@@ -665,31 +670,104 @@ public class MenuController {
 	
 	//image selection tab
 	@FXML
+	private void handleNumber1() {
+		menuButtonNumber.setText("1");
+		number = 1;
+		buttonEnter.setDisable(false);
+	}
+	@FXML
+	private void handleNumber2() {
+		menuButtonNumber.setText("2");
+		number = 2;
+		buttonEnter.setDisable(false);
+	}
+	@FXML
+	private void handleNumber3() {
+		menuButtonNumber.setText("3");
+		number = 3;
+		buttonEnter.setDisable(false);
+	}
+	@FXML
+	private void handleNumber4() {
+		menuButtonNumber.setText("4");
+		number = 4;
+		buttonEnter.setDisable(false);
+	}
+	@FXML
+	private void handleNumber5() {
+		menuButtonNumber.setText("5");
+		number = 5;
+		buttonEnter.setDisable(false);
+	}
+	@FXML
+	private void handleNumber6() {
+		menuButtonNumber.setText("6");
+		number = 6;
+		buttonEnter.setDisable(false);
+	}
+	@FXML
+	private void handleNumber7() {
+		menuButtonNumber.setText("7");
+		number = 7;
+		buttonEnter.setDisable(false);
+	}
+	@FXML
+	private void handleNumber8() {
+		menuButtonNumber.setText("8");
+		number = 8;
+		buttonEnter.setDisable(false);
+	}
+	@FXML
+	private void handleNumber9() {
+		menuButtonNumber.setText("9");
+		number = 9;
+		buttonEnter.setDisable(false);
+	}
+	@FXML
+	private void handleNumber10() {
+		menuButtonNumber.setText("10");
+		number = 10;
+		buttonEnter.setDisable(false);
+	}
+	
+	@FXML
 	private void handleButtonEnter() {
-		number = -1;
-		String numberField = textFieldNumber.getText();
-		if (!numberField.isEmpty() && numberField.trim().length() != 0){
-			number = Integer.valueOf(textFieldNumber.getText());
-		}
-		// alert if less than 0 or greater than 10, display next question if valid number
-		if (number > 10 || number < 1) {
-			String error = "Please enter a number between 1 and 10";
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setContentText(error);
-			alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-			alert.showAndWait().ifPresent(response -> {
-				if (response == ButtonType.OK) {
-					textFieldNumber.setText("");
-				}
-			});
-		} else { 
-			textName.setVisible(true);
-			textFieldName.setVisible(true);
-			buttonImageCreate.setVisible(true);
-			textFieldNumber.setEditable(false);
-		}
+			menuButtonMusic.setVisible(true);
+			buttonMusicEnter.setVisible(true);
+			textMusic.setVisible(true);
 	
 	}
+	
+	@FXML
+	private void handleMenuNoMusic() {
+		menuButtonMusic.setText("No Music");
+		music = false;
+		buttonEnter.setDisable(false);
+	}
+	
+	@FXML
+	private void handleMenuMusic1() {
+		menuButtonMusic.setText("Life-World");
+		music = true;
+		buttonEnter.setDisable(false);
+		musicFile = new File("Music/VJ_Memes_-_Life-World.mp3").getAbsolutePath();
+	}
+	
+	@FXML
+	private void handleMenuMusic2() {
+		menuButtonMusic.setText("Marcello");
+		music = true;
+		buttonEnter.setDisable(false);
+		musicFile = new File("Music/VJ_Memes_-_Marcello.mp3").getAbsolutePath();
+	}
+	
+	@FXML
+	private void handleButtonMusicEnter() {
+		textName.setVisible(true);
+		textFieldName.setVisible(true);
+		buttonImageCreate.setVisible(true);
+	}
+	
 	
 	@FXML
 	private void handleButtonImageCreate(ActionEvent event) {
