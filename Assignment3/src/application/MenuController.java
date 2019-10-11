@@ -183,6 +183,7 @@ public class MenuController {
 			e.printStackTrace();
 		}
 		
+		
 		menuTab.setOnSelectionChanged(e -> {
 			File dir = new File("audiofiles");
 			if (dir.isDirectory()) {
@@ -199,7 +200,9 @@ public class MenuController {
 			
 			listViewAudioFiles.refresh();
 			listViewSelected.refresh();
+			listViewSelected.getItems().clear();
 			
+		//	audioCombinationTab
 			
 			menuButtonMusic.setText("Music");
 			menuButtonNumber.setText("Images");
@@ -707,95 +710,94 @@ public class MenuController {
 		menuButtonNumber.setText("1");
 		number = 1;
 		buttonEnter.setDisable(false);
+		setVisibleMusic();
 	}
 	@FXML
 	private void handleNumber2() {
 		menuButtonNumber.setText("2");
 		number = 2;
-		buttonEnter.setDisable(false);
+		setVisibleMusic();
 	}
 	@FXML
 	private void handleNumber3() {
 		menuButtonNumber.setText("3");
 		number = 3;
-		buttonEnter.setDisable(false);
+		setVisibleMusic();
 	}
 	@FXML
 	private void handleNumber4() {
 		menuButtonNumber.setText("4");
 		number = 4;
-		buttonEnter.setDisable(false);
+		setVisibleMusic();
 	}
 	@FXML
 	private void handleNumber5() {
 		menuButtonNumber.setText("5");
 		number = 5;
-		buttonEnter.setDisable(false);
+		setVisibleMusic();
 	}
 	@FXML
 	private void handleNumber6() {
 		menuButtonNumber.setText("6");
 		number = 6;
-		buttonEnter.setDisable(false);
+		setVisibleMusic();
 	}
 	@FXML
 	private void handleNumber7() {
 		menuButtonNumber.setText("7");
 		number = 7;
-		buttonEnter.setDisable(false);
+		setVisibleMusic();
 	}
 	@FXML
 	private void handleNumber8() {
 		menuButtonNumber.setText("8");
 		number = 8;
-		buttonEnter.setDisable(false);
+		setVisibleMusic();
 	}
 	@FXML
 	private void handleNumber9() {
 		menuButtonNumber.setText("9");
 		number = 9;
-		buttonEnter.setDisable(false);
+		setVisibleMusic();
 	}
 	@FXML
 	private void handleNumber10() {
 		menuButtonNumber.setText("10");
 		number = 10;
-		buttonEnter.setDisable(false);
+		setVisibleMusic();
 	}
 	
 	@FXML
-	private void handleButtonEnter() {
+	private void setVisibleMusic() {
 			menuButtonMusic.setVisible(true);
-			buttonMusicEnter.setVisible(true);
 			textMusic.setVisible(true);
-	
 	}
 	
 	@FXML
 	private void handleMenuNoMusic() {
 		menuButtonMusic.setText("No Music");
 		music = false;
-		buttonEnter.setDisable(false);
+		setVisibleName();
 	}
 	
 	@FXML
 	private void handleMenuMusic1() {
 		menuButtonMusic.setText("Life-World");
 		music = true;
-		buttonEnter.setDisable(false);
 		musicFile = new File("Music/VJ_Memes_-_Life-World.mp3").getAbsolutePath();
+		setVisibleName();
 	}
 	
 	@FXML
 	private void handleMenuMusic2() {
 		menuButtonMusic.setText("Marcello");
 		music = true;
-		buttonEnter.setDisable(false);
 		musicFile = new File("Music/VJ_Memes_-_Marcello.mp3").getAbsolutePath();
+		setVisibleName();
 	}
 	
 	@FXML
-	private void handleButtonMusicEnter() {
+	private void setVisibleName() {
 		textName.setVisible(true);
 		textFieldName.setVisible(true);
 		buttonImageCreate.setVisible(true);
@@ -1039,7 +1041,7 @@ public class MenuController {
 		}
 	}
 	
-	// start the quiz from teh beginning
+	// start the quiz from the beginning
 	@FXML
 	private void handleButtonRetry(ActionEvent event) throws IOException {
 		EventHandler<Event> e = quizTab.getOnSelectionChanged();

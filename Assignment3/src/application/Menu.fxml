@@ -252,17 +252,12 @@
                               <Font name="DejaVu Sans ExtraLight" size="42.0" />
                            </font>
                         </Text>
-                        <Button fx:id="buttonEnter" layoutX="672.0" layoutY="172.0" mnemonicParsing="false" onAction="#handleButtonEnter" text="Enter">
-                           <font>
-                              <Font name="Manjari Regular" size="24.0" />
-                           </font>
-                        </Button>
                         <Button fx:id="buttonBack2" layoutX="35.0" layoutY="29.0" mnemonicParsing="false" onAction="#handleButtonBack" text="Back">
                            <font>
                               <Font name="Manjari Regular" size="24.0" />
                            </font>
                         </Button>
-                        <MenuButton fx:id="menuButtonNumber" layoutX="380.0" layoutY="164.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="259.0" text="Images" textFill="#79b4d1">
+                        <MenuButton fx:id="menuButtonNumber" layoutX="446.0" layoutY="161.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="259.0" text="Images" textFill="#79b4d1">
                           <items>
                             <MenuItem mnemonicParsing="false" onAction="#handleNumber1" text="1" />
                             <MenuItem mnemonicParsing="false" onAction="#handleNumber2" text="2" />
@@ -284,7 +279,7 @@
                               <Font name="DejaVu Sans ExtraLight" size="42.0" />
                            </font>
                         </Text>
-                        <MenuButton fx:id="menuButtonMusic" layoutX="380.0" layoutY="384.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="260.0" text="Music" textFill="#79b4d1" visible="false">
+                        <MenuButton fx:id="menuButtonMusic" layoutX="446.0" layoutY="384.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="260.0" text="Music" textFill="#79b4d1" visible="false">
                           <items>
                               <MenuItem mnemonicParsing="false" onAction="#handleMenuNoMusic" text="No music" />
                               <MenuItem mnemonicParsing="false" onAction="#handleMenuMusic1" text="Life-World" />
@@ -294,11 +289,6 @@
                               <Font name="DejaVu Sans" size="24.0" />
                            </font>
                         </MenuButton>
-                        <Button fx:id="buttonMusicEnter" layoutX="672.0" layoutY="392.0" mnemonicParsing="false" onAction="#handleButtonMusicEnter" text="Enter" visible="false">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Button>
                         <ProgressIndicator fx:id="createProgress" layoutX="664.0" layoutY="650.0" visible="false" />
                      </children>
                   </AnchorPane>
