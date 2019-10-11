@@ -90,7 +90,7 @@ public class FlickrProcess extends Task<Void> {
 			MenuScene menuScene = new MenuScene();
 			Platform.runLater(menuScene);
 		}
-
+ 
 	}
 	
 	private File tempScript() {
