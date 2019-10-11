@@ -185,28 +185,28 @@ public class MenuController {
 		
 		
 		menuTab.setOnSelectionChanged(e -> {
-			File dir = new File("audiofiles");
-			if (dir.isDirectory()) {
-				File[] children = dir.listFiles();
-				for (int i = 0; i < children.length; i++) {
-					children[i].delete();
-				}
-			}
+//			File dir = new File("audiofiles");
+//			if (dir.isDirectory()) {
+//				File[] children = dir.listFiles();
+//				for (int i = 0; i < children.length; i++) {
+//					children[i].delete();
+//				}
+//			}
 			
-			textFieldTerm1.clear();
-			textAreaResults.clear();
-			audioList.refresh();
-			textFieldAudioName.clear();
-			
-			listViewAudioFiles.refresh();
-			listViewSelected.refresh();
-			listViewSelected.getItems().clear();
-			
-		//	audioCombinationTab
-			
-			menuButtonMusic.setText("Music");
-			menuButtonNumber.setText("Images");
-			textFieldName.clear();
+//			textFieldTerm1.clear();
+//			textAreaResults.clear();
+//			audioList.refresh();
+//			textFieldAudioName.clear();
+//			
+//			listViewAudioFiles.refresh();
+//			listViewSelected.refresh();
+//			listViewSelected.getItems().clear();
+//			
+//		//	audioCombinationTab
+//			
+//			menuButtonMusic.setText("Music");
+//			menuButtonNumber.setText("Images");
+//			textFieldName.clear();
 		});
 		
 		audioCombinationTab.setOnSelectionChanged (e -> {
@@ -829,6 +829,20 @@ public class MenuController {
 
 		FlickrProcess flickrProcess = new FlickrProcess(number, creation);
 		team.submit(flickrProcess);
+		textFieldTerm1.clear();
+		textAreaResults.clear();
+		audioList.refresh();
+		textFieldAudioName.clear();
+		
+		listViewAudioFiles.refresh();
+		listViewSelected.refresh();
+		listViewSelected.getItems().clear();
+		
+	//	audioCombinationTab
+		
+		menuButtonMusic.setText("Music");
+		menuButtonNumber.setText("Images");
+		textFieldName.clear();
 	}
 	
 	@FXML
@@ -1055,7 +1069,5 @@ public class MenuController {
 		tabPane.getSelectionModel().select(0);
 		resetQuiz();
 	}
-	
-	
 	
 }
