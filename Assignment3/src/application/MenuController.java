@@ -200,6 +200,7 @@ public class MenuController {
 			listViewAudioFiles.refresh();
 			listViewSelected.refresh();
 			
+			
 			menuButtonMusic.setText("Music");
 			menuButtonNumber.setText("Images");
 			textFieldName.clear();
