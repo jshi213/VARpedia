@@ -57,6 +57,8 @@ public class MenuController {
 	@FXML
 	private Tab menuTab, searchTab, audioSelectionTab, audioCombinationTab, imageTab, listTab, quizTab, quizSummaryTab;
 	
+	private int lastTab;
+	
 	@FXML
 	private TextField textFieldTerm, textFieldTerm1, textFieldAudioName;
 	
@@ -99,7 +101,6 @@ public class MenuController {
 	private static String _selected;
 	
 	private int number;
-	private static Alert staticImageAlert;
 	
 	private ExecutorService team = Executors.newSingleThreadExecutor(); 
 	private static String _searchTerm;
@@ -117,6 +118,7 @@ public class MenuController {
 	
 	// quiz fields
 	private String[] listQuiz;
+
 	
 	private String term;
 	public static int levels, currentLevel, score;
@@ -183,30 +185,12 @@ public class MenuController {
 			e.printStackTrace();
 		}
 		
-		
 		menuTab.setOnSelectionChanged(e -> {
-//			File dir = new File("audiofiles");
-//			if (dir.isDirectory()) {
-//				File[] children = dir.listFiles();
-//				for (int i = 0; i < children.length; i++) {
-//					children[i].delete();
-//				}
-//			}
-			
-//			textFieldTerm1.clear();
-//			textAreaResults.clear();
-//			audioList.refresh();
-//			textFieldAudioName.clear();
-//			
-//			listViewAudioFiles.refresh();
-//			listViewSelected.refresh();
-//			listViewSelected.getItems().clear();
-//			
-//		//	audioCombinationTab
-//			
-//			menuButtonMusic.setText("Music");
-//			menuButtonNumber.setText("Images");
-//			textFieldName.clear();
+			lastTab = 0;
+		});
+		
+		searchTab.setOnSelectionChanged(e -> {
+			lastTab = 1;
 		});
 		
 		audioCombinationTab.setOnSelectionChanged (e -> {
@@ -225,6 +209,8 @@ public class MenuController {
 			listAudioFiles = listViewAudioFiles.getItems();
 			listAudioFiles.setAll(listofaudiofilesarray);
 			audioCombinationTab.setDisable(false); 
+			listViewSelected.getItems().clear();
+			lastTab = 3;
 		});
 		
 		listTab.setOnSelectionChanged(e -> {
@@ -241,6 +227,7 @@ public class MenuController {
 			String[] listofcreationsarray = listofcreations.split("\n");
 			list = listView.getItems();
 			list.setAll(listofcreationsarray);
+			lastTab = 5;
 		});
 		
 		audioSelectionTab.setOnSelectionChanged(e -> {
@@ -258,43 +245,75 @@ public class MenuController {
 			String[] listofaudiofilesarray = listofaudiofiles.split("\n");
 			audioFiles = audioList.getItems();
 			audioFiles.setAll(listofaudiofilesarray);
+			lastTab = 2;
+		});
+		
+		imageTab.setOnSelectionChanged(e -> {
+			lastTab = 4;
 		});
 		
 		quizTab.setOnSelectionChanged(e -> {
 			resetQuiz();
-			textFieldAnswer.clear();
-			textCorrect.setVisible(false);
-			textIncorrect.setVisible(false);
-			buttonQuizNext.setText("Next");
-			buttonQuizEnter.setDisable(false);
-			score = 0;
 			File dir = new File("Quiz/");
-			listQuiz = dir.list();
-			currentLevel = 0;
-			levels = listQuiz.length;
-			textScore.setText("0/" + levels);
-			int i = 0;
-			while (i < listQuiz.length) {
-				listQuiz[i] = listQuiz[i].substring(0, listQuiz[i].length()-4);
-				i++;
+			int length = 0;
+			String[] list1 = dir.list();
+			for (String fileName : list1) {
+				File file = new File("Quiz/"+fileName);
+				if (!file.isHidden()){
+					length++;
+				}
 			}
-				String path = new File("Quiz/" + listQuiz[currentLevel] + ".mp4").getAbsolutePath();
-				mediaQuiz = new Media(new File(path).toURI().toString());
-				mediaPlayer = new MediaPlayer(mediaQuiz);
-				mediaViewQuiz.setMediaPlayer(mediaPlayer);
-				mediaPlayer.setAutoPlay(true);
-				mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-				
-				
 			
-				String[] termNames = listQuiz[currentLevel].split("-");
-				term = termNames[1];
-
+//			if (dir.exists() && length > 0) {
+				textFieldAnswer.clear();
+				textCorrect.setVisible(false);
+				textIncorrect.setVisible(false);
+				buttonQuizNext.setText("Next");
+				buttonQuizEnter.setDisable(false);
+				score = 0;
+				File dir1 = new File("Quiz/");
+				listQuiz = dir1.list();
+				currentLevel = 0;
+				levels = listQuiz.length;
 				textScore.setText("0/" + levels);
+				int i = 0;
+				while (i < listQuiz.length) {
+					listQuiz[i] = listQuiz[i].substring(0, listQuiz[i].length()-4);
+					i++;
+				}
+				if (listQuiz.length > 0 && !listQuiz[currentLevel].startsWith(".")) {
+					String path = new File("Quiz/" + listQuiz[currentLevel] + ".mp4").getAbsolutePath();
+					mediaQuiz = new Media(new File(path).toURI().toString());
+					mediaPlayer = new MediaPlayer(mediaQuiz);
+					mediaViewQuiz.setMediaPlayer(mediaPlayer);
+					mediaPlayer.setAutoPlay(true);
+					mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+
+					String[] termNames = listQuiz[currentLevel].split("-");
+					term = termNames[1];
+
+					textScore.setText("0/" + levels);
+
+					correct = new ArrayList<>();
+					incorrect = new ArrayList<>();
+				}
 				
-				correct = new ArrayList<>();
-				incorrect = new ArrayList<>();
-				
+				if (levels == 1) {
+					buttonQuizNext.setText("Finish");
+				}
+
+
+//				else {
+//					Alert alert = new Alert(AlertType.INFORMATION);
+//					alert.setContentText("There are no creations to test you on");
+//					alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+//					alert.showAndWait().ifPresent(response -> {
+//					});
+//					tabPane.getSelectionModel().select(lastTab);
+//				}
+
+
+
 		});
 		
 	}
@@ -311,25 +330,19 @@ public class MenuController {
 	        	} else if (Main.getScene().getFocusOwner() == textFieldName) {
 	        		buttonImageCreate.fire();
 	        		ev.consume();
+	        	} else if (Main.getScene().getFocusOwner() == textFieldAnswer) {
+	        		buttonQuizEnter.fire();
+	        		ev.consume();
 	        	}
+	        		
 	        }
 	    });
 	}
 	
 	@FXML
 	private void handleButtonList(ActionEvent event) throws IOException {
-		// check if the Creations folder exists/if it isn't and if true, change to the list scene
-		File dir = new File("Creations/");
-		if (dir.exists() && dir.list().length > 0) {
 			tabPane.getSelectionModel().select(5);
-		}
-		else {
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setContentText("There are no creations to view");
-			alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-			alert.showAndWait().ifPresent(response -> {
-			});
-		}
+
 	}
 	
 	@FXML
@@ -709,7 +722,6 @@ public class MenuController {
 	private void handleNumber1() {
 		menuButtonNumber.setText("1");
 		number = 1;
-		buttonEnter.setDisable(false);
 		setVisibleMusic();
 	}
 	@FXML
@@ -766,13 +778,12 @@ public class MenuController {
 		number = 10;
 		setVisibleMusic();
 	}
-	
+
 	@FXML
 	private void setVisibleMusic() {
-			menuButtonMusic.setVisible(true);
-			textMusic.setVisible(true);
+		menuButtonMusic.setDisable(false);
 	}
-	
+
 	@FXML
 	private void handleMenuNoMusic() {
 		menuButtonMusic.setText("No Music");
@@ -798,9 +809,8 @@ public class MenuController {
 	
 	@FXML
 	private void setVisibleName() {
-		textName.setVisible(true);
-		textFieldName.setVisible(true);
-		buttonImageCreate.setVisible(true);
+		textFieldName.setDisable(false);
+		buttonImageCreate.setDisable(false);
 	}
 	
 	
@@ -843,6 +853,8 @@ public class MenuController {
 		menuButtonMusic.setText("Music");
 		menuButtonNumber.setText("Images");
 		textFieldName.clear();
+		imageTab.setDisable(true);
+		audioCombinationTab.setDisable(true);
 	}
 	
 	@FXML

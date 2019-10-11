@@ -232,17 +232,17 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Text fx:id="textName" fill="WHITE" layoutX="59.0" layoutY="536.0" strokeType="OUTSIDE" strokeWidth="0.0" text="What would you like to name your final creation?" visible="false">
+                        <Text fx:id="textName" fill="WHITE" layoutX="59.0" layoutY="536.0" strokeType="OUTSIDE" strokeWidth="0.0" text="What would you like to name your final creation?">
                            <font>
                               <Font name="DejaVu Sans ExtraLight" size="42.0" />
                            </font>
                         </Text>
-                        <TextField fx:id="textFieldName" layoutX="417.0" layoutY="575.0" promptText="Enter a name" visible="false">
+                        <TextField fx:id="textFieldName" disable="true" layoutX="417.0" layoutY="575.0" promptText="Enter a name">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </TextField>
-                        <Button fx:id="buttonImageCreate" layoutX="522.0" layoutY="651.0" mnemonicParsing="false" onAction="#handleButtonImageCreate" text="Create" visible="false">
+                        <Button fx:id="buttonImageCreate" disable="true" layoutX="522.0" layoutY="651.0" mnemonicParsing="false" onAction="#handleButtonImageCreate" text="Create">
                            <font>
                               <Font name="Manjari Regular" size="24.0" />
                            </font>
@@ -274,12 +274,12 @@
                               <Font name="DejaVu Sans" size="24.0" />
                            </font>
                         </MenuButton>
-                        <Text fx:id="textMusic" fill="WHITE" layoutX="97.0" layoutY="337.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Would you like music included in your creation?" visible="false">
+                        <Text fx:id="textMusic" fill="WHITE" layoutX="97.0" layoutY="337.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Would you like music included in your creation?">
                            <font>
                               <Font name="DejaVu Sans ExtraLight" size="42.0" />
                            </font>
                         </Text>
-                        <MenuButton fx:id="menuButtonMusic" layoutX="446.0" layoutY="384.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="260.0" text="Music" textFill="#79b4d1" visible="false">
+                        <MenuButton fx:id="menuButtonMusic" disable="true" layoutX="446.0" layoutY="384.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="260.0" text="Music" textFill="#79b4d1">
                           <items>
                               <MenuItem mnemonicParsing="false" onAction="#handleMenuNoMusic" text="No music" />
                               <MenuItem mnemonicParsing="false" onAction="#handleMenuMusic1" text="Life-World" />
