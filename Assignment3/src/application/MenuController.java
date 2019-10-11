@@ -779,6 +779,13 @@ public class MenuController {
 			if (response == ButtonType.OK) {
 				File fileDelete = new File("Creations/" + _selected + ".mp4");
 				fileDelete.delete();
+				File dirQuiz = new File("Quiz/");
+				File[] files = dirQuiz.listFiles(); 
+				for (File f : files) {
+					if (f.getName().startsWith(_selected)) {
+						f.delete();
+					}
+				}
 				_selected = null;
 				String listofcreations = "";
 				File dir = new File("Creations/");
