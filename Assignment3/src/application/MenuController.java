@@ -186,11 +186,14 @@ public class MenuController {
 	private void setGlobalEventHandler(Node root) {
 	    root.addEventHandler(KeyEvent.KEY_PRESSED, ev -> {
 	        if (ev.getCode() == KeyCode.ENTER) {
-	        	if(tabPane.getSelectionModel().getSelectedItem() == searchTab || tabPane.getSelectionModel().getSelectedItem() == audioSelectionTab) {
+	        	if(Main.getScene().getFocusOwner() == textFieldTerm || Main.getScene().getFocusOwner() == textFieldTerm1) {
 	        		buttonSearch.fire();
 	        		ev.consume(); 
 	        	} else if (Main.getScene().getFocusOwner() == textFieldAudioName) {
 	        		buttonSave.fire();
+	        		ev.consume();
+	        	} else if (Main.getScene().getFocusOwner() == textFieldName) {
+	        		buttonImageCreate.fire();
 	        		ev.consume();
 	        	}
 	        }
