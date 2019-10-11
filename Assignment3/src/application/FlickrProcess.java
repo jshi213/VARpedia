@@ -117,7 +117,7 @@ public class FlickrProcess extends Task<Void> {
 			printWriter.println("cd downloads");
 			// create video
 			if (MenuController.music == true) {
-				printWriter.println("ffmpeg -i ../audiofiles/combined.wav -i " + MenuController.musicFile + " -filter_complex amerge -c:a libmp3lame -q:a 4 speechmusic.mp3");
+				printWriter.println("ffmpeg -i ../audiofiles/combined.wav -i " + MenuController.musicFile + " -filter_complex amerge -c:a libmp3lame -q:a 4 speechmusic.mp3 &>/dev/null");
 				printWriter.println("cat *.jpg | ffmpeg -f image2pipe -framerate 1/" + secondsPerImage + " -i - -i speechmusic.mp3 -c:v libx264 -pix_fmt yuv420p -vf \"pad=ceil(iw/2)*2:ceil(ih/2)*2\" -r 25 -max_muxing_queue_size 1024 -y audioslideshow.mp4 &>/dev/null");
 				printWriter.println();
 			}
