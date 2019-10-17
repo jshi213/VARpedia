@@ -145,7 +145,6 @@
                            <items>
                               <MenuItem fx:id="voice1" mnemonicParsing="false" onAction="#handleVoice1" text="Voice 1" />
                               <MenuItem fx:id="voice2" mnemonicParsing="false" onAction="#handleVoice2" text="Voice 2" />
-                              <MenuItem fx:id="voice3" mnemonicParsing="false" onAction="#handleVoice3" text="Voice 3" />
                            </items>
                            <font>
                               <Font name="DejaVu Sans" size="24.0" />

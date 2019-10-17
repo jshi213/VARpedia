@@ -69,7 +69,7 @@ public class MenuController {
 	private MenuButton menuButtonVoices, buttonVoiceRate, menuButtonNumber, menuButtonMusic;
 	
 	@FXML
-	private MenuItem voice1, voice2, voice3;
+	private MenuItem voice1, voice2;
 	
 	@FXML
 	private ListView<String> audioList;
@@ -447,6 +447,8 @@ public class MenuController {
 			alert.showAndWait();
 			return;
 		}
+		_selectedText = _selectedText.replace("(", "");
+		_selectedText = _selectedText.replace(")", "");
 		FileWriter writer2 = new FileWriter("temporaryfiles/preview.scm", true);
 		writer2.write("(SayText \"" + _selectedText + "\")");
 		writer2.close();
@@ -467,12 +469,6 @@ public class MenuController {
 	private void handleVoice2(ActionEvent event) throws IOException {
 		menuButtonVoices.setText("Voice 2");
 		_voiceSelection = "(voice_akl_nz_jdt_diphone)\n";
-	}
-	
-	@FXML
-	private void handleVoice3(ActionEvent event) throws IOException {
-		menuButtonVoices.setText("Voice 3");
-		_voiceSelection = "(voice_akl_nz_cw_cg_cg)\n";
 	}
 	
 	@FXML
