@@ -816,14 +816,24 @@ public class MenuController {
 	
 	@FXML
 	private void handleButtonImageCreate(ActionEvent event) {
+		String creation = textFieldName.getText();
+		//alert for no spaces in name
+		if(creation.contains(" ")) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("No spaces");
+			alert.setHeaderText(null);
+			alert.setContentText("Please enter a name with no spaces");
+			alert.showAndWait();
+			return;
+		}
+		
 		createProgress.setVisible(true);
 		//alert if invalid name
-		String creation = textFieldName.getText();
 		if(creation.isEmpty() || creation.trim().length() == 0) {
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.setTitle("Enter a name");
 			alert.setHeaderText(null);
-			alert.setContentText("Please enter a name for you creation");
+			alert.setContentText("Please enter a name for your creation");
 			alert.showAndWait();
 			return;
 		}
