@@ -132,7 +132,7 @@ public class FlickrProcess extends Task<Void> {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return null; 
 		
 		
 	}

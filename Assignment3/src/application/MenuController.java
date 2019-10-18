@@ -144,7 +144,7 @@ public class MenuController {
 	public static boolean music = false;
 	
 	@FXML
-	private Pane paneQuiz, paneSummary;
+	private Pane paneQuiz, paneSummary, paneNoCreations; //add
 	
 	// quiz summary fields
 	@FXML
@@ -252,27 +252,31 @@ public class MenuController {
 			lastTab = 4;
 		});
 		
-		quizTab.setOnSelectionChanged(e -> {
+		quizTab.setOnSelectionChanged(e -> { //changed
 			resetQuiz();
 			File dir = new File("Quiz/");
 			int length = 0;
 			String[] list1 = dir.list();
+			ArrayList<String> arrayListQuiz = new ArrayList<>();
+			
 			for (String fileName : list1) {
-				File file = new File("Quiz/"+fileName);
-				if (!file.isHidden()){
-					length++;
+			//	File file = new File("Quiz/"+fileName);
+				if (!fileName.startsWith(".")){
+					arrayListQuiz.add(fileName);
 				}
 			}
 			
-//			if (dir.exists() && length > 0) {
+			if (dir.exists() && arrayListQuiz.size() > 0) {
 				textFieldAnswer.clear();
 				textCorrect.setVisible(false);
 				textIncorrect.setVisible(false);
 				buttonQuizNext.setText("Next");
+				buttonQuizNext.setDisable(true);
 				buttonQuizEnter.setDisable(false);
 				score = 0;
-				File dir1 = new File("Quiz/");
-				listQuiz = dir1.list();
+				//File dir1 = new File("Quiz/");
+			//	listQuiz = dir1.list();
+				listQuiz = arrayListQuiz.toArray(new String[arrayListQuiz.size()]); //add
 				currentLevel = 0;
 				levels = listQuiz.length;
 				textScore.setText("0/" + levels);
@@ -297,24 +301,21 @@ public class MenuController {
 					correct = new ArrayList<>();
 					incorrect = new ArrayList<>();
 				}
-				
+
 				if (levels == 1) {
 					buttonQuizNext.setText("Finish");
 				}
-
-
-//				else {
-//					Alert alert = new Alert(AlertType.INFORMATION);
-//					alert.setContentText("There are no creations to test you on");
-//					alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-//					alert.showAndWait().ifPresent(response -> {
-//					});
-//					tabPane.getSelectionModel().select(lastTab);
-//				}
+				
+			}	
+			else {
+				paneNoCreations.setVisible(true);
+				paneSummary.setVisible(false);
+				paneQuiz.setVisible(false);
+			}
+	    });
 
 
 
-		});
 		
 	}
 	
@@ -1042,7 +1043,8 @@ public class MenuController {
 	
 	// reset the scene for the quiz
 	@FXML
-	private void resetQuiz() {
+	private void resetQuiz() { //changed
+		paneNoCreations.setVisible(false); //add
 		paneSummary.setVisible(false);
 		paneQuiz.setVisible(true);
 	}

@@ -23,4 +23,4 @@ public class MenuScene implements Runnable {
 		}
 	}
 
-}
+} 

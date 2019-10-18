@@ -426,6 +426,15 @@
                               </Text>
                            </children>
                         </Pane>
+                        <Pane fx:id="paneNoCreations" prefHeight="767.0" prefWidth="1200.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <Text fill="WHITE" layoutX="153.0" layoutY="327.0" strokeType="OUTSIDE" strokeWidth="0.0" text="There are no creations to test you on">
+                                 <font>
+                                    <Font name="DejaVu Sans ExtraLight" size="48.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </Pane>
                      </children>
                   </AnchorPane>
               </content>
