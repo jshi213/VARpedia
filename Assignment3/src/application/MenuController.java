@@ -46,7 +46,7 @@ public class MenuController {
 	private Text text;
 	
 	@FXML
-	private Button buttonCreate, buttonList, buttonSearch, buttonSave;
+	private Button buttonCreate, buttonList, buttonSearch, buttonSave, buttonPreview, buttonAudioPlay;
 
 	@FXML
 	private Pane rootPane;
@@ -115,6 +115,8 @@ public class MenuController {
 	private static ProgressIndicator _staticProgressIndicator, _staticCreateProgress;
 	private static TabPane _staticTabPane;
 	private MediaPlayer mediaPlayer;
+	private static Button _staticButtonPreview;
+	private static Tab _staticImageTab;
 	
 	// quiz fields
 	private String[] listQuiz;
@@ -434,10 +436,6 @@ public class MenuController {
 	
 	@FXML
 	private void handleButtonPreview(ActionEvent event) throws IOException {
-		FileWriter writer = new FileWriter("temporaryfiles/preview.scm", false);
-		writer.write(_voiceSelection);
-		writer.write(_voiceRate);
-		writer.close();
 		_selectedText = textAreaResults.getSelectedText();
 		if(_selectedText.length() - _selectedText.replaceAll(" ", "").length() > 39) {
 			Alert alert = new Alert(AlertType.WARNING);
@@ -449,14 +447,24 @@ public class MenuController {
 		}
 		_selectedText = _selectedText.replace("(", "");
 		_selectedText = _selectedText.replace(")", "");
-		FileWriter writer2 = new FileWriter("temporaryfiles/preview.scm", true);
-		writer2.write("(SayText \"" + _selectedText + "\")");
-		writer2.close();
 		
+		buttonPreview.setDisable(true);
+		_staticButtonPreview = buttonPreview;
+		FileWriter scmwriter = new FileWriter("temporaryfiles/preview.scm", false);
+		scmwriter.write(_voiceSelection);
+		scmwriter.write(_voiceRate);
+		scmwriter.close();
+		FileWriter writer = new FileWriter("temporaryfiles/audiotext", false);
+		writer.write(_selectedText);
+		writer.close();
 		
-		ProcessBuilder pb1 = new ProcessBuilder();
-		pb1.command("bash", "-c", "festival -b temporaryfiles/preview.scm");
-		pb1.start();
+		PreviewProcess previewProcess = new PreviewProcess();
+		team.submit(previewProcess);
+		
+	}
+	
+	public static Button getButtonPreview() {
+		return _staticButtonPreview;
 	}
 	
 	@FXML
@@ -503,8 +511,10 @@ public class MenuController {
 	
 	@FXML
 	private void handleButtonSave() throws IOException {
-		//checking if selected text is too long
+		//checking if selected text is empty or too long
 		_selectedText = textAreaResults.getSelectedText();
+		_selectedText = _selectedText.replace("(", "");
+		_selectedText = _selectedText.replace(")", "");
 		if (_selectedText.isEmpty()) {
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.setTitle("Selection error");
@@ -527,7 +537,7 @@ public class MenuController {
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.setTitle("Enter a name");
 			alert.setHeaderText(null);
-			alert.setContentText("Please enter a name for you creation");
+			alert.setContentText("Please enter a name for your audio file");
 			alert.showAndWait();
 			return;
 		}
@@ -660,9 +670,13 @@ public class MenuController {
 			alert.setContentText("Please select an audio file to play");
 			alert.showAndWait();
 		} else {
+			buttonAudioPlay.setDisable(true);
 			Media media = new Media(new File("audiofiles/" + audioToPlay + ".wav").toURI().toString());
 			mediaPlayer = new MediaPlayer(media);
 			mediaPlayer.play();
+			mediaPlayer.setOnEndOfMedia(() -> {
+				buttonAudioPlay.setDisable(false);
+			});
 		}
 	}
 	
@@ -859,8 +873,12 @@ public class MenuController {
 		menuButtonMusic.setText("Music");
 		menuButtonNumber.setText("Images");
 		textFieldName.clear();
-		imageTab.setDisable(true);
+		_staticImageTab = imageTab;
 		audioCombinationTab.setDisable(true);
+	}
+	
+	public static Tab getImageTab() {
+		return _staticImageTab;
 	}
 	
 	@FXML

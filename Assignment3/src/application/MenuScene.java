@@ -7,6 +7,7 @@ import javafx.scene.control.Alert.AlertType;
 
 public class MenuScene implements Runnable {
 	public void run() {
+		MenuController.getImageTab().setDisable(true);
 		MenuController.getCreateProgress().setVisible(false);
 		MenuController.getTabPane().getSelectionModel().select(0);
 		Alert alert = new Alert(AlertType.INFORMATION);

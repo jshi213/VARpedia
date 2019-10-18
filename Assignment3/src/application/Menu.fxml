@@ -141,7 +141,7 @@
                               <Font name="DejaVu Sans ExtraLight" size="28.0" />
                            </font>
                         </Text>
-                        <MenuButton fx:id="menuButtonVoices" layoutX="26.0" layoutY="685.0" mnemonicParsing="false" prefWidth="179.0" text="Voices" textFill="#79b4d1">
+                        <MenuButton fx:id="menuButtonVoices" layoutX="26.0" layoutY="685.0" mnemonicParsing="false" prefWidth="230.0" text="Voices" textFill="#79b4d1">
                            <items>
                               <MenuItem fx:id="voice1" mnemonicParsing="false" onAction="#handleVoice1" text="Voice 1" />
                               <MenuItem fx:id="voice2" mnemonicParsing="false" onAction="#handleVoice2" text="Voice 2" />
@@ -150,7 +150,7 @@
                               <Font name="DejaVu Sans" size="24.0" />
                            </font>
                         </MenuButton>
-                        <MenuButton fx:id="buttonVoiceRate" layoutX="268.0" layoutY="685.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="179.0" text="0.75x" textFill="#79b4d1">
+                        <MenuButton fx:id="buttonVoiceRate" layoutX="289.0" layoutY="685.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="170.0" text="0.75x" textFill="#79b4d1">
                            <items>
                               <MenuItem mnemonicParsing="false" onAction="#handleSpeedOne" text="0.5x" />
                               <MenuItem mnemonicParsing="false" onAction="#handleSpeedTwo" text="0.75x" />
@@ -193,7 +193,7 @@
                               <Font name="Manjari Regular" size="24.0" />
                            </font>
                         </Button>
-                        <Button layoutX="482.0" layoutY="585.0" mnemonicParsing="false" onAction="#handleButtonPlay" text="Play audio">
+                        <Button fx:id="buttonAudioPlay" layoutX="482.0" layoutY="585.0" mnemonicParsing="false" onAction="#handleButtonPlay" text="Play audio">
                            <font>
                               <Font name="Manjari Regular" size="24.0" />
                            </font>
