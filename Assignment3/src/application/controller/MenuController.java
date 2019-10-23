@@ -515,13 +515,13 @@ public class MenuController {
 	@FXML
 	private void handleButtonAdd() {
 		// get the selected item from the list of audio files and and it to the selected items (to be combined) list view
-		if (listViewAudioFiles.getSelectionModel().getSelectedItem() == null) {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle("No audio files selected");
-			alert.setHeaderText(null);
-			alert.setContentText("Please select an audio file to move across");
-			alert.showAndWait();
-		} else {
+		if (listViewAudioFiles.getSelectionModel().getSelectedItem() != null) {
+//			Alert alert = new Alert(AlertType.WARNING);
+//			alert.setTitle("No audio files selected");
+//			alert.setHeaderText(null);
+//			alert.setContentText("Please select an audio file to move across");
+//			alert.showAndWait();
+//		} else {
 			String selected = listViewAudioFiles.getSelectionModel().getSelectedItem().toString();
 			listSelected = listViewSelected.getItems();
 			listSelected.add(selected);
@@ -532,13 +532,13 @@ public class MenuController {
 	@FXML
 	private void handleButtonMoveBack() {
 		// get the selected item from the to be combined list view and remove it from that listview
-		if (listViewSelected.getSelectionModel().getSelectedItem() == null) {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle("No audio files selected");
-			alert.setHeaderText(null);
-			alert.setContentText("Please select an audio file to move back across");
-			alert.showAndWait();
-		} else {
+		if (listViewSelected.getSelectionModel().getSelectedItem() != null) {
+//			Alert alert = new Alert(AlertType.WARNING);
+//			alert.setTitle("No audio files selected");
+//			alert.setHeaderText(null);
+//			alert.setContentText("Please select an audio file to move back across");
+//			alert.showAndWait();
+//		} else {
 			String selected = listViewSelected.getSelectionModel().getSelectedItem().toString();
 			listSelected = listViewSelected.getItems();
 			listSelected.remove(selected);
