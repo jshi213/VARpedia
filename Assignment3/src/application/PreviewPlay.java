@@ -26,7 +26,7 @@ public class PreviewPlay implements Runnable {
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.setTitle("Synthesis error");
 			alert.setHeaderText(null);
-			alert.setContentText("The selected text could not be synthesised, please try selecting a full sentence.");
+			alert.setContentText("The selected text could not be synthesized, please try selecting a full sentence.");
 			alert.showAndWait();
 			MenuController.getButtonPreview().setDisable(false);
 		}

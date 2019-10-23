@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -556,29 +557,15 @@ public class MenuController {
 		FileWriter writer = new FileWriter("temporaryfiles/audiotext", false);
 		writer.write(_selectedText);
 		writer.close();
-		ProcessBuilder pb1 = new ProcessBuilder();
-		pb1.command("bash", "-c", "text2wave temporaryfiles/audiotext -o audiofiles/" + audiofileName + ".wav -eval temporaryfiles/audiofile.scm");
-		pb1.start();
-		Alert infoAlert = new Alert(AlertType.INFORMATION);
-		infoAlert.setTitle("Successfully created");
-		infoAlert.setHeaderText(null);
-		infoAlert.setContentText("Your audio file has been saved");
-		infoAlert.showAndWait();
-		// add all the audio files created into the audio files list view
-		String listofaudiofiles = "";
-		File dir = new File("audiofiles/");
-		File[] fileList = dir.listFiles();
-		for (File file : fileList) {
-			String fileName = file.getName();
-			String fileWithoutExt =  fileName.substring(0, file.getName().length()-4);
-			if(!fileWithoutExt.contains("combined") && !fileWithoutExt.startsWith(".")) {
-				listofaudiofiles = listofaudiofiles + fileWithoutExt + "\n";
-			}
-		}
-		String[] listofaudiofilesarray = listofaudiofiles.split("\n");
+		
+		SaveAudioProcess saveAudioProcess = new SaveAudioProcess(audiofileName, this);
+		team.submit(saveAudioProcess);
+		return;
+	}
+	
+	public void setAudioFiles(String[] listofaudiofilesarray) {
 		audioFiles = audioList.getItems();
 		audioFiles.setAll(listofaudiofilesarray);
-		return;
 	}
 	
 	@FXML
