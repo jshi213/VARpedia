@@ -826,14 +826,14 @@ public class MenuController {
 	private void handleButtonImageCreate(ActionEvent event) {
 		String creation = textFieldName.getText();
 		//alert for no spaces in name
-		if(creation.contains(" ")) {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle("No spaces");
-			alert.setHeaderText(null);
-			alert.setContentText("Please enter a name with no spaces");
-			alert.showAndWait();
-			return;
-		}
+//		if(creation.contains(" ")) {
+//			Alert alert = new Alert(AlertType.WARNING);
+//			alert.setTitle("No spaces");
+//			alert.setHeaderText(null);
+//			alert.setContentText("Please enter a name with no spaces");
+//			alert.showAndWait();
+//			return;
+//		}
 		
 		createProgress.setVisible(true);
 		//alert if invalid name
@@ -1069,6 +1069,17 @@ public class MenuController {
 	@FXML
 	private void handleListViewCorrect() {
 		String selected = listViewCorrect.getSelectionModel().getSelectedItem();
+		listViewPlay(selected);
+	}
+	
+	@FXML
+	private void handleListViewIncorrect() {
+		String selected = listViewIncorrect.getSelectionModel().getSelectedItem();
+		listViewPlay(selected);
+	}
+	
+	private void listViewPlay(String selected) {
+		//String selected = listViewIncorrect.getSelectionModel().getSelectedItem();
 		if (selected != null) {
 			String path = new File("Quiz/" + selected + ".mp4").getAbsolutePath();
 			mediaSummary = new Media(new File(path).toURI().toString());
@@ -1078,17 +1089,6 @@ public class MenuController {
 		}
 	}
 	
-	@FXML
-	private void handleListViewIncorrect() {
-		String selected = listViewIncorrect.getSelectionModel().getSelectedItem();
-		if (selected != null) {
-			String path = new File("Quiz/" + selected + ".mp4").getAbsolutePath();
-			mediaSummary = new Media(new File(path).toURI().toString());
-			mediaPlayerSummary = new MediaPlayer(mediaSummary);
-			mediaViewSummary.setMediaPlayer(mediaPlayerSummary);
-			mediaPlayerSummary.setAutoPlay(true);
-		}
-	}
 	
 	// start the quiz from the beginning
 	@FXML
