@@ -1,4 +1,4 @@
-package application;
+package application.process;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -23,6 +23,8 @@ import com.flickr4java.flickr.photos.PhotosInterface;
 import com.flickr4java.flickr.photos.SearchParameters;
 import com.flickr4java.flickr.photos.Size;
 
+import application.MenuScene;
+import application.controller.MenuController;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 

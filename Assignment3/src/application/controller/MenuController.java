@@ -1,4 +1,4 @@
-package application;
+package application.controller;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -9,7 +9,12 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import application.Main;
 import application.helper.ListRefresh;
+import application.process.FlickrProcess;
+import application.process.PreviewProcess;
+import application.process.SaveAudioProcess;
+import application.process.WikitProcess;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -732,7 +737,7 @@ public class MenuController {
 		}
 		Stage stage = new Stage();
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(getClass().getResource("Play.fxml"));
+		loader.setLocation(getClass().getResource("/resources/Play.fxml"));
 		stage.setOnCloseRequest(event -> {
 			stage.close();
 		    PlayController.stop();

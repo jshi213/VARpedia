@@ -1,10 +1,13 @@
-package application;
+package application.process;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
+import application.AmbiguousAlert;
+import application.CreateMenuScene;
+import application.controller.MenuController;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 

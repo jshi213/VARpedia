@@ -30,10 +30,10 @@ public class Main extends Application {
 			dirQuiz.mkdir();
 			//loading scene with fxml files
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(getClass().getResource("Menu.fxml"));
+			loader.setLocation(getClass().getResource("/resources/Menu.fxml"));
 			Parent layout = loader.load();
 			Scene scene = new Scene(layout);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			scene.getStylesheets().add(getClass().getResource("/resources/application.css").toExternalForm());
 			_staticScene = scene;
 			primaryStage.setScene(scene);
 			primaryStage.show();

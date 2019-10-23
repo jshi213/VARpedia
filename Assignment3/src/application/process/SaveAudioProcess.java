@@ -1,5 +1,7 @@
-package application;
+package application.process;
 
+import application.AudioListRefresh;
+import application.controller.MenuController;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 
