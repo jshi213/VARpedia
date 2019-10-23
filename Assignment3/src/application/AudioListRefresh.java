@@ -5,12 +5,12 @@ import java.io.File;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
-public class ListRefresh implements Runnable {
+public class AudioListRefresh implements Runnable {
 	
 	private MenuController _controllerInstance;
 	private String _audioFileName;
 	
-	public ListRefresh(String audioFileName, MenuController controllerInstance) {
+	public AudioListRefresh(String audioFileName, MenuController controllerInstance) {
 		_controllerInstance = controllerInstance;
 		_audioFileName = audioFileName;
 	}

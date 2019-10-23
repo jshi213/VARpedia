@@ -32,7 +32,7 @@ public class SaveAudioProcess extends Task<String> {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Runnable listRefresher = new ListRefresh(_audioFileName, _menuControllerInstance);
+		Runnable listRefresher = new AudioListRefresh(_audioFileName, _menuControllerInstance);
 		Platform.runLater(listRefresher);
 	}
 }
