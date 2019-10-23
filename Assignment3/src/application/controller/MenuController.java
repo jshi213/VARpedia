@@ -126,6 +126,7 @@ public class MenuController {
 	private ObservableList<String> listCorrect, listIncorrect;
 	
 	@FXML
+
 	private void initialize() {
 		rootPane.setStyle("-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #000000, #757575)");
 		
