@@ -15,6 +15,7 @@ import application.process.FlickrProcess;
 import application.process.PreviewProcess;
 import application.process.SaveAudioProcess;
 import application.process.WikitProcess;
+import javafx.beans.binding.BooleanBinding;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -52,7 +53,7 @@ public class MenuController {
 	private Text text, textName, textMusic, textScore, textCorrect, textIncorrect, textScoreSummary;
 	
 	@FXML
-	private Button buttonCreate, buttonList, buttonSearch, buttonSave, buttonPreview, buttonAudioPlay, buttonEnter, buttonImageCreate, buttonMusicEnter, buttonQuizEnter, buttonQuizNext;
+	private Button buttonCreate, buttonList, buttonSearch, buttonSearch1, buttonSave, buttonPreview, buttonAudioPlay, buttonEnter, buttonImageCreate, buttonMusicEnter, buttonQuizEnter, buttonQuizNext;
 
 	@FXML
 	private Pane rootPane, paneQuiz, paneSummary, paneNoCreations;
@@ -125,8 +126,9 @@ public class MenuController {
 	@FXML
 	private ObservableList<String> listCorrect, listIncorrect;
 	
-	@FXML
 
+	
+	@FXML
 	private void initialize() {
 		rootPane.setStyle("-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #000000, #757575)");
 		
@@ -146,6 +148,9 @@ public class MenuController {
 			e.printStackTrace();
 		}
 		
+		searchTab.setOnSelectionChanged(e -> {
+			bindFieldButton(textFieldTerm, buttonSearch);
+		});
 		audioCombinationTab.setOnSelectionChanged (e -> {
 			// add all the audio files created into the audio files list view
 			listAudioFiles = listViewAudioFiles.getItems();
@@ -160,6 +165,8 @@ public class MenuController {
 		});
 		
 		audioSelectionTab.setOnSelectionChanged(e -> {
+			bindFieldButton(textFieldTerm1, buttonSearch1);
+			bindFieldButton(textFieldAudioName, buttonSave);
 			// add all the audio files created into the audio files list view
 			audioFiles = audioList.getItems();
 			audioFiles.setAll(_listRefresher.refreshAudioFilesLists());
@@ -225,9 +232,30 @@ public class MenuController {
 				paneQuiz.setVisible(false);
 			}
 	    });
-
 		
+		imageTab.setOnSelectionChanged(e -> {
+			bindFieldButton(textFieldName, buttonImageCreate);
+		});		
 	}
+	
+	/**
+	 * Binds the specified text field and button so that button is only enable when the text field
+	 * is not empty
+	 */
+	public void bindFieldButton(TextField field, Button button) {
+		BooleanBinding bb = new BooleanBinding() {
+			{
+			super.bind(field.textProperty());
+			}
+			@Override
+			protected boolean computeValue() {
+				return (field.getText().isEmpty() || field.getText().trim().length() == 0);
+			}
+			
+		};
+		button.disableProperty().bind(bb);
+	}
+
 	
 	private void setGlobalEventHandler(Node root) {
 	    root.addEventHandler(KeyEvent.KEY_PRESSED, ev -> {
@@ -653,7 +681,6 @@ public class MenuController {
 	@FXML
 	private void setVisibleName() {
 		textFieldName.setDisable(false);
-		buttonImageCreate.setDisable(false);
 	}
 	
 	
