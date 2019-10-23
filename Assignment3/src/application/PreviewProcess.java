@@ -5,7 +5,6 @@ import javafx.concurrent.Task;
 
 public class PreviewProcess extends Task<String> {
 	
-	
 	@Override
 	protected String call() {
 		try {

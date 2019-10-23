@@ -9,6 +9,7 @@ import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 
 public class PreviewPlay implements Runnable {
+	
 	public void run() {
 		try {
 		Media media = new Media(new File("temporaryfiles/temppreview.wav").toURI().toString());
