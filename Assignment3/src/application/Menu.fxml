@@ -258,16 +258,16 @@
                         </Button>
                         <MenuButton fx:id="menuButtonNumber" layoutX="446.0" layoutY="161.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="259.0" text="Images" textFill="#79b4d1">
                           <items>
-                            <MenuItem mnemonicParsing="false" onAction="#handleNumber1" text="1" />
-                            <MenuItem mnemonicParsing="false" onAction="#handleNumber2" text="2" />
-                              <MenuItem mnemonicParsing="false" onAction="#handleNumber3" text="3" />
-                              <MenuItem mnemonicParsing="false" onAction="#handleNumber4" text="4" />
-                              <MenuItem mnemonicParsing="false" onAction="#handleNumber5" text="5" />
-                              <MenuItem mnemonicParsing="false" onAction="#handleNumber6" text="6" />
-                              <MenuItem mnemonicParsing="false" onAction="#handleNumber7" text="7" />
-                              <MenuItem mnemonicParsing="false" onAction="#handleNumber8" text="8" />
-                              <MenuItem mnemonicParsing="false" onAction="#handleNumber9" text="9" />
-                              <MenuItem mnemonicParsing="false" onAction="#handleNumber10" text="10" />
+                            <MenuItem mnemonicParsing="false" onAction="#handleNumber" text="1" />
+                            <MenuItem mnemonicParsing="false" onAction="#handleNumber" text="2" />
+                              <MenuItem mnemonicParsing="false" onAction="#handleNumber" text="3" />
+                              <MenuItem mnemonicParsing="false" onAction="#handleNumber" text="4" />
+                              <MenuItem mnemonicParsing="false" onAction="#handleNumber" text="5" />
+                              <MenuItem mnemonicParsing="false" onAction="#handleNumber" text="6" />
+                              <MenuItem mnemonicParsing="false" onAction="#handleNumber" text="7" />
+                              <MenuItem mnemonicParsing="false" onAction="#handleNumber" text="8" />
+                              <MenuItem mnemonicParsing="false" onAction="#handleNumber" text="9" />
+                              <MenuItem mnemonicParsing="false" onAction="#handleNumber" text="10" />
                           </items>
                            <font>
                               <Font name="DejaVu Sans" size="24.0" />

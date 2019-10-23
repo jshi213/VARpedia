@@ -609,63 +609,10 @@ public class MenuController {
 	
 	//image selection tab
 	@FXML
-	private void handleNumber1() {
-		menuButtonNumber.setText("1");
-		number = 1;
-		setVisibleMusic();
-	}
-	@FXML
-	private void handleNumber2() {
-		menuButtonNumber.setText("2");
-		number = 2;
-		setVisibleMusic();
-	}
-	@FXML
-	private void handleNumber3() {
-		menuButtonNumber.setText("3");
-		number = 3;
-		setVisibleMusic();
-	}
-	@FXML
-	private void handleNumber4() {
-		menuButtonNumber.setText("4");
-		number = 4;
-		setVisibleMusic();
-	}
-	@FXML
-	private void handleNumber5() {
-		menuButtonNumber.setText("5");
-		number = 5;
-		setVisibleMusic();
-	}
-	@FXML
-	private void handleNumber6() {
-		menuButtonNumber.setText("6");
-		number = 6;
-		setVisibleMusic();
-	}
-	@FXML
-	private void handleNumber7() {
-		menuButtonNumber.setText("7");
-		number = 7;
-		setVisibleMusic();
-	}
-	@FXML
-	private void handleNumber8() {
-		menuButtonNumber.setText("8");
-		number = 8;
-		setVisibleMusic();
-	}
-	@FXML
-	private void handleNumber9() {
-		menuButtonNumber.setText("9");
-		number = 9;
-		setVisibleMusic();
-	}
-	@FXML
-	private void handleNumber10() {
-		menuButtonNumber.setText("10");
-		number = 10;
+	private void handleNumber(ActionEvent event) {
+		String itemNumber = ((MenuItem) event.getSource()).getText();
+		menuButtonNumber.setText(itemNumber);
+		number = Integer.valueOf(itemNumber);
 		setVisibleMusic();
 	}
 
