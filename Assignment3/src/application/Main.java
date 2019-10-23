@@ -37,6 +37,12 @@ public class Main extends Application {
 			_staticScene = scene;
 			primaryStage.setScene(scene);
 			primaryStage.show();
+			primaryStage.setOnCloseRequest(event -> {
+				primaryStage.close();
+			    deleteFolder(dirTemp);
+			    deleteFolder(dirAudio);
+			    deleteFolder(dirPhotos);
+			});
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -44,6 +50,20 @@ public class Main extends Application {
 	
 	public static void main(String[] args) {
 		launch(args);
+	}
+	
+	public static void deleteFolder(File folder) {
+	    File[] files = folder.listFiles();
+	    if(files!=null) {
+	        for(File f: files) {
+	            if(f.isDirectory()) {
+	                deleteFolder(f);
+	            } else {
+	                f.delete();
+	            }
+	        }
+	    }
+	    folder.delete();
 	}
 	
 	public static Scene getScene() {

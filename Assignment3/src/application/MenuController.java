@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import application.helper.ListRefresh;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -43,13 +44,13 @@ import javafx.stage.Stage;
 public class MenuController {
 
 	@FXML
-	private Text text;
+	private Text text, textName, textMusic, textScore, textCorrect, textIncorrect, textScoreSummary;
 	
 	@FXML
-	private Button buttonCreate, buttonList, buttonSearch, buttonSave, buttonPreview, buttonAudioPlay;
+	private Button buttonCreate, buttonList, buttonSearch, buttonSave, buttonPreview, buttonAudioPlay, buttonEnter, buttonImageCreate, buttonMusicEnter, buttonQuizEnter, buttonQuizNext;
 
 	@FXML
-	private Pane rootPane;
+	private Pane rootPane, paneQuiz, paneSummary, paneNoCreations;
 	
 	@FXML
 	private TabPane tabPane;
@@ -57,10 +58,8 @@ public class MenuController {
 	@FXML
 	private Tab menuTab, searchTab, audioSelectionTab, audioCombinationTab, imageTab, listTab, quizTab, quizSummaryTab;
 	
-	private int lastTab;
-	
 	@FXML
-	private TextField textFieldTerm, textFieldTerm1, textFieldAudioName;
+	private TextField textFieldTerm, textFieldTerm1, textFieldAudioName, textFieldName, textFieldAnswer;
 	
 	@FXML
 	private TextArea textAreaResults;
@@ -72,100 +71,54 @@ public class MenuController {
 	private MenuItem voice1, voice2;
 	
 	@FXML
-	private ListView<String> audioList;
-	
-	@FXML
 	private ProgressIndicator progressIndicator, createProgress;
 	
 	@FXML
-	private ListView<String> listViewAudioFiles, listViewSelected;
+	private ListView<String> listViewAudioFiles, listViewSelected, audioList, listView, listViewCorrect, listViewIncorrect;
 	
 	@FXML
-	private ObservableList<String> listAudioFiles, listSelected;
+	private ObservableList<String> listAudioFiles, listSelected, list;
 	
 	@FXML
-	private Button buttonEnter, buttonImageCreate, buttonMusicEnter;
+	private MediaView mediaViewQuiz, mediaViewSummary;
 	
-	@FXML
-	private TextField textFieldName;
+	private MediaPlayer mediaPlayerSummary, mediaPlayer, mediaPlayerQuiz;
+	private Media mediaSummary, mediaQuiz;
 	
-	@FXML 
-	private Text textName, textMusic;
-	
-	@FXML
-	private ListView<String> listView;
-	
-	@FXML
-	private ObservableList<String> list;
-	
+	private String[] listQuiz;
+	private String term;
+	private boolean musicDecision = false;
+	private String musicFile;
+	private String _selectedText;
+	private String _voiceSelection;
+	private String _voiceRate = "";
 	private static String _selected;
 	
 	private int number;
+	
+	private ListRefresh _listRefresher = new ListRefresh();
 	
 	private ExecutorService team = Executors.newSingleThreadExecutor(); 
 	private static String _searchTerm;
 	private WikitProcess _wikitProcess;
 	private static Alert _staticAlert;
 	private static boolean _processStatus;
-	private String _selectedText;
-	private String _voiceSelection;
-	private String _voiceRate = "";
 	private ObservableList<String> audioFiles;
 	private static TextArea staticTextAreaResults;
 	private static ProgressIndicator _staticProgressIndicator, _staticCreateProgress;
 	private static TabPane _staticTabPane;
-	private MediaPlayer mediaPlayer;
 	private static Button _staticButtonPreview;
 	private static Tab _staticImageTab;
 	
-	// quiz fields
-	private String[] listQuiz;
-
+	private static int levels, currentLevel, score;
 	
-	private String term;
-	public static int levels, currentLevel, score;
+	private static ArrayList<String> correct, incorrect;
 	
-	@FXML
-	private MediaView mediaViewQuiz;
-	private MediaPlayer mediaPlayerQuiz;
-	private Media mediaQuiz;
-	
-	@FXML
-	private TextField textFieldAnswer;
-	
-	@FXML
-	private Text textScore, textCorrect, textIncorrect;
-	
-	@FXML
-	private Button buttonQuizEnter, buttonQuizNext;
-
-	public static ArrayList<String> correct, incorrect;
-	
-	boolean incorrectAttempt = false, added = false;
-	
-	public static boolean music = false;
-	
-	@FXML
-	private Pane paneQuiz, paneSummary, paneNoCreations;
+	private boolean incorrectAttempt = false, added = false;
 	
 	// quiz summary fields
 	@FXML
 	private ObservableList<String> listCorrect, listIncorrect;
-	
-	@FXML
-	private ListView<String> listViewCorrect, listViewIncorrect;
-
-	@FXML
-	private MediaView mediaViewSummary;
-	private MediaPlayer mediaPlayerSummary;
-	private Media mediaSummary;
-	
-	@FXML
-	private Text textScoreSummary;
-	
-	//music
-	public static String musicFile;
-	
 	
 	@FXML
 	private void initialize() {
@@ -187,71 +140,23 @@ public class MenuController {
 			e.printStackTrace();
 		}
 		
-		menuTab.setOnSelectionChanged(e -> {
-			lastTab = 0;
-		});
-		
-		searchTab.setOnSelectionChanged(e -> {
-			lastTab = 1;
-		});
-		
 		audioCombinationTab.setOnSelectionChanged (e -> {
 			// add all the audio files created into the audio files list view
-			File dir = new File("audiofiles/");
-			File[] fileList = dir.listFiles();
-			String listofaudiofiles = "";
-			for (File file : fileList) {
-				String fileName = file.getName();
-				String fileWithoutExt =  fileName.substring(0, file.getName().length()-4);
-				if(!fileWithoutExt.contains("combined") && !fileWithoutExt.startsWith(".")) {
-					listofaudiofiles = listofaudiofiles + fileWithoutExt + "\n";
-				}
-			}
-			String[] listofaudiofilesarray = listofaudiofiles.split("\n");
 			listAudioFiles = listViewAudioFiles.getItems();
-			listAudioFiles.setAll(listofaudiofilesarray);
+			listAudioFiles.setAll(_listRefresher.refreshAudioFilesLists());
 			audioCombinationTab.setDisable(false); 
 			listViewSelected.getItems().clear();
-			lastTab = 3;
 		});
 		
 		listTab.setOnSelectionChanged(e -> {
-			String listofcreations = "";
-			File dir = new File("Creations/");
-			File[] fileList = dir.listFiles();
-			for (File file : fileList) {
-				String fileName = file.getName();
-				String fileWithoutExt =  fileName.substring(0, file.getName().length()-4);
-				if (!fileWithoutExt.startsWith(".")) {
-				listofcreations = listofcreations + fileWithoutExt + "\n";
-				}
-			}	
-			String[] listofcreationsarray = listofcreations.split("\n");
 			list = listView.getItems();
-			list.setAll(listofcreationsarray);
-			lastTab = 5;
+			list.setAll(_listRefresher.refreshCreationsFileList());
 		});
 		
 		audioSelectionTab.setOnSelectionChanged(e -> {
 			// add all the audio files created into the audio files list view
-			String listofaudiofiles = "";
-			File dir = new File("audiofiles/");
-			File[] fileList = dir.listFiles();
-			for (File file : fileList) {
-				String fileName = file.getName();
-				String fileWithoutExt =  fileName.substring(0, file.getName().length()-4);
-				if(!fileWithoutExt.contains("combined") && !fileWithoutExt.startsWith(".")) {
-					listofaudiofiles = listofaudiofiles + fileWithoutExt + "\n";
-				}
-			}
-			String[] listofaudiofilesarray = listofaudiofiles.split("\n");
 			audioFiles = audioList.getItems();
-			audioFiles.setAll(listofaudiofilesarray);
-			lastTab = 2;
-		});
-		 
-		imageTab.setOnSelectionChanged(e -> {
-			lastTab = 4;
+			audioFiles.setAll(_listRefresher.refreshAudioFilesLists());
 		});
 		
 		quizTab.setOnSelectionChanged(e -> {
@@ -556,29 +461,15 @@ public class MenuController {
 		FileWriter writer = new FileWriter("temporaryfiles/audiotext", false);
 		writer.write(_selectedText);
 		writer.close();
-		ProcessBuilder pb1 = new ProcessBuilder();
-		pb1.command("bash", "-c", "text2wave temporaryfiles/audiotext -o audiofiles/" + audiofileName + ".wav -eval temporaryfiles/audiofile.scm");
-		pb1.start();
-		Alert infoAlert = new Alert(AlertType.INFORMATION);
-		infoAlert.setTitle("Successfully created");
-		infoAlert.setHeaderText(null);
-		infoAlert.setContentText("Your audio file has been saved");
-		infoAlert.showAndWait();
-		// add all the audio files created into the audio files list view
-		String listofaudiofiles = "";
-		File dir = new File("audiofiles/");
-		File[] fileList = dir.listFiles();
-		for (File file : fileList) {
-			String fileName = file.getName();
-			String fileWithoutExt =  fileName.substring(0, file.getName().length()-4);
-			if(!fileWithoutExt.contains("combined") && !fileWithoutExt.startsWith(".")) {
-				listofaudiofiles = listofaudiofiles + fileWithoutExt + "\n";
-			}
-		}
-		String[] listofaudiofilesarray = listofaudiofiles.split("\n");
+		
+		SaveAudioProcess saveAudioProcess = new SaveAudioProcess(audiofileName, this);
+		team.submit(saveAudioProcess);
+		return;
+	}
+	
+	public void setAudioFiles(String[] listofaudiofilesarray) {
 		audioFiles = audioList.getItems();
 		audioFiles.setAll(listofaudiofilesarray);
-		return;
 	}
 	
 	@FXML
@@ -601,17 +492,8 @@ public class MenuController {
 		
 		if (files.length() > 0) {
 			// add all the audio files created into the audio files list view
-			String listofaudiofiles = "";
-			for (File file : fileList) {
-				String fileName = file.getName();
-				String fileWithoutExt =  fileName.substring(0, file.getName().length()-4);
-				if(!fileWithoutExt.contains("combined") && !fileWithoutExt.startsWith(".")) {
-					listofaudiofiles = listofaudiofiles + fileWithoutExt + "\n";
-				}
-			}
-			String[] listofaudiofilesarray = listofaudiofiles.split("\n");
 			listAudioFiles = listViewAudioFiles.getItems();
-			listAudioFiles.setAll(listofaudiofilesarray);
+			listAudioFiles.setAll(_listRefresher.refreshAudioFilesLists());
 			tabPane.getSelectionModel().clearAndSelect(3);
 			audioCombinationTab.setDisable(false); 
 		} else {
@@ -795,14 +677,14 @@ public class MenuController {
 	@FXML
 	private void handleMenuNoMusic() {
 		menuButtonMusic.setText("No Music");
-		music = false;
+		musicDecision = false;
 		setVisibleName();
 	}
 	
 	@FXML
 	private void handleMenuMusic1() {
 		menuButtonMusic.setText("Life-World");
-		music = true;
+		musicDecision = true;
 		musicFile = new File("Music/VJ_Memes_-_Life-World.mp3").getAbsolutePath();
 		setVisibleName();
 	}
@@ -810,7 +692,7 @@ public class MenuController {
 	@FXML
 	private void handleMenuMusic2() {
 		menuButtonMusic.setText("Marcello");
-		music = true;
+		musicDecision = true;
 		musicFile = new File("Music/VJ_Memes_-_Marcello.mp3").getAbsolutePath();
 		setVisibleName();
 	}
@@ -855,7 +737,7 @@ public class MenuController {
 			return;
 		}
 
-		FlickrProcess flickrProcess = new FlickrProcess(number, creation);
+		FlickrProcess flickrProcess = new FlickrProcess(number, creation, musicDecision, musicFile);
 		team.submit(flickrProcess);
 		textFieldTerm1.clear();
 		textAreaResults.clear();
@@ -938,19 +820,8 @@ public class MenuController {
 					}
 				}
 				_selected = null;
-				String listofcreations = "";
-				File dir = new File("Creations/");
-				File[] fileList = dir.listFiles();
-				for (File file : fileList) {
-					String fileName = file.getName();
-					String fileWithoutExt =  fileName.substring(0, file.getName().length()-4);
-					if (!fileWithoutExt.startsWith(".")) {
-					listofcreations = listofcreations + fileWithoutExt + "\n";
-					}
-				}	
-				String[] listofcreationsarray = listofcreations.split("\n");
 				list = listView.getItems();
-				list.setAll(listofcreationsarray);
+				list.setAll(_listRefresher.refreshCreationsFileList());
 			}});
 		}
 	}

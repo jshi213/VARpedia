@@ -31,10 +31,14 @@ public class FlickrProcess extends Task<Void> {
 	private int _number;
 	private String _creation;
 	private String _term = MenuController.getSearchTerm();
+	private boolean _musicDecision;
+	private String _musicFile;
 	
-	public FlickrProcess(int number, String creation) {
+	public FlickrProcess(int number, String creation, boolean musicDecision, String musicFile) {
 		_number = number;
 		_creation = creation;
+		_musicDecision = musicDecision;
+		_musicFile = musicFile;
 	}
 
 	@Override
@@ -116,8 +120,8 @@ public class FlickrProcess extends Task<Void> {
 			printWriter.println("#!/bin/bash");
 			printWriter.println("cd downloads");
 			// create video
-			if (MenuController.music == true) {
-				printWriter.println("ffmpeg -i ../audiofiles/combined.wav -i " + MenuController.musicFile + " -filter_complex amerge -c:a libmp3lame -q:a 4 speechmusic.mp3 &>/dev/null");
+			if (_musicDecision == true) {
+				printWriter.println("ffmpeg -i ../audiofiles/combined.wav -i " + _musicFile + " -filter_complex amerge -c:a libmp3lame -q:a 4 speechmusic.mp3 &>/dev/null");
 				printWriter.println("cat *.jpg | ffmpeg -f image2pipe -framerate 1/" + secondsPerImage + " -i - -i speechmusic.mp3 -c:v libx264 -pix_fmt yuv420p -vf \"pad=ceil(iw/2)*2:ceil(ih/2)*2\" -r 25 -max_muxing_queue_size 1024 -y audioslideshow.mp4 &>/dev/null");
 				printWriter.println();
 			}
