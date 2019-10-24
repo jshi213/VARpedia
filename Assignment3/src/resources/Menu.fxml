@@ -152,11 +152,11 @@
                         </MenuButton>
                         <MenuButton fx:id="buttonVoiceRate" layoutX="289.0" layoutY="685.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="170.0" text="0.75x" textFill="#79b4d1">
                            <items>
-                              <MenuItem mnemonicParsing="false" onAction="#handleSpeedOne" text="0.5x" />
-                              <MenuItem mnemonicParsing="false" onAction="#handleSpeedTwo" text="0.75x" />
-                              <MenuItem mnemonicParsing="false" onAction="#handleSpeedThree" text="1x" />
-                              <MenuItem mnemonicParsing="false" onAction="#handleSpeedFour" text="1.5x" />
-                              <MenuItem mnemonicParsing="false" onAction="#handleSpeedFive" text="2x" />
+                              <MenuItem mnemonicParsing="false" onAction="#handleSpeed" text="0.5x" />
+                              <MenuItem mnemonicParsing="false" onAction="#handleSpeed" text="0.75x" />
+                              <MenuItem mnemonicParsing="false" onAction="#handleSpeed" text="1x" />
+                              <MenuItem mnemonicParsing="false" onAction="#handleSpeed" text="1.5x" />
+                              <MenuItem mnemonicParsing="false" onAction="#handleSpeed" text="2x" />
                            </items>
                            <font>
                               <Font name="DejaVu Sans" size="24.0" />

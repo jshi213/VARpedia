@@ -400,35 +400,44 @@ public class MenuController {
 		_voiceSelection = "(voice_akl_nz_jdt_diphone)\n";
 	}
 	
-	@FXML
-	private void handleSpeedOne(ActionEvent event) {
-		_voiceRate = "(Parameter.set 'Duration_Stretch 2)\n";
-		buttonVoiceRate.setText("0.5x");
-	}
+//	@FXML
+//	private void handleSpeedOne(ActionEvent event) {
+//		_voiceRate = "(Parameter.set 'Duration_Stretch 2)\n";
+//		buttonVoiceRate.setText("0.5x");
+//	}
+//	
+//	@FXML
+//	private void handleSpeedTwo(ActionEvent event) {
+//		_voiceRate = "(Parameter.set 'Duration_Stretch 1.333)\n";
+//		buttonVoiceRate.setText("0.75x");
+//	}
+//	
+//	@FXML
+//	private void handleSpeedThree(ActionEvent event) {
+//		_voiceRate = "";
+//		buttonVoiceRate.setText("1x");
+//	}
+//	
+//	@FXML
+//	private void handleSpeedFour(ActionEvent event) {
+//		_voiceRate = "(Parameter.set 'Duration_Stretch 0.666)\n";
+//		buttonVoiceRate.setText("1.5x");
+//	}
+//	
+//	@FXML
+//	private void handleSpeedFive(ActionEvent event) {
+//		_voiceRate = "(Parameter.set 'Duration_Stretch 0.5\n)";
+//		buttonVoiceRate.setText("2x");
+//	}
 	
 	@FXML
-	private void handleSpeedTwo(ActionEvent event) {
-		_voiceRate = "(Parameter.set 'Duration_Stretch 1.333)\n";
-		buttonVoiceRate.setText("0.75x");
+	private void handleSpeed(ActionEvent event) {
+		String speed = ((MenuItem) event.getSource()).getText();
+		int speedInt = Integer.valueOf(speed);
+		_voiceRate = "(Parameter.set 'Duration_Stretch " + speedInt + ")\n";
+		buttonVoiceRate.setText(speed);
 	}
 	
-	@FXML
-	private void handleSpeedThree(ActionEvent event) {
-		_voiceRate = "";
-		buttonVoiceRate.setText("1x");
-	}
-	
-	@FXML
-	private void handleSpeedFour(ActionEvent event) {
-		_voiceRate = "(Parameter.set 'Duration_Stretch 0.666)\n";
-		buttonVoiceRate.setText("1.5x");
-	}
-	
-	@FXML
-	private void handleSpeedFive(ActionEvent event) {
-		_voiceRate = "(Parameter.set 'Duration_Stretch 0.5\n)";
-		buttonVoiceRate.setText("2x");
-	}
 	
 	@FXML
 	private void handleButtonSave() throws IOException {
@@ -520,12 +529,6 @@ public class MenuController {
 	private void handleButtonAdd() {
 		// get the selected item from the list of audio files and and it to the selected items (to be combined) list view
 		if (listViewAudioFiles.getSelectionModel().getSelectedItem() != null) {
-//			Alert alert = new Alert(AlertType.WARNING);
-//			alert.setTitle("No audio files selected");
-//			alert.setHeaderText(null);
-//			alert.setContentText("Please select an audio file to move across");
-//			alert.showAndWait();
-//		} else {
 			String selected = listViewAudioFiles.getSelectionModel().getSelectedItem().toString();
 			listSelected = listViewSelected.getItems();
 			listSelected.add(selected);
@@ -537,12 +540,6 @@ public class MenuController {
 	private void handleButtonMoveBack() {
 		// get the selected item from the to be combined list view and remove it from that listview
 		if (listViewSelected.getSelectionModel().getSelectedItem() != null) {
-//			Alert alert = new Alert(AlertType.WARNING);
-//			alert.setTitle("No audio files selected");
-//			alert.setHeaderText(null);
-//			alert.setContentText("Please select an audio file to move back across");
-//			alert.showAndWait();
-//		} else {
 			String selected = listViewSelected.getSelectionModel().getSelectedItem().toString();
 			listSelected = listViewSelected.getItems();
 			listSelected.remove(selected);
@@ -686,8 +683,6 @@ public class MenuController {
 		listViewAudioFiles.refresh();
 		listViewSelected.refresh();
 		listViewSelected.getItems().clear();
-		
-	//	audioCombinationTab
 		
 		menuButtonMusic.setText("Music");
 		menuButtonNumber.setText("Images");
@@ -876,8 +871,7 @@ public class MenuController {
 			mediaViewSummary.setMediaPlayer(mediaPlayerSummary);
 			mediaPlayerSummary.setAutoPlay(true);
 		}
-	}
-	
+	}	
 	
 	// start the quiz from the beginning
 	@FXML
