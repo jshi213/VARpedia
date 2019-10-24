@@ -303,12 +303,12 @@
                               <Font name="Manjari Regular" size="24.0" />
                            </font>
                         </Button>
-                        <Button fx:id="buttonPlay" layoutX="183.0" layoutY="613.0" mnemonicParsing="false" onAction="#handleButtonListPlay" prefHeight="50.0" prefWidth="334.0" text="Play Selected Creation">
+                        <Button fx:id="buttonPlay" disable="true" layoutX="183.0" layoutY="613.0" mnemonicParsing="false" onAction="#handleButtonListPlay" prefHeight="50.0" prefWidth="334.0" text="Play Selected Creation">
                            <font>
                               <Font name="Manjari Regular" size="24.0" />
                            </font>
                         </Button>
-                        <Button fx:id="buttonDelete" layoutX="682.0" layoutY="613.0" mnemonicParsing="false" onAction="#handleButtonDelete" text="Delete Selected Creation">
+                        <Button fx:id="buttonDelete" disable="true" layoutX="682.0" layoutY="613.0" mnemonicParsing="false" onAction="#handleButtonDelete" text="Delete Selected Creation">
                            <font>
                               <Font name="Manjari Regular" size="24.0" />
                            </font>

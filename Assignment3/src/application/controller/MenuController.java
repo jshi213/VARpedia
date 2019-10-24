@@ -53,7 +53,7 @@ public class MenuController {
 	private Text text, textName, textMusic, textScore, textCorrect, textIncorrect, textScoreSummary;
 	
 	@FXML
-	private Button buttonCreate, buttonList, buttonSearch, buttonSearch1, buttonSave, buttonPreview, buttonAudioPlay, buttonEnter, buttonImageCreate, buttonMusicEnter, buttonQuizEnter, buttonQuizNext;
+	private Button buttonCreate, buttonList, buttonSearch, buttonSearch1, buttonSave, buttonPreview, buttonAudioPlay, buttonEnter, buttonImageCreate, buttonMusicEnter, buttonPlay, buttonDelete, buttonQuizEnter, buttonQuizNext;
 
 	@FXML
 	private Pane rootPane, paneQuiz, paneSummary, paneNoCreations;
@@ -242,7 +242,7 @@ public class MenuController {
 	public void bindFieldButton(TextField field, Button button) {
 		BooleanBinding bb = new BooleanBinding() {
 			{
-			super.bind(field.textProperty());
+				super.bind(field.textProperty());
 			}
 			@Override
 			protected boolean computeValue() {
@@ -251,7 +251,6 @@ public class MenuController {
 		};
 		button.disableProperty().bind(bb);
 	}
-
 	
 	private void setGlobalEventHandler(Node root) {
 	    root.addEventHandler(KeyEvent.KEY_PRESSED, ev -> {
@@ -716,13 +715,6 @@ public class MenuController {
 	
 	@FXML
 	private void handleButtonListPlay() throws IOException {
-		if (_selected == null || _selected == "") {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setContentText("Please select a creation.");
-			alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-			alert.showAndWait();
-			return;
-		}
 		Stage stage = new Stage();
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(getClass().getResource("/resources/Play.fxml"));
@@ -734,18 +726,12 @@ public class MenuController {
 		Scene scene = new Scene(layout);
 		stage.setScene(scene);
 		stage.show();
+		buttonDelete.setDisable(true);
+		buttonPlay.setDisable(true);
 	}
 	
 	@FXML
 	private void handleButtonDelete() {
-		if (_selected == null || _selected == "") {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setContentText("Please select a creation.");
-			alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-			alert.showAndWait();
-			return;
-		}
-		else {
 			String confirmation = "Are you sure you want to delete " + _selected + "?";
 			Alert alert = new Alert(AlertType.CONFIRMATION, confirmation);
 			alert.showAndWait().ifPresent(response -> {
@@ -763,14 +749,19 @@ public class MenuController {
 				list = listView.getItems();
 				list.setAll(_listRefresher.refreshCreationsFileList());
 			}});
-		}
+			buttonPlay.setDisable(true);
+			buttonDelete.setDisable(true);
 	}
-	
+
 	@FXML
 	private void handleItemSelection() {
-		 _selected = listView.getSelectionModel().getSelectedItem();
+		_selected = listView.getSelectionModel().getSelectedItem();
+		if (_selected != null) {
+			buttonDelete.setDisable(false);
+			buttonPlay.setDisable(false);
+		}
 	}
-	
+
 	public static String getSelectedItem() {
 		return _selected;
 	}
