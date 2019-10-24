@@ -87,7 +87,7 @@ public class MenuController {
 	private Media mediaSummary, mediaQuiz;
 	
 	private String[] listQuiz;
-	private String term;
+	private String term, audioToPlay;
 	private boolean musicDecision = false;
 	private String musicFile;
 	private String _selectedText;
@@ -476,10 +476,17 @@ public class MenuController {
 			listAudioFiles.add(selected);
 		}
 	}
+	@FXML
+	private void handleListViewAudioSelected() {
+		audioToPlay = listViewSelected.getSelectionModel().getSelectedItem();
+	}
 	
 	@FXML
+	private void handleListViewAudioFiles() {
+		audioToPlay = listViewAudioFiles.getSelectionModel().getSelectedItem();
+	}
+	@FXML
 	private void handleButtonPlay() {
-		String audioToPlay = listViewAudioFiles.getSelectionModel().getSelectedItem();
 		if(audioToPlay == null) {
 			_alertGenerator.generateAlert(AlertType.WARNING, "No audio files selected", null, "Please select an audio file to play");
 		} else {
@@ -492,6 +499,7 @@ public class MenuController {
 			});
 		}
 	}
+	
 	    
 	@FXML 
 	private void handleButtonCombineBack(ActionEvent event) throws IOException {
