@@ -23,8 +23,8 @@ import com.flickr4java.flickr.photos.PhotosInterface;
 import com.flickr4java.flickr.photos.SearchParameters;
 import com.flickr4java.flickr.photos.Size;
 
-import application.MenuScene;
 import application.controller.MenuController;
+import application.runnable.MenuScene;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 

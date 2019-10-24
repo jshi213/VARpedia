@@ -10,11 +10,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import application.Main;
-import application.helper.ListRefresh;
-import application.process.FlickrProcess;
-import application.process.PreviewProcess;
-import application.process.SaveAudioProcess;
-import application.process.WikitProcess;
+import application.helper.*;
+import application.process.*;
 import javafx.beans.binding.BooleanBinding;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -40,7 +37,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -103,6 +99,7 @@ public class MenuController {
 	private int number;
 	
 	private ListRefresh _listRefresher = new ListRefresh();
+	private AlertFactory _alertGenerator = new AlertFactory();
 	
 	private ExecutorService team = Executors.newSingleThreadExecutor(); 
 	private static String _searchTerm;
@@ -359,11 +356,7 @@ public class MenuController {
 	private void handleButtonPreview(ActionEvent event) throws IOException {
 		_selectedText = textAreaResults.getSelectedText();
 		if(_selectedText.length() - _selectedText.replaceAll(" ", "").length() > 39) {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle("Selection error");
-			alert.setHeaderText(null);
-			alert.setContentText("The selected text is too long, please select under 40 words");
-			alert.showAndWait();
+			_alertGenerator.generateAlert(AlertType.WARNING, "Selection error", null, "The selected text is too long, please select under 40 words");
 			return;
 		}
 		_selectedText = _selectedText.replace("(", "");
@@ -437,19 +430,11 @@ public class MenuController {
 		_selectedText = _selectedText.replace("(", "");
 		_selectedText = _selectedText.replace(")", "");
 		if (_selectedText.isEmpty()) {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle("Selection error");
-			alert.setHeaderText(null);
-			alert.setContentText("No text has been selected");
-			alert.showAndWait();
+			_alertGenerator.generateAlert(AlertType.WARNING, "Selection error", null, "No text has been selected");
 			return;
 		}
 		if(_selectedText.length() - _selectedText.replaceAll(" ", "").length() > 39) {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle("Selection error");
-			alert.setHeaderText(null);
-			alert.setContentText("The selected text is too long, please select under 40 words");
-			alert.showAndWait();
+			_alertGenerator.generateAlert(AlertType.WARNING, "Selection error", null, "The selected text is too long, please select under 40 words");
 			return;
 		}
 		String audiofileName = textFieldAudioName.getText();
@@ -457,11 +442,7 @@ public class MenuController {
 		//checking if audiofile with same name already exists
 		File tempFile = new File("audiofiles/"+audiofileName+".wav");
 		if(tempFile.exists()) {
-			Alert alert2 = new Alert(AlertType.WARNING);
-			alert2.setTitle("Already exists");
-			alert2.setHeaderText(null);
-			alert2.setContentText("Audio with same name already exists, please choose a new name");
-			alert2.showAndWait();
+			_alertGenerator.generateAlert(AlertType.WARNING, "Already exist", null, "Audio with same name already exists, please choose a new name words");
 			return;
 		}
 		FileWriter scmwriter = new FileWriter("temporaryfiles/audiofile.scm", false);
@@ -507,11 +488,7 @@ public class MenuController {
 			tabPane.getSelectionModel().clearAndSelect(3);
 			audioCombinationTab.setDisable(false); 
 		} else {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setContentText("Please create an audio file before continuing");
-			alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-			alert.showAndWait().ifPresent(response -> {
-			});
+			_alertGenerator.generateAlert(AlertType.WARNING, "No audio files", null, "Please create an audio file before continuing");
 		}
 	}
 	
@@ -520,12 +497,6 @@ public class MenuController {
 	private void handleButtonAdd() {
 		// get the selected item from the list of audio files and and it to the selected items (to be combined) list view
 		if (listViewAudioFiles.getSelectionModel().getSelectedItem() != null) {
-//			Alert alert = new Alert(AlertType.WARNING);
-//			alert.setTitle("No audio files selected");
-//			alert.setHeaderText(null);
-//			alert.setContentText("Please select an audio file to move across");
-//			alert.showAndWait();
-//		} else {
 			String selected = listViewAudioFiles.getSelectionModel().getSelectedItem().toString();
 			listSelected = listViewSelected.getItems();
 			listSelected.add(selected);
@@ -537,12 +508,6 @@ public class MenuController {
 	private void handleButtonMoveBack() {
 		// get the selected item from the to be combined list view and remove it from that listview
 		if (listViewSelected.getSelectionModel().getSelectedItem() != null) {
-//			Alert alert = new Alert(AlertType.WARNING);
-//			alert.setTitle("No audio files selected");
-//			alert.setHeaderText(null);
-//			alert.setContentText("Please select an audio file to move back across");
-//			alert.showAndWait();
-//		} else {
 			String selected = listViewSelected.getSelectionModel().getSelectedItem().toString();
 			listSelected = listViewSelected.getItems();
 			listSelected.remove(selected);
@@ -554,11 +519,7 @@ public class MenuController {
 	private void handleButtonPlay() {
 		String audioToPlay = listViewAudioFiles.getSelectionModel().getSelectedItem();
 		if(audioToPlay == null) {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle("No audio files selected");
-			alert.setHeaderText(null);
-			alert.setContentText("Please select an audio file to play");
-			alert.showAndWait();
+			_alertGenerator.generateAlert(AlertType.WARNING, "No audio files selected", null, "Please select an audio file to play");
 		} else {
 			buttonAudioPlay.setDisable(true);
 			Media media = new Media(new File("audiofiles/" + audioToPlay + ".wav").toURI().toString());
@@ -594,21 +555,13 @@ public class MenuController {
 				"-filter_complex '" + commandFilterInput + "concat=n=" + Integer.toString(audioCount) + ":v=0:a=1[out]' \\" + 
 				"-map '[out]' audiofiles/combined.wav -y");
 		pb1.start();
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("Successfully combined");
-		alert.setHeaderText(null);
-		alert.setContentText("Selected audio files have been combined");
-		alert.showAndWait();
+		_alertGenerator.generateAlert(AlertType.INFORMATION, "Successfully combined", null, "Selected audio files have been combined");
 	}
 	
 	@FXML
 	private void handleButtonCombineNext(ActionEvent event) throws IOException {
 		if (listViewSelected.getItems().isEmpty()) {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle("No audio files selected");
-			alert.setHeaderText(null);
-			alert.setContentText("Please select at least one audio file to be in the video");
-			alert.showAndWait();
+			_alertGenerator.generateAlert(AlertType.WARNING, "No audio files selected", null, "Please select at least one audio file to be in the video");
 		}
 		else {
 			combine();
@@ -668,11 +621,7 @@ public class MenuController {
 
 		File tempFile = new File("Creations/"+creation+".mp4");
 		if(tempFile.exists()) {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle("Already exists");
-			alert.setHeaderText(null);
-			alert.setContentText("Creation with same name already exists, please choose a new name");
-			alert.showAndWait();
+			_alertGenerator.generateAlert(AlertType.WARNING, "Already exists", null, "Creation with same name already exists, please choose a new name");
 			return;
 		}
 
