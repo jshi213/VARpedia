@@ -393,42 +393,13 @@ public class MenuController {
 		_voiceSelection = "(voice_akl_nz_jdt_diphone)\n";
 	}
 	
-//	@FXML
-//	private void handleSpeedOne(ActionEvent event) {
-//		_voiceRate = "(Parameter.set 'Duration_Stretch 2)\n";
-//		buttonVoiceRate.setText("0.5x");
-//	}
-//	
-//	@FXML
-//	private void handleSpeedTwo(ActionEvent event) {
-//		_voiceRate = "(Parameter.set 'Duration_Stretch 1.333)\n";
-//		buttonVoiceRate.setText("0.75x");
-//	}
-//	
-//	@FXML
-//	private void handleSpeedThree(ActionEvent event) {
-//		_voiceRate = "";
-//		buttonVoiceRate.setText("1x");
-//	}
-//	
-//	@FXML
-//	private void handleSpeedFour(ActionEvent event) {
-//		_voiceRate = "(Parameter.set 'Duration_Stretch 0.666)\n";
-//		buttonVoiceRate.setText("1.5x");
-//	}
-//	
-//	@FXML
-//	private void handleSpeedFive(ActionEvent event) {
-//		_voiceRate = "(Parameter.set 'Duration_Stretch 0.5\n)";
-//		buttonVoiceRate.setText("2x");
-//	}
-	
 	@FXML
 	private void handleSpeed(ActionEvent event) {
-		String speed = ((MenuItem) event.getSource()).getText();
-		int speedInt = Integer.valueOf(speed);
-		_voiceRate = "(Parameter.set 'Duration_Stretch " + speedInt + ")\n";
-		buttonVoiceRate.setText(speed);
+		String speedItem = ((MenuItem) event.getSource()).getText();
+		String speed = speedItem.substring(0, speedItem.length()-1);
+		double speedNum = 1/Double.valueOf(speed);
+		_voiceRate = "(Parameter.set 'Duration_Stretch " + speedNum + ")\n";
+		buttonVoiceRate.setText(speedItem);
 	}
 	
 	
