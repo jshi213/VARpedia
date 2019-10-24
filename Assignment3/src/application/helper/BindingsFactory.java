@@ -1,18 +1,20 @@
 package application.helper;
 
-import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.collections.ObservableList;
 
+/**
+ The BindingsFactory class contains methods to bind buttons to different javafx nodes.
+ */
 public class BindingsFactory {
 	
 	/**
 	 * Binds the specified text field and button so that button is only enabled when the text field
 	 * is not empty
+	 * @param field
+	 * @param button
 	 */
 	public void bindFieldButton(TextField field, Button button) {
 		BooleanBinding bb = new BooleanBinding() {
