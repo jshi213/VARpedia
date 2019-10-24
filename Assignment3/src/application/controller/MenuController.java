@@ -857,9 +857,19 @@ public class MenuController {
 	// quiz summary handlers
 	
 	@FXML
-	private void handleListView(ActionEvent event) {
-		String selected = ((ListView<?>) event.getSource()).getSelectionModel().getSelectedItem().toString();
-		listViewPlay(selected);
+	private void handleListViewCorrect() {
+		String selected = listViewCorrect.getSelectionModel().getSelectedItem();
+		if (selected != null) {
+			listViewPlay(selected);
+		}
+	}
+	
+	@FXML
+	private void handleListViewIncorrect() {
+		String selected = listViewIncorrect.getSelectionModel().getSelectedItem();
+		if (selected != null) {
+			listViewPlay(selected);
+		}
 	}
 	
 	private void listViewPlay(String selected) {
