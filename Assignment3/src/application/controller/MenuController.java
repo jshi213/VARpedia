@@ -193,9 +193,7 @@ public class MenuController {
 				buttonQuizNext.setDisable(true);
 				buttonQuizEnter.setDisable(false);
 				score = 0;
-				//File dir1 = new File("Quiz/");
-			//	listQuiz = dir1.list();
-				listQuiz = arrayListQuiz.toArray(new String[arrayListQuiz.size()]); //add
+				listQuiz = arrayListQuiz.toArray(new String[arrayListQuiz.size()]); 
 				currentLevel = 0;
 				levels = listQuiz.length;
 				textScore.setText("0/" + levels);
@@ -313,15 +311,7 @@ public class MenuController {
 			_searchTerm = textFieldTerm1.getText();
 		}
 		textFieldTerm1.setText(_searchTerm);
-		//checking for empty search field
-		if(_searchTerm.isEmpty() || _searchTerm.trim().length() == 0) {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle("No search term entered");
-			alert.setHeaderText(null);
-			alert.setContentText("Please enter a search term");
-			alert.showAndWait();
-			return;
-		}
+		
 		//starting new thread for wikit search by using WikitProcess class
 		textFieldTerm.clear();
 		progressIndicator.setVisible(true);
@@ -469,15 +459,7 @@ public class MenuController {
 			return;
 		}
 		String audiofileName = textFieldAudioName.getText();
-		//checking if audiofile name is not just spaces or empty string
-		if(audiofileName.isEmpty() || audiofileName.trim().length() == 0) {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle("Enter a name");
-			alert.setHeaderText(null);
-			alert.setContentText("Please enter a name for your audio file");
-			alert.showAndWait();
-			return;
-		}
+
 		//checking if audiofile with same name already exists
 		File tempFile = new File("audiofiles/"+audiofileName+".wav");
 		if(tempFile.exists()) {
@@ -687,26 +669,9 @@ public class MenuController {
 	@FXML
 	private void handleButtonImageCreate(ActionEvent event) {
 		String creation = textFieldName.getText();
-		//alert for no spaces in name
-//		if(creation.contains(" ")) {
-//			Alert alert = new Alert(AlertType.WARNING);
-//			alert.setTitle("No spaces");
-//			alert.setHeaderText(null);
-//			alert.setContentText("Please enter a name with no spaces");
-//			alert.showAndWait();
-//			return;
-//		}
 		
 		createProgress.setVisible(true);
-		//alert if invalid name
-		if(creation.isEmpty() || creation.trim().length() == 0) {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle("Enter a name");
-			alert.setHeaderText(null);
-			alert.setContentText("Please enter a name for your creation");
-			alert.showAndWait();
-			return;
-		}
+
 		File tempFile = new File("Creations/"+creation+".mp4");
 		if(tempFile.exists()) {
 			Alert alert = new Alert(AlertType.WARNING);
