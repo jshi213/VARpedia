@@ -221,8 +221,7 @@ public class MenuController {
 
 				if (levels == 1) { 
 					buttonQuizNext.setText("Finish");
-				}
-				 
+				}			 
 			}	
 			else {
 				paneNoCreations.setVisible(true);
@@ -248,8 +247,7 @@ public class MenuController {
 			@Override
 			protected boolean computeValue() {
 				return (field.getText().isEmpty() || field.getText().trim().length() == 0);
-			}
-			
+			}			
 		};
 		button.disableProperty().bind(bb);
 	}
@@ -279,7 +277,6 @@ public class MenuController {
 	@FXML
 	private void handleButtonList(ActionEvent event) throws IOException {
 			tabPane.getSelectionModel().select(5);
-
 	}
 	
 	@FXML
@@ -291,9 +288,7 @@ public class MenuController {
 				children[i].delete();
 			}
 		}
-		tabPane.getSelectionModel().select(1);
-		
-		
+		tabPane.getSelectionModel().select(1);		
 	}
 	
 	@FXML
@@ -346,21 +341,21 @@ public class MenuController {
 	public static String getSearchTerm() {
 		return _searchTerm;
 	}
-	
-	
+
+
 	//audio selection tab
 	public static void setResults() {
 		//initializing text area to display results in
-				String line = "";
-				try {
-					line = new String(Files.readAllBytes(Paths.get("temporaryfiles/initialtext")));
-					staticTextAreaResults.setText(line);
-					staticTextAreaResults.setWrapText(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+		String line = "";
+		try {
+			line = new String(Files.readAllBytes(Paths.get("temporaryfiles/initialtext")));
+			staticTextAreaResults.setText(line);
+			staticTextAreaResults.setWrapText(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-	
+
 	@FXML
 	private void handleButtonPreview(ActionEvent event) throws IOException {
 		_selectedText = textAreaResults.getSelectedText();
@@ -814,10 +809,7 @@ public class MenuController {
 			}
 			added = true;
 		}
-		textScore.setText(score + "/" + levels);
-		
-
-		
+		textScore.setText(score + "/" + levels);		
 	}
 	
 	// go back to the main menu
@@ -853,21 +845,17 @@ public class MenuController {
 
 			String[] termNames = listQuiz[currentLevel].split("-");
 			term = termNames[1];
-		}
-		
+		}		
 	}
 	
 	// set the summary scene for the quiz
 	@FXML
 	private void setSummary() {
 		paneSummary.setVisible(true);
-		paneQuiz.setVisible(false);
-		
-		textScoreSummary.setText(score + "/" + levels);
-		
+		paneQuiz.setVisible(false);	
+		textScoreSummary.setText(score + "/" + levels);		
 		listCorrect = listViewCorrect.getItems();
-		listCorrect.setAll(correct);
-		
+		listCorrect.setAll(correct);		
 		listIncorrect = listViewIncorrect.getItems();
 		listIncorrect.setAll(incorrect);
 	}
@@ -883,14 +871,8 @@ public class MenuController {
 	// quiz summary handlers
 	
 	@FXML
-	private void handleListViewCorrect() {
-		String selected = listViewCorrect.getSelectionModel().getSelectedItem();
-		listViewPlay(selected);
-	}
-	
-	@FXML
-	private void handleListViewIncorrect() {
-		String selected = listViewIncorrect.getSelectionModel().getSelectedItem();
+	private void handleListView(ActionEvent event) {
+		String selected = ((ListView<?>) event.getSource()).getSelectionModel().getSelectedItem().toString();
 		listViewPlay(selected);
 	}
 	
