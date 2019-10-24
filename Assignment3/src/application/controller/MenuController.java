@@ -569,7 +569,7 @@ public class MenuController {
 			});
 		}
 	}
-	
+	    
 	@FXML 
 	private void handleButtonCombineBack(ActionEvent event) throws IOException {
 		tabPane.getSelectionModel().selectPrevious();
