@@ -12,7 +12,6 @@ import java.util.concurrent.Executors;
 import application.Main;
 import application.helper.*;
 import application.process.*;
-import javafx.beans.binding.BooleanBinding;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -49,7 +48,7 @@ public class MenuController {
 	private Text text, textName, textMusic, textScore, textCorrect, textIncorrect, textScoreSummary;
 	
 	@FXML
-	private Button buttonCreate, buttonList, buttonSearch, buttonSearch1, buttonSave, buttonPreview, buttonAudioPlay, buttonEnter, buttonImageCreate, buttonMusicEnter, buttonPlay, buttonDelete, buttonQuizEnter, buttonQuizNext;
+	private Button buttonCreate, buttonList, buttonSearch, buttonSearch1, buttonSave, buttonNext, buttonPreview, buttonAudioPlay, buttonEnter, buttonImageCreate, buttonMusicEnter, buttonPlay, buttonDelete, buttonQuizEnter, buttonQuizNext;
 
 	@FXML
 	private Pane rootPane, paneQuiz, paneSummary, paneNoCreations;
@@ -100,6 +99,7 @@ public class MenuController {
 	
 	private ListRefresh _listRefresher = new ListRefresh();
 	private AlertFactory _alertGenerator = new AlertFactory();
+	private BindingsFactory _bindingsGenerator = new BindingsFactory();
 	
 	private ExecutorService team = Executors.newSingleThreadExecutor(); 
 	private static String _searchTerm;
@@ -146,7 +146,7 @@ public class MenuController {
 		}
 		
 		searchTab.setOnSelectionChanged(e -> {
-			bindFieldButton(textFieldTerm, buttonSearch);
+			_bindingsGenerator.bindFieldButton(textFieldTerm, buttonSearch);
 		});
 		audioCombinationTab.setOnSelectionChanged (e -> {
 			// add all the audio files created into the audio files list view
@@ -162,8 +162,8 @@ public class MenuController {
 		});
 		
 		audioSelectionTab.setOnSelectionChanged(e -> {
-			bindFieldButton(textFieldTerm1, buttonSearch1);
-			bindFieldButton(textFieldAudioName, buttonSave);
+			_bindingsGenerator.bindFieldButton(textFieldTerm1, buttonSearch1);
+			_bindingsGenerator.bindTextAreaButton(textFieldAudioName, textAreaResults, buttonSave);
 			// add all the audio files created into the audio files list view
 			audioFiles = audioList.getItems();
 			audioFiles.setAll(_listRefresher.refreshAudioFilesLists());
@@ -228,25 +228,8 @@ public class MenuController {
 	    });
 		
 		imageTab.setOnSelectionChanged(e -> {
-			bindFieldButton(textFieldName, buttonImageCreate);
+			_bindingsGenerator.bindFieldButton(textFieldName, buttonImageCreate);
 		});		
-	}
-	
-	/**
-	 * Binds the specified text field and button so that button is only enable when the text field
-	 * is not empty
-	 */
-	public void bindFieldButton(TextField field, Button button) {
-		BooleanBinding bb = new BooleanBinding() {
-			{
-				super.bind(field.textProperty());
-			}
-			@Override
-			protected boolean computeValue() {
-				return (field.getText().isEmpty() || field.getText().trim().length() == 0);
-			}			
-		};
-		button.disableProperty().bind(bb);
 	}
 	
 	private void setGlobalEventHandler(Node root) {
