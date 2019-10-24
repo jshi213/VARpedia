@@ -1,15 +1,16 @@
-package application;
+package application.runnable;
 
 import java.io.File;
 
 import application.controller.MenuController;
-import javafx.scene.control.Alert;
+import application.helper.AlertFactory;
 import javafx.scene.control.Alert.AlertType;
 
 public class AudioListRefresh implements Runnable {
 	
 	private MenuController _controllerInstance;
 	private String _audioFileName;
+	private AlertFactory _alertGenerator = new AlertFactory();
 	
 	public AudioListRefresh(String audioFileName, MenuController controllerInstance) {
 		_controllerInstance = controllerInstance;
@@ -20,11 +21,7 @@ public class AudioListRefresh implements Runnable {
 		File savedAudio = new File("audiofiles/"+_audioFileName+".wav");
 		if(savedAudio.length() < 1024) {
 			savedAudio.delete();
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle("Synthesis error");
-			alert.setHeaderText(null);
-			alert.setContentText("The selected text could not be synthesized, please try selecting a full sentence.");
-			alert.showAndWait();
+			_alertGenerator.generateAlert(AlertType.WARNING, "Synthesis error", null, "The selected text could not be synthesized, please try selecting a full sentence");
 			return;
 		}
 		// add the audio file created into the audio files list view

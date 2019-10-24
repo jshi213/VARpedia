@@ -1,21 +1,20 @@
-package application;
+package application.runnable;
 
 import java.io.File;
 
 import application.controller.MenuController;
-import javafx.scene.control.Alert;
+import application.helper.AlertFactory;
 import javafx.scene.control.Alert.AlertType;
 
 public class MenuScene implements Runnable {
+	
+	private AlertFactory _alertGenerator = new AlertFactory();
+	
 	public void run() {
 		MenuController.getImageTab().setDisable(true);
 		MenuController.getCreateProgress().setVisible(false);
 		MenuController.getTabPane().getSelectionModel().select(0);
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("Creation complete");
-		alert.setHeaderText(null);
-		alert.setContentText("Your creation is now ready to view");
-		alert.showAndWait();
+		_alertGenerator.generateAlert(AlertType.INFORMATION, "Creation complete", null, "Your creation is now ready to view");
 		File dir = new File("audiofiles");
 		if (dir.isDirectory()) {
 			File[] children = dir.listFiles();

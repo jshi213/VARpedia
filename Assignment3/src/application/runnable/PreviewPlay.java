@@ -1,15 +1,17 @@
-package application;
+package application.runnable;
 
 import java.io.File;
 
 import application.controller.MenuController;
-import javafx.scene.control.Alert;
+import application.helper.AlertFactory;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 
 public class PreviewPlay implements Runnable {
+	
+	private AlertFactory _alertGenerator = new AlertFactory();
 	
 	public void run() {
 		try {
@@ -24,11 +26,7 @@ public class PreviewPlay implements Runnable {
 		} catch(MediaException e) {
 			File tempPreview = new File("temporaryfiles/temppreview.wav");
 			tempPreview.delete();
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle("Synthesis error");
-			alert.setHeaderText(null);
-			alert.setContentText("The selected text could not be synthesized, please try selecting a full sentence.");
-			alert.showAndWait();
+			_alertGenerator.generateAlert(AlertType.WARNING, "Synthesis error", null, "The selected text could not be synthesized, please try selecting a full sentence");
 			MenuController.getButtonPreview().setDisable(false);
 		}
 	}
