@@ -12,7 +12,6 @@ import java.util.concurrent.Executors;
 import application.Main;
 import application.helper.*;
 import application.process.*;
-import javafx.beans.binding.BooleanBinding;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -49,7 +48,7 @@ public class MenuController {
 	private Text text, textName, textMusic, textScore, textCorrect, textIncorrect, textScoreSummary;
 	
 	@FXML
-	private Button buttonCreate, buttonList, buttonSearch, buttonSearch1, buttonSave, buttonPreview, buttonAudioPlay, buttonEnter, buttonImageCreate, buttonMusicEnter, buttonPlay, buttonDelete, buttonQuizEnter, buttonQuizNext;
+	private Button buttonCreate, buttonList, buttonSearch, buttonSearch1, buttonSave, buttonNext, buttonPreview, buttonAudioPlay, buttonEnter, buttonImageCreate, buttonMusicEnter, buttonPlay, buttonDelete, buttonQuizEnter, buttonQuizNext;
 
 	@FXML
 	private Pane rootPane, paneQuiz, paneSummary, paneNoCreations;
@@ -88,7 +87,7 @@ public class MenuController {
 	private Media mediaSummary, mediaQuiz;
 	
 	private String[] listQuiz;
-	private String term;
+	private String term, audioToPlay;
 	private boolean musicDecision = false;
 	private String musicFile;
 	private String _selectedText;
@@ -100,6 +99,7 @@ public class MenuController {
 	
 	private ListRefresh _listRefresher = new ListRefresh();
 	private AlertFactory _alertGenerator = new AlertFactory();
+	private BindingsFactory _bindingsGenerator = new BindingsFactory();
 	
 	private ExecutorService team = Executors.newSingleThreadExecutor(); 
 	private static String _searchTerm;
@@ -146,7 +146,7 @@ public class MenuController {
 		}
 		
 		searchTab.setOnSelectionChanged(e -> {
-			bindFieldButton(textFieldTerm, buttonSearch);
+			_bindingsGenerator.bindFieldButton(textFieldTerm, buttonSearch);
 		});
 		audioCombinationTab.setOnSelectionChanged (e -> {
 			// add all the audio files created into the audio files list view
@@ -162,8 +162,8 @@ public class MenuController {
 		});
 		
 		audioSelectionTab.setOnSelectionChanged(e -> {
-			bindFieldButton(textFieldTerm1, buttonSearch1);
-			bindFieldButton(textFieldAudioName, buttonSave);
+			_bindingsGenerator.bindFieldButton(textFieldTerm1, buttonSearch1);
+			_bindingsGenerator.bindTextAreaButton(textFieldAudioName, textAreaResults, buttonSave);
 			// add all the audio files created into the audio files list view
 			audioFiles = audioList.getItems();
 			audioFiles.setAll(_listRefresher.refreshAudioFilesLists());
@@ -228,25 +228,8 @@ public class MenuController {
 	    });
 		
 		imageTab.setOnSelectionChanged(e -> {
-			bindFieldButton(textFieldName, buttonImageCreate);
+			_bindingsGenerator.bindFieldButton(textFieldName, buttonImageCreate);
 		});		
-	}
-	
-	/**
-	 * Binds the specified text field and button so that button is only enable when the text field
-	 * is not empty
-	 */
-	public void bindFieldButton(TextField field, Button button) {
-		BooleanBinding bb = new BooleanBinding() {
-			{
-				super.bind(field.textProperty());
-			}
-			@Override
-			protected boolean computeValue() {
-				return (field.getText().isEmpty() || field.getText().trim().length() == 0);
-			}			
-		};
-		button.disableProperty().bind(bb);
 	}
 	
 	private void setGlobalEventHandler(Node root) {
@@ -277,6 +260,13 @@ public class MenuController {
 	
 	@FXML
 	private void handleButtonCreate(ActionEvent event) throws IOException {
+		textFieldTerm1.clear(); //added
+		textAreaResults.clear();
+		menuButtonNumber.setText("Images");
+		menuButtonMusic.setText("Music");
+		textFieldName.clear();
+		imageTab.setDisable(true);
+		audioCombinationTab.setDisable(true);
 		File dir = new File("audiofiles");
 		if (dir.isDirectory()) {
 			File[] children = dir.listFiles();
@@ -402,17 +392,13 @@ public class MenuController {
 		buttonVoiceRate.setText(speedItem);
 	}
 	
-	
 	@FXML
 	private void handleButtonSave() throws IOException {
 		//checking if selected text is empty or too long
 		_selectedText = textAreaResults.getSelectedText();
 		_selectedText = _selectedText.replace("(", "");
 		_selectedText = _selectedText.replace(")", "");
-		if (_selectedText.isEmpty()) {
-			_alertGenerator.generateAlert(AlertType.WARNING, "Selection error", null, "No text has been selected");
-			return;
-		}
+
 		if(_selectedText.length() - _selectedText.replaceAll(" ", "").length() > 39) {
 			_alertGenerator.generateAlert(AlertType.WARNING, "Selection error", null, "The selected text is too long, please select under 40 words");
 			return;
@@ -435,6 +421,7 @@ public class MenuController {
 		
 		SaveAudioProcess saveAudioProcess = new SaveAudioProcess(audiofileName, this);
 		team.submit(saveAudioProcess);
+		textFieldAudioName.clear(); //added
 		return;
 	}
 	
@@ -472,7 +459,7 @@ public class MenuController {
 		}
 	}
 	
-	//audiocombination tab
+	//audio combination tab
 	@FXML
 	private void handleButtonAdd() {
 		// get the selected item from the list of audio files and and it to the selected items (to be combined) list view
@@ -494,13 +481,23 @@ public class MenuController {
 			listAudioFiles.add(selected);
 		}
 	}
+	@FXML
+	private void handleListViewAudioSelected() { //changed
+		if (listViewSelected.getSelectionModel().getSelectedItem() != null) {
+		audioToPlay = listViewSelected.getSelectionModel().getSelectedItem();
+		buttonAudioPlay.setDisable(false);
+		}
+	}
 	
 	@FXML
+	private void handleListViewAudioFiles() { //changed
+		if (listViewAudioFiles.getSelectionModel().getSelectedItem() != null) {
+		audioToPlay = listViewAudioFiles.getSelectionModel().getSelectedItem();
+		buttonAudioPlay.setDisable(false);
+		}
+	}
+	@FXML
 	private void handleButtonPlay() {
-		String audioToPlay = listViewAudioFiles.getSelectionModel().getSelectedItem();
-		if(audioToPlay == null) {
-			_alertGenerator.generateAlert(AlertType.WARNING, "No audio files selected", null, "Please select an audio file to play");
-		} else {
 			buttonAudioPlay.setDisable(true);
 			Media media = new Media(new File("audiofiles/" + audioToPlay + ".wav").toURI().toString());
 			mediaPlayer = new MediaPlayer(media);
@@ -508,8 +505,8 @@ public class MenuController {
 			mediaPlayer.setOnEndOfMedia(() -> {
 				buttonAudioPlay.setDisable(false);
 			});
-		}
 	}
+	
 	    
 	@FXML 
 	private void handleButtonCombineBack(ActionEvent event) throws IOException {
@@ -789,19 +786,15 @@ public class MenuController {
 	// quiz summary handlers
 	
 	@FXML
-	private void handleListViewCorrect() {
-		String selected = listViewCorrect.getSelectionModel().getSelectedItem();
-		if (selected != null) {
-			listViewPlay(selected);
-		}
+	private void handleListViewIncorrect() {
+		String selected = listViewIncorrect.getSelectionModel().getSelectedItem().toString();
+		listViewPlay(selected);
 	}
 	
 	@FXML
-	private void handleListViewIncorrect() {
-		String selected = listViewIncorrect.getSelectionModel().getSelectedItem();
-		if (selected != null) {
-			listViewPlay(selected);
-		}
+	private void handleListViewCorrect() {
+		String selected = listViewCorrect.getSelectionModel().getSelectedItem().toString();
+		listViewPlay(selected);
 	}
 	
 	private void listViewPlay(String selected) {

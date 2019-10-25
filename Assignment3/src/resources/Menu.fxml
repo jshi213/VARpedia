@@ -176,8 +176,8 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="767.0" prefWidth="1200.0">
                      <children>
-                        <ListView fx:id="listViewAudioFiles" layoutX="56.0" layoutY="209.0" prefHeight="350.0" prefWidth="400.0" />
-                        <ListView fx:id="listViewSelected" layoutX="659.0" layoutY="209.0" prefHeight="350.0" prefWidth="400.0" />
+                        <ListView fx:id="listViewAudioFiles" layoutX="56.0" layoutY="209.0" onMouseClicked="#handleListViewAudioFiles" prefHeight="350.0" prefWidth="400.0" />
+                        <ListView fx:id="listViewSelected" layoutX="659.0" layoutY="209.0" onMouseClicked="#handleListViewAudioSelected" prefHeight="350.0" prefWidth="400.0" />
                         <Button layoutX="525.0" layoutY="288.0" mnemonicParsing="false" onAction="#handleButtonAdd" text="&gt;&gt;">
                            <font>
                               <Font name="Manjari Regular" size="24.0" />
@@ -188,12 +188,12 @@
                               <Font name="Manjari Regular" size="24.0" />
                            </font>
                         </Button>
-                        <Button layoutX="574.0" layoutY="693.0" mnemonicParsing="false" onAction="#handleButtonCombineNext" text="Next: Select number of images &amp; Create video">
+                        <Button layoutX="693.0" layoutY="692.0" mnemonicParsing="false" onAction="#handleButtonCombineNext" text="Next: Images, Music, Creation Name">
                            <font>
                               <Font name="Manjari Regular" size="24.0" />
                            </font>
                         </Button>
-                        <Button fx:id="buttonAudioPlay" layoutX="482.0" layoutY="585.0" mnemonicParsing="false" onAction="#handleButtonPlay" text="Play audio">
+                        <Button fx:id="buttonAudioPlay" disable="true" layoutX="482.0" layoutY="585.0" mnemonicParsing="false" onAction="#handleButtonPlay" text="Play audio">
                            <font>
                               <Font name="Manjari Regular" size="24.0" />
                            </font>
@@ -213,12 +213,12 @@
                               <Font name="DejaVu Sans ExtraLight" size="32.0" />
                            </font>
                         </Text>
-                        <Text fill="WHITE" layoutX="179.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Combine your audio files into a creation">
+                        <Text fill="WHITE" layoutX="179.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select audio files to be in your creation">
                            <font>
                               <Font name="DejaVu Sans ExtraLight" size="42.0" />
                            </font>
                         </Text>
-                        <Text fill="WHITE" layoutX="722.0" layoutY="189.0" strokeType="OUTSIDE" strokeWidth="0.0" text="included in video">
+                        <Text fill="WHITE" layoutX="700.0" layoutY="189.0" strokeType="OUTSIDE" strokeWidth="0.0" text="included in creation">
                            <font>
                               <Font name="DejaVu Sans ExtraLight" size="32.0" />
                            </font>

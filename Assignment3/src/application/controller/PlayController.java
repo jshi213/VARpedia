@@ -44,14 +44,13 @@ public class PlayController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		String creationName = MenuController.getSelectedItem() + ".mp4";
-		System.out.println(creationName);
 		mediaViewPane.setStyle("-fx-background-color: #000000;");
 		String path = new File("Creations/" + creationName).getAbsolutePath();
 		media = new Media(new File(path).toURI().toString());
 		mediaPlayer = new MediaPlayer(media);
 		progressSlider.maxProperty().bind(Bindings.createDoubleBinding(
-					() -> mediaPlayer.getTotalDuration().toSeconds(),
-					mediaPlayer.totalDurationProperty()));
+					() -> media.getDuration().toSeconds(),
+					media.durationProperty()));
 		mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
 			@Override
 			public void changed(ObservableValue<? extends Duration> observable, Duration oldValue,

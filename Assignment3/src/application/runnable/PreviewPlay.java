@@ -26,7 +26,7 @@ public class PreviewPlay implements Runnable {
 		} catch(MediaException e) {
 			File tempPreview = new File("temporaryfiles/temppreview.wav");
 			tempPreview.delete();
-			_alertGenerator.generateAlert(AlertType.WARNING, "Synthesis error", null, "The selected text could not be synthesized, please try selecting a full sentence");
+			_alertGenerator.generateAlert(AlertType.WARNING, "Synthesis error", null, "The selected text could not be synthesized, please try selecting a different sentence or change voices");
 			MenuController.getButtonPreview().setDisable(false);
 		}
 	}
