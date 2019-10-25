@@ -21,7 +21,7 @@ public class AudioListRefresh implements Runnable {
 		File savedAudio = new File("audiofiles/"+_audioFileName+".wav");
 		if(savedAudio.length() < 1024) {
 			savedAudio.delete();
-			_alertGenerator.generateAlert(AlertType.WARNING, "Synthesis error", null, "The selected text could not be synthesized, please try selecting a full sentence");
+			_alertGenerator.generateAlert(AlertType.WARNING, "Synthesis error", null, "The selected text could not be synthesized, please try selecting different words or changes voices");
 			return;
 		}
 		// add the audio file created into the audio files list view
