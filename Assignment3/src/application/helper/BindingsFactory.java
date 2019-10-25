@@ -52,4 +52,16 @@ public class BindingsFactory {
 		button.disableProperty().bind(bb);
 	}
 	
+	public void bindTextAreaButtonPreview(TextArea area, Button button) {
+		BooleanBinding bb = new BooleanBinding() {
+			{
+				super.bind(area.selectedTextProperty());
+			}
+			@Override
+			protected boolean computeValue() {
+				return (area.getSelectedText().isEmpty() || area.getSelectedText().trim().length() == 0);
+			}			
+		};
+		button.disableProperty().bind(bb);
+	}
 }

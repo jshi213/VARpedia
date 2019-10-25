@@ -143,8 +143,8 @@
                         </Text>
                         <MenuButton fx:id="menuButtonVoices" layoutX="26.0" layoutY="685.0" mnemonicParsing="false" prefWidth="230.0" text="Voices" textFill="#79b4d1">
                            <items>
-                              <MenuItem fx:id="voice1" mnemonicParsing="false" onAction="#handleVoice1" text="Voice 1" />
-                              <MenuItem fx:id="voice2" mnemonicParsing="false" onAction="#handleVoice2" text="Voice 2" />
+                              <MenuItem fx:id="voice1" mnemonicParsing="false" onAction="#handleVoice1" text="Default" />
+                              <MenuItem fx:id="voice2" mnemonicParsing="false" onAction="#handleVoice2" text="NZ Male" />
                            </items>
                            <font>
                               <Font name="DejaVu Sans" size="24.0" />
@@ -188,12 +188,11 @@
                               <Font name="Manjari Regular" size="24.0" />
                            </font>
                         </Button>
-                        <Button layoutX="574.0" layoutY="693.0" mnemonicParsing="false" onAction="#handleButtonCombineNext" text="Next: Select number of images &amp; Create video">
-                           <font>
+                       <Button layoutX="600.0" layoutY="693.0" mnemonicParsing="false" onAction="#handleButtonCombineNext" text="Next: Select Images/Music &amp; Name Creation">                           <font>
                               <Font name="Manjari Regular" size="24.0" />
                            </font>
                         </Button>
-                        <Button fx:id="buttonAudioPlay" layoutX="482.0" layoutY="585.0" mnemonicParsing="false" onAction="#handleButtonPlay" text="Play audio">
+                        <Button fx:id="buttonAudioPlay" disable="true" layoutX="482.0" layoutY="585.0" mnemonicParsing="false" onAction="#handleButtonPlay" text="Play audio">
                            <font>
                               <Font name="Manjari Regular" size="24.0" />
                            </font>
@@ -213,12 +212,12 @@
                               <Font name="DejaVu Sans ExtraLight" size="32.0" />
                            </font>
                         </Text>
-                        <Text fill="WHITE" layoutX="179.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Combine your audio files into a creation">
+                        <Text fill="WHITE" layoutX="189.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select audio files to be in your creation">
                            <font>
                               <Font name="DejaVu Sans ExtraLight" size="42.0" />
                            </font>
                         </Text>
-                        <Text fill="WHITE" layoutX="722.0" layoutY="189.0" strokeType="OUTSIDE" strokeWidth="0.0" text="included in video">
+                        <Text fill="WHITE" layoutX="700.0" layoutY="189.0" strokeType="OUTSIDE" strokeWidth="0.0" text="included in creation">
                            <font>
                               <Font name="DejaVu Sans ExtraLight" size="32.0" />
                            </font>

@@ -162,6 +162,7 @@ public class MenuController {
 		});
 		
 		audioSelectionTab.setOnSelectionChanged(e -> {
+			_bindingsGenerator.bindTextAreaButtonPreview(textAreaResults, buttonPreview);
 			_bindingsGenerator.bindFieldButton(textFieldTerm1, buttonSearch1);
 			_bindingsGenerator.bindTextAreaButton(textFieldAudioName, textAreaResults, buttonSave);
 			// add all the audio files created into the audio files list view
