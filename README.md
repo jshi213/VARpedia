@@ -1,4 +1,4 @@
-# assignment3
+# VARpedia
 SOFTENG 206 Project
 
 The intended audience of this application is the elderly.
