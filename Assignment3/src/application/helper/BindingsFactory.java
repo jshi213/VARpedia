@@ -12,7 +12,8 @@ public class BindingsFactory {
 	
 	/**
 	 * Binds the specified text field and button so that button is only enabled when the text field
-	 * is not empty
+	 * is not empty.
+	 * 
 	 * @param field
 	 * @param button
 	 */
@@ -31,7 +32,11 @@ public class BindingsFactory {
 	
 	/**
 	 * Binds the specified text area and button so that button is only enabled when the text area selected text
-	 * is not empty, and the audioname text field is also not empty
+	 * is not empty, and the audioname text field is also not empty.
+	 * 
+	 * @param field
+	 * @param area
+	 * @param button
 	 */
 	public void bindTextAreaButton(TextField field, TextArea area, Button button) {
 		BooleanBinding bb = new BooleanBinding() {

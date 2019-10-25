@@ -20,9 +20,11 @@ import javafx.scene.shape.Shape;
 import javafx.scene.media.MediaPlayer.Status;
 import javafx.util.Duration;
 
+/**
+ * The PlayController class is a controller class for Play.fxml which contains handlers and
+ * listeners for all video player elements.
+ */
 public class PlayController implements Initializable {
-	
-	private Duration _duration;
 	
 	@FXML
 	private Pane mediaViewPane;
@@ -39,12 +41,15 @@ public class PlayController implements Initializable {
 	@FXML
 	private Button playButton;
 	
-	@FXML Shape playSymbol, pauseSymbol1, pauseSymbol2;
+	@FXML
+	private Shape playSymbol, pauseSymbol1, pauseSymbol2;
 	
 	@FXML
 	private MediaView mediaView;
+	
 	private MediaPlayer mediaPlayer;
 	private Media media;
+	private Duration _duration;
 	private final boolean repeat = false;
     private boolean stopRequested = false;
     private boolean atEndOfMedia = false;
@@ -52,6 +57,12 @@ public class PlayController implements Initializable {
 	
 	private static MediaPlayer _staticMediaPlayer;
 	
+	/**
+	 *Initializes the new stage with media elements and listeners for the controls.
+	 *
+	 *@param location
+	 *@param resources
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		String creationName = MenuController.getSelectedItem() + ".mp4";
@@ -131,6 +142,11 @@ public class PlayController implements Initializable {
 		});
 	}
 
+	
+	/**
+	 * Reads the current time of the mediaplayer and updates the timeslider and timelabel. Also updates
+	 * the player volume if the volumeslider is changed.
+	 */
 	protected void updateValues() {
 		if (timeLabel != null && timeSlider != null && volumeSlider != null) {
 			Platform.runLater(new Runnable() {
@@ -151,6 +167,13 @@ public class PlayController implements Initializable {
 		}
 	}
 
+	/**
+	 * Returns the formatted time for the timelabel when given the current time and total duration.
+	 * 
+	 * @param elapsed   Elapsed time for the player.
+	 * @param duration  Total duration of media.
+	 * @return			The formatted time as a String object.
+	 */
 	private static String formatTime(Duration elapsed, Duration duration) {
 		int intElapsed = (int)Math.floor(elapsed.toSeconds());
 		int elapsedHours = intElapsed / (60 * 60);
@@ -190,6 +213,11 @@ public class PlayController implements Initializable {
 		}
 	}
 	
+	/**
+	 * Handler for the pause/play button of the player.
+	 * 
+	 * @param event
+	 */
 	@FXML
 	public void handleButtonPlay(ActionEvent event) {
 		Status status = mediaPlayer.getStatus();
@@ -213,10 +241,18 @@ public class PlayController implements Initializable {
 		}
 	}
 	
+	
+	/**
+	 * Stops the mediaplayer.
+	 */
 	public static void stop() {
 		_staticMediaPlayer.stop();
 	}
 	
+	/**
+	 * Handler for when the slider is clicked, and the current time of the mediaplayer needs to be updated.
+	 * 
+	 */
 	@FXML
 	public void handleMousePressed() {
 		mediaPlayer.seek(_duration.multiply(timeSlider.getValue() / 100.0));

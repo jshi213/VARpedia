@@ -10,6 +10,7 @@ public class AlertFactory {
 	
 	/**
 	 * This method generates a pop-up alert with the given properties.
+	 * 
 	 * @param alertType 
 	 * @param title
 	 * @param header

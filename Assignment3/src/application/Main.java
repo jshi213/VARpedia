@@ -9,6 +9,9 @@ import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
 
 
+/**
+ * The Main class is the entry point for the application.
+ */
 public class Main extends Application {
 	
 	private static Scene _staticScene;
@@ -52,6 +55,11 @@ public class Main extends Application {
 		launch(args);
 	}
 	
+	/**
+	 * Deletes a folder and its contents created the application.
+	 * 
+	 * @param folder The folder to delete.
+	 */
 	public static void deleteFolder(File folder) {
 	    File[] files = folder.listFiles();
 	    if(files!=null) {
@@ -66,6 +74,11 @@ public class Main extends Application {
 	    folder.delete();
 	}
 	
+	/**
+	 * Gets the Scene created in the start method of this object.
+	 * 
+	 * @return The scene to get.
+	 */
 	public static Scene getScene() {
 		return _staticScene;
 	}

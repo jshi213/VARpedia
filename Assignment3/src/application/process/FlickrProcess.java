@@ -28,6 +28,10 @@ import application.runnable.MenuScene;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 
+/**
+ * The FlickrProcess class is a Task class that runs on a concurrent thread to retrieve images for the creation
+ * from Flickr, and creates the creation with chosen audio and name.
+ */
 public class FlickrProcess extends Task<Void> {
 	
 	private int _number;
@@ -36,6 +40,15 @@ public class FlickrProcess extends Task<Void> {
 	private boolean _musicDecision;
 	private String _musicFile;
 	
+	
+	/**
+	 * Initializes the new FlickrProcess object.
+	 * 
+	 * @param number		Number of images user has selected.
+	 * @param creation		The creation name the user has chosen.
+	 * @param musicDecision	The musical track the user has chosen.
+	 * @param musicFile		The music file of the chosen track.
+	 */
 	public FlickrProcess(int number, String creation, boolean musicDecision, String musicFile) {
 		_number = number;
 		_creation = creation;
@@ -99,6 +112,12 @@ public class FlickrProcess extends Task<Void> {
  
 	}
 	
+	/**
+	 * Combines all the user inputs and the audio files into a single bash script that generates
+	 * the creation.
+	 * 
+	 * @return The bash script file. 
+	 */
 	private File tempScript() {
 		// find the number of seconds to play each image for
 		double durationInSeconds = 0;
@@ -123,15 +142,28 @@ public class FlickrProcess extends Task<Void> {
 			printWriter.println("cd downloads");
 			// create video
 			if (_musicDecision == true) {
-				printWriter.println("ffmpeg -i ../audiofiles/combined.wav -i " + _musicFile + " -filter_complex amerge -c:a libmp3lame -q:a 4 speechmusic.mp3 &>/dev/null");
-				printWriter.println("cat *.jpg | ffmpeg -f image2pipe -framerate 1/" + secondsPerImage + " -i - -i speechmusic.mp3 -c:v libx264 -pix_fmt yuv420p -vf \"pad=ceil(iw/2)*2:ceil(ih/2)*2\" -r 25 -max_muxing_queue_size 1024 -y audioslideshow.mp4 &>/dev/null");
+				printWriter.println("ffmpeg -i ../audiofiles/combined.wav -i " + _musicFile
+						+ " -filter_complex amerge -c:a libmp3lame -q:a 4 "
+						+ "speechmusic.mp3 &>/dev/null");
+				printWriter.println("cat *.jpg | ffmpeg -f image2pipe -framerate 1/" 
+						+ secondsPerImage + " -i - -i speechmusic.mp3 -c:v libx264 -pix_fmt yuv420p "
+								+ "-vf \"pad=ceil(iw/2)*2:ceil(ih/2)*2\" -r 25 -max_muxing_queue_size "
+								+ "1024 -y audioslideshow.mp4 &>/dev/null");
 				printWriter.println();
 			}
 			else {			
-				printWriter.println("cat *.jpg | ffmpeg -f image2pipe -framerate 1/" + secondsPerImage + " -i - -i ../audiofiles/combined.wav -c:v libx264 -pix_fmt yuv420p -vf \"pad=ceil(iw/2)*2:ceil(ih/2)*2\" -r 25 -max_muxing_queue_size 1024 -y audioslideshow.mp4 &>/dev/null");
+				printWriter.println("cat *.jpg | ffmpeg -f image2pipe -framerate 1/" + secondsPerImage 
+						+ " -i - -i ../audiofiles/combined.wav -c:v libx264 -pix_fmt yuv420p -vf "
+						+ "\"pad=ceil(iw/2)*2:ceil(ih/2)*2\" -r 25 -max_muxing_queue_size 1024 -y "
+						+ "audioslideshow.mp4 &>/dev/null");
 			}
-			printWriter.println("cat *.jpg | ffmpeg -f image2pipe -framerate 1/" + secondsPerImage + " -i - -c:v libx264 -pix_fmt yuv420p -vf \"pad=ceil(iw/2)*2:ceil(ih/2)*2\" -r 25 -max_muxing_queue_size 1024 -y \"../Quiz/" + _creation + "-" + _term + ".mp4\" &>/dev/null");
-			printWriter.println("ffmpeg -i audioslideshow.mp4 -vf \"drawtext=fontfile=myfont.ttf:fontsize=60: fontcolor=white:x=(w-text_w)/2:y=(h-text_h)/2:text=" + MenuController.getSearchTerm() + "\" -codec:a copy \"../Creations/" + _creation + ".mp4\" &>/dev/null");
+			printWriter.println("cat *.jpg | ffmpeg -f image2pipe -framerate 1/" + secondsPerImage 
+					+ " -i - -c:v libx264 -pix_fmt yuv420p -vf \"pad=ceil(iw/2)*2:ceil(ih/2)*2\" -r "
+					+ "25 -max_muxing_queue_size 1024 -y \"../Quiz/" + _creation + "-" + _term + ".mp4\" "
+							+ "&>/dev/null");
+			printWriter.println("ffmpeg -i audioslideshow.mp4 -vf \"drawtext=fontfile=myfont.ttf:fontsize=60: "
+					+ "fontcolor=white:x=(w-text_w)/2:y=(h-text_h)/2:text=" + MenuController.getSearchTerm()
+					+ "\" -codec:a copy \"../Creations/" + _creation + ".mp4\" &>/dev/null");
 			printWriter.println("rm -f slideshow.mp4 audioslideshow.mp4 speechmusic.mp3 *.jpg");
 			printWriter.close();
 			return tempScript;
