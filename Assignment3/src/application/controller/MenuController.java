@@ -260,6 +260,13 @@ public class MenuController {
 	
 	@FXML
 	private void handleButtonCreate(ActionEvent event) throws IOException {
+		textFieldTerm1.clear(); 
+		textAreaResults.clear();
+		menuButtonNumber.setText("Images");
+		menuButtonMusic.setText("Music");
+		textFieldName.clear();
+		imageTab.setDisable(true);
+		audioCombinationTab.setDisable(true);
 		File dir = new File("audiofiles");
 		if (dir.isDirectory()) {
 			File[] children = dir.listFiles();
@@ -366,13 +373,13 @@ public class MenuController {
 	
 	@FXML
 	private void handleVoice1(ActionEvent event) throws IOException {
-		menuButtonVoices.setText("Voice 1");
+		menuButtonVoices.setText("Default");
 		_voiceSelection = "(voice_kal_diphone)\n";
 	}
 	
 	@FXML
 	private void handleVoice2(ActionEvent event) throws IOException {
-		menuButtonVoices.setText("Voice 2");
+		menuButtonVoices.setText("NZ Male");
 		_voiceSelection = "(voice_akl_nz_jdt_diphone)\n";
 	}
 	
@@ -404,7 +411,7 @@ public class MenuController {
 		//checking if audiofile with same name already exists
 		File tempFile = new File("audiofiles/"+audiofileName+".wav");
 		if(tempFile.exists()) {
-			_alertGenerator.generateAlert(AlertType.WARNING, "Already exist", null, "Audio with same name already exists, please choose a new name words");
+			_alertGenerator.generateAlert(AlertType.WARNING, "Already exist", null, "Audio with same name already exists, please choose a new name");
 			return;
 		}
 		FileWriter scmwriter = new FileWriter("temporaryfiles/audiofile.scm", false);
@@ -417,6 +424,7 @@ public class MenuController {
 		
 		SaveAudioProcess saveAudioProcess = new SaveAudioProcess(audiofileName, this);
 		team.submit(saveAudioProcess);
+		textFieldAudioName.clear();
 		return;
 	}
 	
@@ -478,26 +486,27 @@ public class MenuController {
 	}
 	@FXML
 	private void handleListViewAudioSelected() {
-		audioToPlay = listViewSelected.getSelectionModel().getSelectedItem();
+		if (listViewSelected.getSelectionModel().getSelectedItem() != null) {
+			audioToPlay = listViewSelected.getSelectionModel().getSelectedItem();
+			buttonAudioPlay.setDisable(false);
+		}
 	}
-	
+
 	@FXML
 	private void handleListViewAudioFiles() {
-		audioToPlay = listViewAudioFiles.getSelectionModel().getSelectedItem();
+		if (listViewAudioFiles.getSelectionModel().getSelectedItem() != null) {
+			audioToPlay = listViewAudioFiles.getSelectionModel().getSelectedItem();
+			buttonAudioPlay.setDisable(false);
+		}
 	}
 	@FXML
 	private void handleButtonPlay() {
-		if(audioToPlay == null) {
-			_alertGenerator.generateAlert(AlertType.WARNING, "No audio files selected", null, "Please select an audio file to play");
-		} else {
 			buttonAudioPlay.setDisable(true);
 			Media media = new Media(new File("audiofiles/" + audioToPlay + ".wav").toURI().toString());
 			mediaPlayer = new MediaPlayer(media);
 			mediaPlayer.play();
-			mediaPlayer.setOnEndOfMedia(() -> {
-				buttonAudioPlay.setDisable(false);
-			});
-		}
+			listViewAudioFiles.getSelectionModel().select(null);
+			listViewSelected.getSelectionModel().select(null);
 	}
 	
 	    
