@@ -261,8 +261,6 @@ public class MenuController {
 	
 	@FXML
 	private void handleButtonCreate(ActionEvent event) throws IOException {
-		menuButtonVoices.setText("Voices");
-		buttonVoiceRate.setText("1x");
 		textFieldTerm1.clear(); 
 		textAreaResults.clear();
 		menuButtonNumber.setText("Images");
@@ -376,13 +374,13 @@ public class MenuController {
 	
 	@FXML
 	private void handleVoice1(ActionEvent event) throws IOException {
-		menuButtonVoices.setText("Default");
+		menuButtonVoices.setText("Voice 1");
 		_voiceSelection = "(voice_kal_diphone)\n";
 	}
 	
 	@FXML
 	private void handleVoice2(ActionEvent event) throws IOException {
-		menuButtonVoices.setText("NZ Male");
+		menuButtonVoices.setText("Voice 2");
 		_voiceSelection = "(voice_akl_nz_jdt_diphone)\n";
 	}
 	
