@@ -9,10 +9,6 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 
-/**
- * A runnable that plays the temporary .wav file created in the PreviewProcess task class, and
- * deletes the file after it is played. 
- */
 public class PreviewPlay implements Runnable {
 	
 	private AlertFactory _alertGenerator = new AlertFactory();
