@@ -6,6 +6,11 @@ import application.controller.MenuController;
 import application.helper.AlertFactory;
 import javafx.scene.control.Alert.AlertType;
 
+/**
+ * Runnable class that is run after the FlickrProcess task class is finished. 
+ * Changes to the main menu tab and resets the imagecreation tab, then deletes
+ * audio files used for the creation.
+ */
 public class MenuScene implements Runnable {
 	
 	private AlertFactory _alertGenerator = new AlertFactory();

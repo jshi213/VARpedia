@@ -30,7 +30,8 @@ import javafx.concurrent.Task;
 
 /**
  * The FlickrProcess class is a Task class that runs on a concurrent thread to retrieve images for the creation
- * from Flickr, and creates the creation with chosen audio and name.
+ * from Flickr, and creates the creation with chosen audio and name. It then resets all relevant components of the
+ * application for the next creation.
  */
 public class FlickrProcess extends Task<Void> {
 	

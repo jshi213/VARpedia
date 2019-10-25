@@ -11,11 +11,21 @@ import application.runnable.CreateMenuScene;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 
+/**
+ * The WikitProcess class is a task class that runs on a concurrent thread to run the
+ * wikit bash command as a process and writes the results into the "initialtext" text file.
+ * It then changes the scene to the next tab.
+ */
 public class WikitProcess extends Task<String> {
 	
 	private String _searchTerm;
 	private boolean _isCancelled = false;
 	
+	/**
+	 * Initializes the Runnable.
+	 * 
+	 * @param searchTerm	The searchterm typed by the user.
+	 */
 	public WikitProcess(String searchTerm) {
 		_searchTerm = searchTerm;
 	}
@@ -65,6 +75,11 @@ public class WikitProcess extends Task<String> {
 		return null;
 	}
 	
+	
+	/**
+	 * Sets the cancelled flag to true, causing the process task to abort from the call method 
+	 * loop.
+	 */
 	public void setCancel() {
 		_isCancelled = true;
 	}

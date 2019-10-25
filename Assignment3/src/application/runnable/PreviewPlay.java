@@ -9,6 +9,10 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 
+/**
+ * Runnable class that is run after the PreviewProcess task class is finished. It plays the temporary
+ * .wav file the PreviewProcess class created, and deletes it when finished. 
+ */
 public class PreviewPlay implements Runnable {
 	
 	private AlertFactory _alertGenerator = new AlertFactory();
@@ -26,7 +30,8 @@ public class PreviewPlay implements Runnable {
 		} catch(MediaException e) {
 			File tempPreview = new File("temporaryfiles/temppreview.wav");
 			tempPreview.delete();
-			_alertGenerator.generateAlert(AlertType.WARNING, "Synthesis error", null, "The selected text could not be synthesized, please try selecting different words or change voices");
+			_alertGenerator.generateAlert(AlertType.WARNING, "Synthesis error", null, "The selected "
+					+ "text could not be synthesized, please try selecting different words or change voices");
 			MenuController.getButtonPreview().setDisable(false);
 		}
 	}
