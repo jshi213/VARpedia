@@ -42,8 +42,12 @@ import javafx.scene.media.MediaView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+/**
+ * The controller class for Menu.fxml, containing functionality for all components of the main stage of the application. 
+ */
 public class MenuController {
 
+	//FXML tagged javafx nodes from scenebuilder
 	@FXML
 	private Text text, textName, textMusic, textScore, textCorrect, textIncorrect, textScoreSummary;
 	
@@ -78,76 +82,64 @@ public class MenuController {
 	private ListView<String> listViewAudioFiles, listViewSelected, audioList, listView, listViewCorrect, listViewIncorrect;
 	
 	@FXML
-	private ObservableList<String> listAudioFiles, listSelected, list;
+	private ObservableList<String> listAudioFiles, listSelected, list, listCorrect, listIncorrect;
 	
 	@FXML
 	private MediaView mediaViewQuiz, mediaViewSummary;
 	
+	//Non-fxml fields
 	private MediaPlayer mediaPlayerSummary, mediaPlayer, mediaPlayerQuiz;
 	private Media mediaSummary, mediaQuiz;
-	
+	private ExecutorService team = Executors.newSingleThreadExecutor(); 
 	private String[] listQuiz;
-	private String term, audioToPlay;
-	private boolean musicDecision = false;
-	private String musicFile;
-	private String _selectedText;
-	private String _voiceSelection;
-	private String _voiceRate = "";
-	private static String _selected;
-	
-	private int number;
-	
+	private String _selectedText, _voiceSelection, term, audioToPlay, _voiceRate = "", musicFile;
+	private WikitProcess _wikitProcess;
 	private ListRefresh _listRefresher = new ListRefresh();
 	private AlertFactory _alertGenerator = new AlertFactory();
 	private BindingsFactory _bindingsGenerator = new BindingsFactory();
-	
-	private ExecutorService team = Executors.newSingleThreadExecutor(); 
-	private static String _searchTerm;
-	private WikitProcess _wikitProcess;
-	private static Alert _staticAlert;
-	private static boolean _processStatus;
+	private boolean musicDecision = false;
+	private boolean incorrectAttempt = false, added = false;
+	private int number;
 	private ObservableList<String> audioFiles;
+	
+	//static fields used for processing to and from other classes
+	private static String _selected;
+	private static String _staticSearchTerm;
+	private static boolean _processStatus;
 	private static TextArea staticTextAreaResults;
 	private static ProgressIndicator _staticProgressIndicator, _staticCreateProgress;
 	private static TabPane _staticTabPane;
 	private static Button _staticButtonPreview;
 	private static Tab _staticImageTab;
-	
 	private static int levels, currentLevel, score;
-	
 	private static ArrayList<String> correct, incorrect;
 	
-	private boolean incorrectAttempt = false, added = false;
-	
-	// quiz summary fields
-	@FXML
-	private ObservableList<String> listCorrect, listIncorrect;
-	
-
-	
+	/**
+	 * Initializes various components of the application linked to the primary stage.
+	 */
 	@FXML
 	private void initialize() {
-		rootPane.setStyle("-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #000000, #757575)");
-		
+		//call method to add handler for enter key
 		setGlobalEventHandler(rootPane);
+		
+		//Initializing application components and fields
 		staticTextAreaResults = textAreaResults;
 		_staticProgressIndicator = progressIndicator;
 		_staticCreateProgress = createProgress;
 		_staticTabPane = tabPane;
-		
 		buttonVoiceRate.setText("1x");
-		//initializing default voice
 		_voiceSelection = "(voice_kal_diphone)\n";
-		//initializing text area to display results in
 		try {
 			textAreaResults.setWrapText(true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
+		//binding button and field when searchtab is selected
 		searchTab.setOnSelectionChanged(e -> {
 			_bindingsGenerator.bindFieldButton(textFieldTerm, buttonSearch);
 		});
+		
 		audioCombinationTab.setOnSelectionChanged (e -> {
 			// add all the audio files created into the audio files list view
 			listAudioFiles = listViewAudioFiles.getItems();
@@ -156,13 +148,14 @@ public class MenuController {
 			listViewSelected.getItems().clear();
 		});
 		
+		//refreshing listview whenever viewtab is focused
 		listTab.setOnSelectionChanged(e -> {
 			list = listView.getItems();
 			list.setAll(_listRefresher.refreshCreationsFileList());
 		});
 		
 		audioSelectionTab.setOnSelectionChanged(e -> {
-			_bindingsGenerator.bindTextAreaButtonPreview(textAreaResults, buttonPreview);
+			//various bindings
 			_bindingsGenerator.bindFieldButton(textFieldTerm1, buttonSearch1);
 			_bindingsGenerator.bindTextAreaButton(textFieldAudioName, textAreaResults, buttonSave);
 			// add all the audio files created into the audio files list view
@@ -177,7 +170,6 @@ public class MenuController {
 			ArrayList<String> arrayListQuiz = new ArrayList<>();
 			
 			for (String fileName : list1) {
-			//	File file = new File("Quiz/"+fileName);
 				if (!fileName.startsWith(".")){
 					arrayListQuiz.add(fileName);
 				}
@@ -232,7 +224,12 @@ public class MenuController {
 			_bindingsGenerator.bindFieldButton(textFieldName, buttonImageCreate);
 		});		
 	}
-	
+		
+	/**
+	 * Adds listener for enter key so that pressing enter on specific scenarios will fire specific buttons.
+	 * 
+	 * @param root The root component to find other components from
+	 */
 	private void setGlobalEventHandler(Node root) {
 	    root.addEventHandler(KeyEvent.KEY_PRESSED, ev -> {
 	        if (ev.getCode() == KeyCode.ENTER) {
@@ -254,11 +251,25 @@ public class MenuController {
 	    });
 	}
 	
+////MAIN MENU TAB HANDLERS///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handler for list button in main menu which changes to the viewcreations tab.
+	 * 
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
 	private void handleButtonList(ActionEvent event) throws IOException {
 			tabPane.getSelectionModel().select(5);
 	}
 	
+	/**
+	 * Handler for create button in main menu which changes to the search tab and deletes audiofiles contents after
+	 * resetting components used for creating last creation.
+	 * 
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
 	private void handleButtonCreate(ActionEvent event) throws IOException {
 		textFieldTerm1.clear(); 
@@ -278,32 +289,47 @@ public class MenuController {
 		tabPane.getSelectionModel().select(1);		
 	}
 	
+	/**
+	 * Handler for quiz button in main menu which changes to the quiz tab.
+	 */
 	@FXML
 	private void handleButtonQuiz() {
 		tabPane.getSelectionModel().select(6);
 	}
 	
-	//search tab
+////SEARCH TAB HANDLERS AND METHODS//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handler for the search button in the search tab. Starts the WikitProcess task with the input typed by the user, then changes to the
+	 * audio creation tab.
+	 * 
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
 	private void handleButtonSearch(ActionEvent event) throws IOException {
 		textAreaResults.clear();
 		if(tabPane.getSelectionModel().getSelectedItem() == searchTab) {
-			_searchTerm = textFieldTerm.getText();
+			_staticSearchTerm = textFieldTerm.getText();
 		} else {
-			_searchTerm = textFieldTerm1.getText();
+			_staticSearchTerm = textFieldTerm1.getText();
 		}
-		textFieldTerm1.setText(_searchTerm);
-		
-		//starting new thread for wikit search by using WikitProcess class
+		textFieldTerm1.setText(_staticSearchTerm);
 		textFieldTerm.clear();
 		progressIndicator.setVisible(true);
-		WikitProcess wikitProcess = new WikitProcess(_searchTerm);
+		WikitProcess wikitProcess = new WikitProcess(_staticSearchTerm);
 		_wikitProcess = wikitProcess;
 		_processStatus = true;
 		team.submit(wikitProcess);
 		tabPane.getSelectionModel().select(2);
 	}
 	
+	/**
+	 * Handler for the back button in the search tab. Changes to main menu tab and flags the WikitProcess task to stop if it is currently
+	 * running.
+	 * 
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
 	private void handleButtonSearchBack(ActionEvent event) throws IOException {
 		if(_processStatus) {
@@ -312,25 +338,37 @@ public class MenuController {
 		tabPane.getSelectionModel().selectPrevious();
 	}
 	
+	/**
+	 * Gets the progress indicator for searching previously copied to a static field.
+	 * 
+	 * @return	The copy of the search progress indicator
+	 */
 	public static ProgressIndicator getProgressIndicator() {
 		return _staticProgressIndicator;
 	}
-	
-	public static Alert getAlert() {
-		return _staticAlert;
-	}
 
+	
+	/**
+	 * Sets the flag for when the process is running to false.
+	 */
 	public static void setProcessStatus() {
 		_processStatus = false;
 		
 	}
 	
+	/**
+	 * Gets the searchterm the user typed previously copied to a static field.
+	 * 
+	 * @return	The copy of the searchterm
+	 */
 	public static String getSearchTerm() {
-		return _searchTerm;
+		return _staticSearchTerm;
 	}
 
-
-	//audio selection tab
+////AUDIO SELECTION TAB HANDLERS AND METHODS/////////////////////////////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Sets the text area with the text in the "initialtext" file
+	 */
 	public static void setResults() {
 		//initializing text area to display results in
 		String line = "";
@@ -343,11 +381,22 @@ public class MenuController {
 		}
 	}
 
+	/**
+	 * Handler for the preview button in the audio creation tab. Starts the PreviewProcess task to create temporary audio file and play it.
+	 * Displays alert if selected text is too long.
+	 * 
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
 	private void handleButtonPreview(ActionEvent event) throws IOException {
 		_selectedText = textAreaResults.getSelectedText();
 		if(_selectedText.length() - _selectedText.replaceAll(" ", "").length() > 39) {
 			_alertGenerator.generateAlert(AlertType.WARNING, "Selection error", null, "The selected text is too long, please select under 40 words");
+			return;
+		}
+		if(_selectedText == null || _selectedText.trim().equals(" ")) {
+			_alertGenerator.generateAlert(AlertType.WARNING, "Selection error", null, "Please select text to preview");
 			return;
 		}
 		_selectedText = _selectedText.replace("(", "");
@@ -368,22 +417,47 @@ public class MenuController {
 		
 	}
 	
+	/**
+	 * Gets the preview button instance previously copied to a static field.
+	 * 
+	 * @return	The copy of the button
+	 */
 	public static Button getButtonPreview() {
 		return _staticButtonPreview;
 	}
 	
+	/**
+	 * Handler for when the first menuitem is chosen from the menubutton in the audio creation tab. Sets the menubutton text to "default"
+	 * and assigns the default voice to the voice selection field. 
+	 * 
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
 	private void handleVoice1(ActionEvent event) throws IOException {
 		menuButtonVoices.setText("Default");
 		_voiceSelection = "(voice_kal_diphone)\n";
 	}
 	
+	/**
+	 * Handler for when the second menuitem is chosen from the menubutton in the audio creation tab. Sets the menubutton text to "NZ male"
+	 * and assigns the NZ male voice to the voice selection field. 
+	 * 
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
 	private void handleVoice2(ActionEvent event) throws IOException {
 		menuButtonVoices.setText("NZ Male");
 		_voiceSelection = "(voice_akl_nz_jdt_diphone)\n";
 	}
 	
+	/**
+	 * Handler for selections made from the voice rate menubutton. Sets the menubutton text to the chosen voice rate and assigns the chosen
+	 * voice rate to the voice rate field.
+	 * 
+	 * @param event
+	 */
 	@FXML
 	private void handleSpeed(ActionEvent event) {
 		String speedItem = ((MenuItem) event.getSource()).getText();
@@ -393,6 +467,12 @@ public class MenuController {
 		buttonVoiceRate.setText(speedItem);
 	}
 	
+	/**
+	 * Handler for the save button in the audio creation tab. Saves the selected text as audio with chosen speech settings
+	 * by running the SaveAudioProcess task.
+	 * 
+	 * @throws IOException
+	 */
 	@FXML
 	private void handleButtonSave() throws IOException {
 		//checking if selected text is empty or too long
@@ -429,16 +509,34 @@ public class MenuController {
 		return;
 	}
 	
+	/**
+	 * Sets the audioFiles ObservableList<String> to the current list of audiofiles in the audiofiles directory. 
+	 * 
+	 * @param listofaudiofilesarray The list of audio files in the audiofiles directory.
+	 */
 	public void setAudioFiles(String[] listofaudiofilesarray) {
 		audioFiles = audioList.getItems();
 		audioFiles.setAll(listofaudiofilesarray);
 	}
 	
+	/**
+	 * Handler for the back button in the audio creation tab. Changes to the search tab.
+	 * 
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
 	private void handleButtonCreateMenuBack(ActionEvent event) throws IOException {
 		tabPane.getSelectionModel().selectPrevious();
 	}
 	
+	/**
+	 * Handler for the next button in the audio creation tab. Shows an alert if an audiofile has not yet been made, and changes to
+	 * the audio combination tab otherwise. 
+	 * 
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
 	private void handleButtonNext(ActionEvent event) throws IOException {
 		// if no audio files have been created, prompt the user to create one
@@ -463,7 +561,11 @@ public class MenuController {
 		}
 	}
 	
-	//audiocombination tab
+////AUDIO COMBINATION TAB HANDLERS NAD METHODS///////////////////////////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handler for the right pointing button in the audio combination tab. Moves the selected audio file on the left listview to the
+	 * right listview for combination. 
+	 */
 	@FXML
 	private void handleButtonAdd() {
 		// get the selected item from the list of audio files and and it to the selected items (to be combined) list view
@@ -475,6 +577,10 @@ public class MenuController {
 		}
 	}
 	
+	/**
+	 * Handler for the left pointing button in the audio combination tab. Moves the selected audio file on the right listview to the
+	 * left listview to remove from combination.
+	 */
 	@FXML
 	private void handleButtonMoveBack() {
 		// get the selected item from the to be combined list view and remove it from that listview
@@ -485,6 +591,11 @@ public class MenuController {
 			listAudioFiles.add(selected);
 		}
 	}
+	
+	/**
+	 * Handler for when audio files on the right listview have been selected. Enables the left pointing button in the audio
+	 * creation tab.
+	 */
 	@FXML
 	private void handleListViewAudioSelected() {
 		if (listViewSelected.getSelectionModel().getSelectedItem() != null) {
@@ -493,6 +604,10 @@ public class MenuController {
 		}
 	}
 
+	/**
+	 * Handler for when audio files on the left listview have been selected. Enables the right pointing button in the audio
+	 * creation tab.
+	 */
 	@FXML
 	private void handleListViewAudioFiles() {
 		if (listViewAudioFiles.getSelectionModel().getSelectedItem() != null) {
@@ -500,6 +615,10 @@ public class MenuController {
 			buttonAudioPlay.setDisable(false);
 		}
 	}
+	
+	/**
+	 * Handler for the play button in the audio creation tab. Plays the selected audio in the listviews.
+	 */
 	@FXML
 	private void handleButtonPlay() {
 			buttonAudioPlay.setDisable(true);
@@ -511,11 +630,22 @@ public class MenuController {
 	}
 	
 	    
+	/**
+	 * Handler for the back button in the audio combination tab. Changes to the audio creation tab. 
+	 * 
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML 
 	private void handleButtonCombineBack(ActionEvent event) throws IOException {
 		tabPane.getSelectionModel().selectPrevious();
 	}
 	
+	/**
+	 * Combines the audio files previously moved for combination into a files named "combined.wav".
+	 * 
+	 * @throws IOException
+	 */
 	private void combine() throws IOException {
 		//getting the list of selected audiofiles and generating strings for input into bash process
 		ObservableList<String> audioToCombine = listViewSelected.getItems();
@@ -538,6 +668,13 @@ public class MenuController {
 		_alertGenerator.generateAlert(AlertType.INFORMATION, "Successfully combined", null, "Selected audio files have been combined");
 	}
 	
+	/**
+	 * Handler for the next button in the audio combination tab. Calls the combine method to combine the audio files if audio files have
+	 * been selected for combination. Shows alert otherwise.
+	 * 
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
 	private void handleButtonCombineNext(ActionEvent event) throws IOException {
 		if (listViewSelected.getItems().isEmpty()) {
@@ -550,20 +687,24 @@ public class MenuController {
 		}
 	}
 	
-	//image selection tab
+////IMAGE SELECTION TAB HANDLERS AND METHODS/////////////////////////////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Hander for when a selection is made for the image number menubutton. Allows the next selection to be made and stores the number
+	 * of images wanted by the user in the number field. 
+	 * 
+	 * @param event
+	 */
 	@FXML
 	private void handleNumber(ActionEvent event) {
 		String itemNumber = ((MenuItem) event.getSource()).getText();
 		menuButtonNumber.setText(itemNumber);
 		number = Integer.valueOf(itemNumber);
-		setVisibleMusic();
-	}
-
-	@FXML
-	private void setVisibleMusic() {
 		menuButtonMusic.setDisable(false);
 	}
 
+	/**
+	 * Handler for when the selection for the music is the no music menuitem. 
+	 */
 	@FXML
 	private void handleMenuNoMusic() {
 		menuButtonMusic.setText("No Music");
@@ -571,6 +712,9 @@ public class MenuController {
 		setVisibleName();
 	}
 	
+	/**
+	 * Handler for when the selection for the music is the first music menuitem. 
+	 */
 	@FXML
 	private void handleMenuMusic1() {
 		menuButtonMusic.setText("Life-World");
@@ -579,6 +723,9 @@ public class MenuController {
 		setVisibleName();
 	}
 	
+	/**
+	 * Handler for when the selection for the music is the second music menuitem. 
+	 */
 	@FXML
 	private void handleMenuMusic2() {
 		menuButtonMusic.setText("Marcello");
@@ -586,13 +733,21 @@ public class MenuController {
 		musicFile = new File("Music/VJ_Memes_-_Marcello.mp3").getAbsolutePath();
 		setVisibleName();
 	}
-	
-	@FXML
+
+	/**
+	 * Sets the textfield for the name of the creation to be visible. 
+	 */
 	private void setVisibleName() {
 		textFieldName.setDisable(false);
 	}
 	
 	
+	/**
+	 * Handler for the create button in the image creation tab. Combines all the user choices into finalizing the creation with the
+	 * FlickrProcess task. Changes to the main menu tab and resets all relevant components for next creation. 
+	 * 
+	 * @param event
+	 */
 	@FXML
 	private void handleButtonImageCreate(ActionEvent event) {
 		String creation = textFieldName.getText();
@@ -625,23 +780,46 @@ public class MenuController {
 		audioCombinationTab.setDisable(true);
 	}
 	
+	/**
+	 * Gets a copy of the imagetab as a tab object previously copied into a static field. 
+	 * 
+	 * @return The copy of the imagetab
+	 */
 	public static Tab getImageTab() {
 		return _staticImageTab;
 	}
 	
+	/**
+	 * Handler for the back button in the image creation tab. Changes to the audio combination tab.
+	 * 
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
 	private void handleButtonBack(ActionEvent event) throws IOException {
 		// return to the previous scene where you select the audio
 		tabPane.getSelectionModel().selectPrevious();
 	}
 	
-	//list tab
+////VIEW TAB HANDLERS AND METHODS////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handler for the back button in the view tab. Changes to the main menu tab and resets the selection field.
+	 * 
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
 	private void handleButtonListBack(ActionEvent event) throws IOException {
 		_selected = null;
 		tabPane.getSelectionModel().select(0);
 	}
 	
+	/**
+	 * Handler for the play button in the view tab. Opens a new stage with the video player and the selected creation loaded into 
+	 * the mediaview. 
+	 * 
+	 * @throws IOException
+	 */
 	@FXML
 	private void handleButtonListPlay() throws IOException {
 		Stage stage = new Stage();
@@ -659,6 +837,10 @@ public class MenuController {
 		buttonPlay.setDisable(true);
 	}
 	
+	/**
+	 * Handler for the delete button in the view tab. Opens a prompt for the user to confirm deletion, then deletes the selected creation
+	 * if the user confirms.
+	 */
 	@FXML
 	private void handleButtonDelete() {
 			String confirmation = "Are you sure you want to delete " + _selected + "?";
@@ -682,6 +864,9 @@ public class MenuController {
 			buttonDelete.setDisable(true);
 	}
 
+	/**
+	 * Handler for when a creation is selected from the listview. Enables the play and delete buttons. 
+	 */
 	@FXML
 	private void handleItemSelection() {
 		_selected = listView.getSelectionModel().getSelectedItem();
@@ -691,21 +876,34 @@ public class MenuController {
 		}
 	}
 
+	/**
+	 * Gets a copy of the selected creation as a String previously copied into a static field.
+	 * 
+	 * @return The copy of the selection
+	 */
 	public static String getSelectedItem() {
 		return _selected;
 	}
 	
+	/**
+	 * Gets a copy of the progress indicator previously copied into a static field. 
+	 * 
+	 * @return The copy of the progress indicator
+	 */
 	public static ProgressIndicator getCreateProgress() {
 		return _staticCreateProgress;
 	}
 	
+	/**
+	 * Gets a copy of the tabpane as a tab object previously copied into a static field.
+	 * 
+	 * @return The copy of the tabpane
+	 */
 	public static TabPane getTabPane() {
 		return _staticTabPane;
 	}
 	
-	
-	// quiz handlers 
-	
+////QUIZ HANDLERS AND METHODS///////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
 	// check if answer entered is correct, display whether it is correct or incorrect and adjust score accordingly
 	@FXML
 	private void handleButtonQuizEnter() {

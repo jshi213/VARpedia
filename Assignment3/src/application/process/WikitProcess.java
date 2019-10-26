@@ -14,7 +14,7 @@ import javafx.concurrent.Task;
 /**
  * The WikitProcess class is a task class that runs on a concurrent thread to run the
  * wikit bash command as a process and writes the results into the "initialtext" text file.
- * It then changes the scene to the next tab.
+ * It then changes the scene to the next tab. Generates alert if no result is found.
  */
 public class WikitProcess extends Task<String> {
 	
