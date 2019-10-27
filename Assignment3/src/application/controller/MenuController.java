@@ -1025,8 +1025,10 @@ public class MenuController {
 	 */
 	@FXML
 	private void handleListViewIncorrect() {
-		String selected = listViewIncorrect.getSelectionModel().getSelectedItem().toString();
-		listViewPlay(selected);
+		String selected = listViewIncorrect.getSelectionModel().getSelectedItem();
+		if(!(selected == null)) {
+			listViewPlay(selected.toString());
+		}
 	}
 	
 	/**
@@ -1035,8 +1037,10 @@ public class MenuController {
 	 */
 	@FXML
 	private void handleListViewCorrect() {
-		String selected = listViewCorrect.getSelectionModel().getSelectedItem().toString();
-		listViewPlay(selected);
+		String selected = listViewCorrect.getSelectionModel().getSelectedItem();
+		if(!(selected == null)) {
+			listViewPlay(selected.toString());
+		}
 	}
 	
 	/**

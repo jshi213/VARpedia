@@ -123,7 +123,6 @@
     -fx-border-width: 2 2 2 2;
     -fx-border-radius: 4px;
     -fx-padding: 8 16 8 16;
-    -fx-text-fill: #395389;
 }
 
 .menu-button:hover {
