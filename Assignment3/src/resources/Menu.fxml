@@ -271,8 +271,8 @@
                         <MenuButton fx:id="menuButtonMusic" disable="true" layoutX="470.0" layoutY="384.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="260.0" text="Music" textFill="#79b4d1">
                           <items>
                               <MenuItem mnemonicParsing="false" onAction="#handleMenuNoMusic" text="No music" />
-                              <MenuItem mnemonicParsing="false" onAction="#handleMenuMusic1" text="Life-World" />
-                              <MenuItem mnemonicParsing="false" onAction="#handleMenuMusic2" text="Marcello" />
+                              <MenuItem mnemonicParsing="false" onAction="#handleMenuMusic1" text="Classical" />
+                              <MenuItem mnemonicParsing="false" onAction="#handleMenuMusic2" text="Blues" />
                           </items>
                            <font>
                               <Font name="DejaVu Sans" size="24.0" />

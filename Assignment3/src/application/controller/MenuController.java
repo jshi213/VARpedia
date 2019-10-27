@@ -734,9 +734,9 @@ public class MenuController {
 	 */
 	@FXML
 	private void handleMenuMusic1() {
-		menuButtonMusic.setText("Life-World");
+		menuButtonMusic.setText("Classical");
 		musicDecision = true;
-		musicFile = new File("Music/VJ_Memes_-_Life-World.mp3").getAbsolutePath();
+		musicFile = new File("Music/Classical.mp3").getAbsolutePath();
 		setVisibleName();
 	}
 	
@@ -745,9 +745,9 @@ public class MenuController {
 	 */
 	@FXML
 	private void handleMenuMusic2() {
-		menuButtonMusic.setText("Marcello");
+		menuButtonMusic.setText("Blues");
 		musicDecision = true;
-		musicFile = new File("Music/VJ_Memes_-_Marcello.mp3").getAbsolutePath();
+		musicFile = new File("Music/Blues.mp3").getAbsolutePath();
 		setVisibleName();
 	}
 
