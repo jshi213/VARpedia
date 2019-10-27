@@ -25,5 +25,6 @@ public class AlertFactory {
 		alert.setResizable(true);
 		alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 		alert.showAndWait();
+		
 	}
 }
