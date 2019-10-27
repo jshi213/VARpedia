@@ -24,6 +24,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -32,6 +33,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.control.Alert.AlertType;
@@ -39,7 +41,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -49,11 +50,14 @@ public class MenuController {
 
 	//FXML tagged javafx nodes from scenebuilder
 	@FXML
-	private Text text, textName, textMusic, textScore, textCorrect, textIncorrect, textScoreSummary;
+	private Label textName, textMusic, textScoreSummary, textScore, textCorrect, textIncorrect;
 	
 	@FXML
 	private Button buttonCreate, buttonList, buttonSearch, buttonSearch1, buttonSave, buttonNext, buttonPreview, buttonAudioPlay, buttonEnter, buttonImageCreate, buttonMusicEnter, buttonPlay, buttonDelete, buttonQuizEnter, buttonQuizNext;
 
+	@FXML
+	private ToggleButton themeButton;
+	
 	@FXML
 	private Pane rootPane, paneQuiz, paneSummary, paneNoCreations;
 	
@@ -252,6 +256,20 @@ public class MenuController {
 	}
 	
 ////MAIN MENU TAB HANDLERS///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	@FXML
+	private void handleThemeButton(ActionEvent event) {
+		if(themeButton.isSelected()) {
+		Main.getScene().getStylesheets().clear();
+		Main.getScene().setUserAgentStylesheet(null);
+		Main.getScene().getStylesheets().add(getClass().getResource("/resources/applicationlight.css").toExternalForm());
+		themeButton.setText("Dark Theme");
+		} else {
+			Main.getScene().getStylesheets().clear();
+			Main.getScene().setUserAgentStylesheet(null);
+			Main.getScene().getStylesheets().add(getClass().getResource("/resources/application.css").toExternalForm());
+			themeButton.setText("Light Theme");
+		}
+	}
 	/**
 	 * Handler for list button in main menu which changes to the viewcreations tab.
 	 * 
