@@ -2,6 +2,7 @@ package application.helper;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.Region;
 
 /**
  * The Alert factory class contains a method to generate alerts that must be acknowledged by the user.
@@ -21,6 +22,8 @@ public class AlertFactory {
 		alert.setTitle(title);
 		alert.setHeaderText(header);
 		alert.setContentText(content);
+		alert.setResizable(true);
+		alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 		alert.showAndWait();
 	}
 }
