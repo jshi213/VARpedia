@@ -131,7 +131,6 @@ public class MenuController {
 		_staticProgressIndicator = progressIndicator;
 		_staticCreateProgress = createProgress;
 		_staticTabPane = tabPane;
-		buttonVoiceRate.setText("1x");
 		_voiceSelection = "(voice_kal_diphone)\n";
 		try {
 			textAreaResults.setWrapText(true);

@@ -127,7 +127,7 @@
                               <Font size="22.0" />
                            </font>
                         </TextField>
-                        <MenuButton fx:id="menuButtonVoices" layoutX="26.0" layoutY="685.0" mnemonicParsing="false" prefWidth="230.0" text="Voices" textFill="#79b4d1">
+                        <MenuButton fx:id="menuButtonVoices" layoutX="26.0" layoutY="685.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="230.0" text="Voices" textFill="#79b4d1">
                            <items>
                               <MenuItem fx:id="voice1" mnemonicParsing="false" onAction="#handleVoice1" text="Default" />
                               <MenuItem fx:id="voice2" mnemonicParsing="false" onAction="#handleVoice2" text="NZ Male" />
@@ -136,7 +136,7 @@
                               <Font name="DejaVu Sans" size="24.0" />
                            </font>
                         </MenuButton>
-                        <MenuButton fx:id="buttonVoiceRate" layoutX="289.0" layoutY="685.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="170.0" text="0.75x" textFill="#79b4d1">
+                        <MenuButton fx:id="buttonVoiceRate" layoutX="289.0" layoutY="685.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="66.0" prefWidth="212.0" text="Speed" textFill="#79b4d1">
                            <items>
                               <MenuItem mnemonicParsing="false" onAction="#handleSpeed" text="0.5x" />
                               <MenuItem mnemonicParsing="false" onAction="#handleSpeed" text="0.75x" />
