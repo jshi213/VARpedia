@@ -870,7 +870,7 @@ public class MenuController {
 	@FXML
 	private void handleItemSelection() {
 		_selected = listView.getSelectionModel().getSelectedItem();
-		if (_selected != null) {
+		if (_selected != null && !_selected.isEmpty()) {
 			buttonDelete.setDisable(false);
 			buttonPlay.setDisable(false);
 		}
@@ -904,7 +904,10 @@ public class MenuController {
 	}
 	
 ////QUIZ HANDLERS AND METHODS///////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
-	// check if answer entered is correct, display whether it is correct or incorrect and adjust score accordingly
+	/**
+	 * Handler for enter button in quiz tab. Checks if the keyword user typed is the searchterm for the video being displayed, then 
+	 * displays whether it is correct or incorrect and adjusts score accordingly. 
+	 */
 	@FXML
 	private void handleButtonQuizEnter() {
 		buttonQuizNext.setDisable(false);
@@ -930,13 +933,23 @@ public class MenuController {
 		textScore.setText(score + "/" + levels);		
 	}
 	
-	// go back to the main menu
+	/**
+	 * Handler for the back button in the quiz tab. Changes to the main menu.
+	 * 
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
 	private void handleButtonQuizBack(ActionEvent event) throws IOException {
 		tabPane.getSelectionModel().select(0);
 	}
 	
-	// go to the next question or to the summary if on the last question
+	/**
+	 * Handler for the next button in the quiz tab. Displays the next question or the quiz summary if on the last question.
+	 * 
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
 	private void handleButtonQuizNext(ActionEvent event) throws IOException {	
 		incorrectAttempt = false;
@@ -966,8 +979,9 @@ public class MenuController {
 		}		
 	}
 	
-	// set the summary scene for the quiz
-	@FXML
+	/**
+	 * Initializes and displays the summary screen for the quiz tab.
+	 */
 	private void setSummary() {
 		paneSummary.setVisible(true);
 		paneQuiz.setVisible(false);	
@@ -978,7 +992,9 @@ public class MenuController {
 		listIncorrect.setAll(incorrect);
 	}
 	
-	// reset the scene for the quiz
+	/**
+	 * Resets the quiz tab for another quiz.
+	 */
 	@FXML
 	private void resetQuiz() {
 		paneNoCreations.setVisible(false);
@@ -986,20 +1002,31 @@ public class MenuController {
 		paneQuiz.setVisible(true);
 	}
 	
-	// quiz summary handlers
-	
+	/**
+	 * Handler for when an answer is selected in the correct listview of the quiz summary screen. Plays the video for the related creation
+	 * in an embedded mediaview. 
+	 */
 	@FXML
 	private void handleListViewIncorrect() {
 		String selected = listViewIncorrect.getSelectionModel().getSelectedItem().toString();
 		listViewPlay(selected);
 	}
 	
+	/**
+	 * Handler for when an answer is selected in the incorrect listview of the quiz summary screen. Plays the video for the related creation
+	 * in an embedded mediaview. 
+	 */
 	@FXML
 	private void handleListViewCorrect() {
 		String selected = listViewCorrect.getSelectionModel().getSelectedItem().toString();
 		listViewPlay(selected);
 	}
 	
+	/**
+	 * Finds the given selection in the "Quiz" directory and plays it in an embedded mediaview.
+	 * 
+	 * @param selected The selected video
+	 */
 	private void listViewPlay(String selected) {
 		//String selected = listViewIncorrect.getSelectionModel().getSelectedItem();
 		if (selected != null) {
@@ -1011,8 +1038,12 @@ public class MenuController {
 		}
 	}
 	
-	
-	// start the quiz from the beginning
+	/**
+	 * Handler for the retry button in the quiz tab. Restarts the same quiz from the beginning by resetting the quiz tab. 
+	 * 
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
 	private void handleButtonRetry(ActionEvent event) throws IOException {
 		EventHandler<Event> e = quizTab.getOnSelectionChanged();
@@ -1020,7 +1051,12 @@ public class MenuController {
 		resetQuiz();
 	}
 	
-	// return to the main menu
+	/**
+	 * Handler for the menu button in the quiz tab. Changes to the main menu tab.
+	 * 
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
 	private void handleButtonMenu(ActionEvent event) throws IOException {
 		tabPane.getSelectionModel().select(0);
